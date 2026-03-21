@@ -52,8 +52,8 @@ Exceptions: none
 | Role | Size | Weight | Line Height | Tailwind Class |
 |------|------|--------|-------------|----------------|
 | Body | 16px | 400 (regular) | 1.5 | `text-base font-normal leading-relaxed` |
-| Label | 14px | 500 (medium) | 1.4 | `text-sm font-medium leading-snug` |
-| Heading | 24px | 600 (semibold) | 1.2 | `text-2xl font-semibold leading-tight` |
+| Label | 14px | 400 (regular) | 1.4 | `text-sm font-normal leading-snug` |
+| Heading | 24px | 700 (bold) | 1.2 | `text-2xl font-bold leading-tight` |
 | Display | 36px | 700 (bold) | 1.1 | `text-4xl font-bold leading-none` |
 
 **Font stack in `@theme`:**
@@ -63,7 +63,12 @@ Exceptions: none
 }
 ```
 
-**Weight constraint:** Only use weights 400, 500, 600, and 700. Load these four weights from Google Fonts. No light (300) or black (900) weights.
+**Google Fonts `<link>`:** Load only weights 400 and 700:
+```html
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+```
+
+**Weight constraint:** Only use weights 400 and 700. No other weights (300, 500, 600, 900) are permitted. Use `font-normal` (400) for body text, labels, and secondary content. Use `font-bold` (700) for headings, display text, and emphasis.
 
 ---
 
@@ -130,9 +135,9 @@ Phase 1 establishes the dark-themed foundation. All colors defined as CSS custom
 - Height: 64px (`h-16`)
 - Inner padding: 16px horizontal (`px-4`)
 - Layout: `flex items-center justify-between`
-- Left side: Site name "nick-site" in `text-base font-semibold text-text`
+- Left side: Site name "nick-site" in `text-base font-bold text-text`
 - Right side: Nav links "Home" and "Playground" as `<RouterLink>` elements
-- Nav link style: `text-sm font-medium text-text-muted hover:text-accent transition-colors`
+- Nav link style: `text-sm font-normal text-text-muted hover:text-accent transition-colors`
 - Active nav link: `text-accent` (use `router-link-active` class)
 - Bottom border: `border-b border-border`
 - Max content width: `max-w-5xl mx-auto w-full` inside the header bar
@@ -152,14 +157,14 @@ Phase 1 establishes the dark-themed foundation. All colors defined as CSS custom
 - Container: `max-w-5xl mx-auto px-4 py-16`
 - Hero section with centered text layout
 - Name: "Nick" in `text-4xl font-bold text-text` (Display role)
-- Title: "Technical Lead" in `text-2xl font-semibold text-text-muted mt-2` (Heading role)
+- Title: "Technical Lead" in `text-2xl font-bold text-text-muted mt-2` (Heading role)
 - Description placeholder: "Portfolio and tech playground" in `text-base text-text-muted mt-4` (Body role)
 - Purpose: Confirms TailwindCSS v4 wiring is functional. Content replaced in Phase 2.
 
 ### PlaygroundView.vue (D-14) — Stub
 
 - Container: `max-w-5xl mx-auto px-4 py-16`
-- Heading: "Playground" in `text-2xl font-semibold text-text`
+- Heading: "Playground" in `text-2xl font-bold text-text`
 - Description: "Micro-frontend experimentation zone" in `text-base text-text-muted mt-2`
 - Mount point: `<div id="remote-mount" class="mt-8 p-8 border border-border rounded-lg">`
 - Empty state inside mount point: "No remotes loaded" in `text-sm text-text-muted text-center`
@@ -169,7 +174,7 @@ Phase 1 establishes the dark-themed foundation. All colors defined as CSS custom
 
 - Container: `max-w-5xl mx-auto px-4 py-16 text-center`
 - Error code: "404" in `text-6xl font-bold text-text-muted`
-- Heading: "Page not found" in `text-2xl font-semibold text-text mt-4`
+- Heading: "Page not found" in `text-2xl font-bold text-text mt-4`
 - Body: "The page you're looking for doesn't exist or has been moved." in `text-base text-text-muted mt-2`
 - Action: `<RouterLink to="/">` styled as text link: "Go back home" in `text-accent hover:underline mt-6 inline-block`
 - This is a real, usable 404 page -- not a placeholder. Reused as-is in later phases.
