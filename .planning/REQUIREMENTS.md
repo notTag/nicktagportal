@@ -107,48 +107,48 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MONO-01 | — | Pending |
-| MONO-02 | — | Pending |
-| MONO-03 | — | Pending |
-| MONO-04 | — | Pending |
-| MONO-05 | — | Pending |
-| MONO-06 | — | Pending |
-| SHELL-01 | — | Pending |
-| SHELL-02 | — | Pending |
-| SHELL-03 | — | Pending |
-| SHELL-04 | — | Pending |
-| SHELL-05 | — | Pending |
-| SHELL-06 | — | Pending |
-| SHELL-07 | — | Pending |
-| SHELL-08 | — | Pending |
-| SHELL-09 | — | Pending |
-| VIEW-01 | — | Pending |
-| VIEW-02 | — | Pending |
-| VIEW-03 | — | Pending |
-| VIEW-04 | — | Pending |
-| VIEW-05 | — | Pending |
-| VIEW-06 | — | Pending |
-| FED-01 | — | Pending |
-| FED-02 | — | Pending |
-| FED-03 | — | Pending |
-| FED-04 | — | Pending |
-| FED-05 | — | Pending |
-| FED-06 | — | Pending |
-| FED-07 | — | Pending |
-| FED-08 | — | Pending |
-| DEPLOY-01 | — | Pending |
-| DEPLOY-02 | — | Pending |
-| DEPLOY-03 | — | Pending |
-| DEPLOY-04 | — | Pending |
-| DEPLOY-05 | — | Pending |
-| DEPLOY-06 | — | Pending |
-| DEPLOY-07 | — | Pending |
+| MONO-01 | Phase 1 | Pending |
+| MONO-02 | Phase 1 | Pending |
+| MONO-03 | Phase 1 | Pending |
+| MONO-04 | Phase 1 | Pending |
+| MONO-05 | Phase 1 | Pending |
+| MONO-06 | Phase 1 | Pending |
+| SHELL-01 | Phase 1 | Pending |
+| SHELL-02 | Phase 1 | Pending |
+| SHELL-03 | Phase 1 | Pending |
+| SHELL-04 | Phase 1 | Pending |
+| SHELL-05 | Phase 1 | Pending |
+| SHELL-06 | Phase 1 | Pending |
+| SHELL-07 | Phase 1 | Pending |
+| SHELL-08 | Phase 1 | Pending |
+| SHELL-09 | Phase 1 | Pending |
+| VIEW-01 | Phase 2 | Pending |
+| VIEW-02 | Phase 2 | Pending |
+| VIEW-03 | Phase 2 | Pending |
+| VIEW-04 | Phase 2 | Pending |
+| VIEW-05 | Phase 2 | Pending |
+| VIEW-06 | Phase 2 | Pending |
+| FED-01 | Phase 2 | Pending |
+| FED-02 | Phase 2 | Pending |
+| FED-03 | Phase 2 | Pending |
+| FED-04 | Phase 2 | Pending |
+| FED-05 | Phase 2 | Pending |
+| FED-06 | Phase 2 | Pending |
+| FED-07 | Phase 2 | Pending |
+| FED-08 | Phase 2 | Pending |
+| DEPLOY-01 | Phase 3 | Pending |
+| DEPLOY-02 | Phase 3 | Pending |
+| DEPLOY-03 | Phase 3 | Pending |
+| DEPLOY-04 | Phase 3 | Pending |
+| DEPLOY-05 | Phase 3 | Pending |
+| DEPLOY-06 | Phase 3 | Pending |
+| DEPLOY-07 | Phase 3 | Pending |
 
 **Coverage:**
 - v1 requirements: 36 total
-- Mapped to phases: 0
-- Unmapped: 36 ⚠️
+- Mapped to phases: 36
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-03-21*
-*Last updated: 2026-03-21 after initial definition*
+*Last updated: 2026-03-21 after roadmap creation*
