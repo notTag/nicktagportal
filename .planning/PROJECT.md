@@ -24,12 +24,15 @@ The shell app works as a polished, deployable personal site from day one — fed
 - [x] TheHeader + TheFooter components in packages/ui with AppLayout wrapper — Validated in Phase 1: Monorepo and Shell App Core
 - [x] ESLint v9 flat config + Prettier + husky pre-commit hooks — Validated in Phase 1: Monorepo and Shell App Core
 
+### Validated
+
+- [x] Polished HomeView with Nick's identity (Technical Lead → Director of Engineering) — Validated in Phase 2: Views and Federation Scaffolding
+- [x] PlaygroundView stubbed for future remote mounting — Validated in Phase 2: Views and Federation Scaffolding
+- [x] Vite build with Module Federation configured (empty remotes, shared singletons) — Validated in Phase 2: Views and Federation Scaffolding
+- [x] federation/remotes.ts with env-aware URL resolver pattern — Validated in Phase 2: Views and Federation Scaffolding
+
 ### Active
 
-- [ ] Polished HomeView with Nick's identity (Technical Lead → Director of Engineering)
-- [ ] PlaygroundView stubbed for future remote mounting
-- [ ] Vite build with Module Federation configured (empty remotes, shared singletons)
-- [ ] federation/remotes.ts with env-aware URL resolver pattern
 - [ ] GitHub Actions workflow deploying shell to GitHub Pages (custom domain: nicktag.tech)
 - [ ] CNAME file and 404.html SPA workaround for GitHub Pages
 
@@ -92,4 +95,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-03-21 — Phase 1 complete: monorepo scaffold, Vue 3 shell app, dev tooling_
+_Last updated: 2026-03-22 — Phase 2 complete: SynthWave '84 theme, HomeView, PlaygroundView, federation scaffolding_
