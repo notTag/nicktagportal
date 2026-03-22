@@ -85,3 +85,15 @@ Phases execute in numeric order: 1 -> 2 -> 3
 | 1. Monorepo and Shell App Core      | 0/3            | Not started | -         |
 | 2. Views and Federation Scaffolding | 0/2            | Not started | -         |
 | 3. Deployment Pipeline              | 0/1            | Not started | -         |
+
+## Backlog
+
+### Phase 999.1: Theme Interchangeability System (BACKLOG)
+
+**Goal:** VSCode theme mapping layer with settings button in the header. Users can swap color themes (SynthWave '84 as default); preference stored in localStorage. CSS variables map to VSCode theme variable names so any VSCode theme JSON can be dropped in.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
