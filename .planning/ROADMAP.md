@@ -51,12 +51,13 @@ Plans:
 3. The PlaygroundView displays a heading, description, and accepts a `:remote` route parameter visible in the component
 4. `vite.config.ts` includes `@originjs/vite-plugin-federation` with name `shell`, empty remotes, shared singletons (vue, vue-router, pinia), and `build.target` set to `esnext`
 5. `federation/remotes.ts` exports a `RemoteName` type and provides an env-aware URL resolver that distinguishes `import.meta.env.DEV` from production
-   **Plans**: TBD
+   **Plans**: 3 plans
 
 Plans:
 
-- [ ] 02-01: TBD
-- [ ] 02-02: TBD
+- [ ] 02-01-PLAN.md -- SynthWave '84 palette, JSON data files, header brand update, SocialLinks component, footer wiring
+- [ ] 02-02-PLAN.md -- TerminalPanel component, HomeView (hero + terminal + skills), PlaygroundView federation comment
+- [ ] 02-03-PLAN.md -- Module Federation plugin install, vite.config.ts configuration, federation/remotes.ts URL resolver
 
 ### Phase 3: Deployment Pipeline
 
@@ -82,8 +83,8 @@ Phases execute in numeric order: 1 -> 2 -> 3
 
 | Phase                               | Plans Complete | Status      | Completed |
 | ----------------------------------- | -------------- | ----------- | --------- |
-| 1. Monorepo and Shell App Core      | 0/3            | Not started | -         |
-| 2. Views and Federation Scaffolding | 0/2            | Not started | -         |
+| 1. Monorepo and Shell App Core      | 3/3            | Complete    | -         |
+| 2. Views and Federation Scaffolding | 0/3            | Not started | -         |
 | 3. Deployment Pipeline              | 0/1            | Not started | -         |
 
 ## Backlog
