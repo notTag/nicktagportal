@@ -25,7 +25,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **SHELL-05**: 404 catch-all fallback route
 - [x] **SHELL-06**: Pinia initialized in main.ts with placeholder root store using Composition API style
 - [x] **SHELL-07**: TailwindCSS v4 with CSS-first config (@import "tailwindcss"), no tailwind.config.js
-- [ ] **SHELL-08**: Components designed for reusability — extractable to packages/ui later
+- [x] **SHELL-08**: Components designed for reusability — extractable to packages/ui later
 - [x] **SHELL-09**: All files TypeScript — no plain .js files anywhere
 
 ### Views
@@ -120,7 +120,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SHELL-05    | Phase 1 | Complete |
 | SHELL-06    | Phase 1 | Complete |
 | SHELL-07    | Phase 1 | Complete |
-| SHELL-08    | Phase 1 | Pending  |
+| SHELL-08    | Phase 1 | Complete |
 | SHELL-09    | Phase 1 | Complete |
 | VIEW-01     | Phase 2 | Pending  |
 | VIEW-02     | Phase 2 | Pending  |
