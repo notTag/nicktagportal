@@ -39,14 +39,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Module Federation
 
-- [ ] **FED-01**: @originjs/vite-plugin-federation configured in vite.config.ts with name 'shell'
-- [ ] **FED-02**: Empty remotes object with commented example of remote registration
-- [ ] **FED-03**: Shared singletons: vue, vue-router, pinia
-- [ ] **FED-04**: build.target set to 'esnext' with comment explaining federation requirement
-- [ ] **FED-05**: build.minify set to false with comment noting to re-enable for production
-- [ ] **FED-06**: federation/remotes.ts with env-aware URL resolver using import.meta.env.DEV
-- [ ] **FED-07**: federation/remotes.ts exports a `RemoteName` type (initially `never`, extended as remotes are added) and an env-aware URL resolver that returns the correct remote URL for dev or production
-- [ ] **FED-08**: Commented example in remotes.ts showing local dev vs prod URL pattern
+- [x] **FED-01**: @originjs/vite-plugin-federation configured in vite.config.ts with name 'shell'
+- [x] **FED-02**: Empty remotes object with commented example of remote registration
+- [x] **FED-03**: Shared singletons: vue, vue-router, pinia
+- [x] **FED-04**: build.target set to 'esnext' with comment explaining federation requirement
+- [x] **FED-05**: build.minify set to false with comment noting to re-enable for production
+- [x] **FED-06**: federation/remotes.ts with env-aware URL resolver using import.meta.env.DEV
+- [x] **FED-07**: federation/remotes.ts exports a `RemoteName` type (initially `never`, extended as remotes are added) and an env-aware URL resolver that returns the correct remote URL for dev or production
+- [x] **FED-08**: Commented example in remotes.ts showing local dev vs prod URL pattern
 
 ### Deployment
 
@@ -128,14 +128,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | VIEW-04     | Phase 2 | Pending  |
 | VIEW-05     | Phase 2 | Pending  |
 | VIEW-06     | Phase 2 | Pending  |
-| FED-01      | Phase 2 | Pending  |
-| FED-02      | Phase 2 | Pending  |
-| FED-03      | Phase 2 | Pending  |
-| FED-04      | Phase 2 | Pending  |
-| FED-05      | Phase 2 | Pending  |
-| FED-06      | Phase 2 | Pending  |
-| FED-07      | Phase 2 | Pending  |
-| FED-08      | Phase 2 | Pending  |
+| FED-01      | Phase 2 | Complete |
+| FED-02      | Phase 2 | Complete |
+| FED-03      | Phase 2 | Complete |
+| FED-04      | Phase 2 | Complete |
+| FED-05      | Phase 2 | Complete |
+| FED-06      | Phase 2 | Complete |
+| FED-07      | Phase 2 | Complete |
+| FED-08      | Phase 2 | Complete |
 | DEPLOY-01   | Phase 3 | Pending  |
 | DEPLOY-02   | Phase 3 | Pending  |
 | DEPLOY-03   | Phase 3 | Pending  |
