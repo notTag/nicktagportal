@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "preserve",
+    "paths": {
+      "@/*": ["./apps/shell/src/*"],
+      "@ui/*": ["./packages/ui/src/*"],
+      "@ui": ["./packages/ui/src"],
+      "@types/*": ["./packages/types/src/*"]
+    }
+  },
+  "references": [
+    { "path": "./apps/shell/tsconfig.app.json" },
+    { "path": "./apps/shell/tsconfig.node.json" }
+  ]
+}

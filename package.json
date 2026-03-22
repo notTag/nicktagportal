@@ -1,0 +1,14 @@
+{
+  "name": "nick-site",
+  "private": true,
+  "type": "module",
+  "workspaces": ["apps/*", "packages/*"],
+  "scripts": {
+    "dev": "bun run --filter './apps/shell' dev",
+    "build": "bun run --filter './apps/shell' build",
+    "build:all": "bun run --filter '*' build",
+    "typecheck": "bun run --filter '*' typecheck",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  }
+}
