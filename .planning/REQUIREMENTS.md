@@ -30,12 +30,12 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Views
 
-- [ ] **VIEW-01**: HomeView — polished landing with Nick's name, role (Technical Lead → Director of Engineering), site description as portfolio and tech playground
-- [ ] **VIEW-02**: HomeView — navigation to /playground route
+- [x] **VIEW-01**: HomeView — polished landing with Nick's name, role (Technical Lead → Director of Engineering), site description as portfolio and tech playground
+- [x] **VIEW-02**: HomeView — navigation to /playground route
 - [x] **VIEW-03**: HomeView — styled with Tailwind, clean and minimal design
-- [ ] **VIEW-04**: PlaygroundView — heading and description of micro-frontend experimentation zone
-- [ ] **VIEW-05**: PlaygroundView — commented block showing how a future remote component would be dynamically imported and mounted
-- [ ] **VIEW-06**: PlaygroundView — accepts :remote route param for future remote mounting
+- [x] **VIEW-04**: PlaygroundView — heading and description of micro-frontend experimentation zone
+- [x] **VIEW-05**: PlaygroundView — commented block showing how a future remote component would be dynamically imported and mounted
+- [x] **VIEW-06**: PlaygroundView — accepts :remote route param for future remote mounting
 
 ### Module Federation
 
@@ -122,12 +122,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SHELL-07    | Phase 1 | Complete |
 | SHELL-08    | Phase 1 | Complete |
 | SHELL-09    | Phase 1 | Complete |
-| VIEW-01     | Phase 2 | Pending  |
-| VIEW-02     | Phase 2 | Pending  |
+| VIEW-01     | Phase 2 | Complete |
+| VIEW-02     | Phase 2 | Complete |
 | VIEW-03     | Phase 2 | Complete |
-| VIEW-04     | Phase 2 | Pending  |
-| VIEW-05     | Phase 2 | Pending  |
-| VIEW-06     | Phase 2 | Pending  |
+| VIEW-04     | Phase 2 | Complete |
+| VIEW-05     | Phase 2 | Complete |
+| VIEW-06     | Phase 2 | Complete |
 | FED-01      | Phase 2 | Complete |
 | FED-02      | Phase 2 | Complete |
 | FED-03      | Phase 2 | Complete |

@@ -56,7 +56,7 @@ Plans:
 Plans:
 
 - [x] 02-01-PLAN.md -- SynthWave '84 palette, JSON data files, header brand update, SocialLinks component, footer wiring
-- [ ] 02-02-PLAN.md -- TerminalPanel component, HomeView (hero + terminal + skills), PlaygroundView federation comment
+- [x] 02-02-PLAN.md -- TerminalPanel component, HomeView (hero + terminal + skills), PlaygroundView federation comment
 - [x] 02-03-PLAN.md -- Module Federation plugin install, vite.config.ts configuration, federation/remotes.ts URL resolver
 
 ### Phase 3: Deployment Pipeline
