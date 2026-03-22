@@ -28,11 +28,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. TailwindCSS v4 utility classes render correctly in the browser with no `tailwind.config.js` file present
   4. `bun run typecheck` passes with TypeScript strict mode and path aliases resolve across all packages
   5. `packages/ui` and `packages/types` exist as scaffolded workspaces with valid `package.json` and empty `index.ts` files
-**Plans**: TBD
+**Plans**: 3 plans
 
 Plans:
-- [ ] 01-01: TBD
-- [ ] 01-02: TBD
+- [ ] 01-01-PLAN.md -- Monorepo root config, shell app scaffold with Vue 3 + Router + Pinia + TailwindCSS v4, shared package scaffolds
+- [ ] 01-02-PLAN.md -- UI components (TheHeader, TheFooter) in packages/ui, AppLayout wiring, feature flags, package documentation
+- [ ] 01-03-PLAN.md -- Dev tooling: ESLint v9 flat config, Prettier with Tailwind sorting, husky + lint-staged pre-commit hooks
 
 ### Phase 2: Views and Federation Scaffolding
 **Goal**: A polished HomeView presenting Nick's professional identity, a PlaygroundView ready for future remote mounting, and Module Federation configured with shared singletons and an env-aware URL resolver
@@ -71,6 +72,6 @@ Phases execute in numeric order: 1 -> 2 -> 3
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Monorepo and Shell App Core | 0/2 | Not started | - |
+| 1. Monorepo and Shell App Core | 0/3 | Not started | - |
 | 2. Views and Federation Scaffolding | 0/2 | Not started | - |
 | 3. Deployment Pipeline | 0/1 | Not started | - |
