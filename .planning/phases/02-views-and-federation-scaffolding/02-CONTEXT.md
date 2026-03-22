@@ -148,11 +148,13 @@ Update `packages/ui/src/components/TheHeader.vue`:
 - Brand text: `"Nick Tagliasacchi"` (replacing `"nick-site"`)
 - Nav links remain: Home (`/`) and Playground (`/playground`)
 
-### Footer Feature Flag
+### Footer & Social Links
 
-In `apps/shell/src/config/features.ts`, set `showFooter: true` but render the social links section inside the footer. The footer is ON — it contains the social links. (The previous "Built with Vue 3 + Vite" text is removed; the footer now shows social links from `socialLinks.json`.)
-
-Note: the user said "Footer: feature flag to off" — interpret this as the OLD footer stub content is gone; the new footer with social links is what's shown. Keep `showFooter: true` since the footer now has real content.
+- `showFooter: true` in `apps/shell/src/config/features.ts` — footer is ON, it contains the social links
+- Old "Built with Vue 3 + Vite" text removed
+- Social links extracted into their own component: `packages/ui/src/components/SocialLinks.vue`
+- `TheFooter.vue` renders `<SocialLinks />` — footer is the current host but `SocialLinks` can be relocated later without touching the footer
+- `SocialLinks.vue` imports `socialLinks.json` directly and handles the orientation logic
 
 ### PlaygroundView — Federation Hint (VIEW-05)
 
@@ -352,7 +354,7 @@ Full list populated from user-provided skills (see Specific Ideas). HomeView ren
 ### Integration Points
 
 - `HomeView.vue` imports `profile.json`, `cliDefaultOutput.json`, `cliCommands.json`, `techSkills.json` directly
-- `TheFooter.vue` imports `socialLinks.json` directly
+- `SocialLinks.vue` imports `socialLinks.json` directly; `TheFooter.vue` renders `<SocialLinks />`
 - `TerminalPanel.vue` receives commands via props OR imports JSON directly (implementor's choice)
 - `federation/remotes.ts` sits at `apps/shell/src/federation/remotes.ts` — new directory
 
