@@ -1,3 +1,2 @@
-// Barrel exports for @nick-site/ui
-// Components added in Plan 02
-export {}
+export { default as TheHeader } from './components/TheHeader.vue'
+export { default as TheFooter } from './components/TheFooter.vue'
