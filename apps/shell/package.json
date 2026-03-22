@@ -1,0 +1,27 @@
+{
+  "name": "@nick-site/shell",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc -b && vite build",
+    "typecheck": "vue-tsc --noEmit"
+  },
+  "dependencies": {
+    "vue": "^3.5",
+    "vue-router": "^4.5",
+    "pinia": "^2.3",
+    "@nick-site/ui": "workspace:*",
+    "@nick-site/types": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "^6.0",
+    "@vitejs/plugin-vue": "^5.2",
+    "typescript": "^5.7",
+    "vue-tsc": "^2.2",
+    "tailwindcss": "^4.0",
+    "@tailwindcss/vite": "^4.0",
+    "vite-plugin-vue-devtools": "^7.0"
+  }
+}

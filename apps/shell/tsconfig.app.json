@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@ui/*": ["../../packages/ui/src/*"],
+      "@ui": ["../../packages/ui/src"],
+      "@types/*": ["../../packages/types/src/*"]
+    }
+  },
+  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "../../packages/ui/src/**/*", "../../packages/types/src/**/*"]
+}
