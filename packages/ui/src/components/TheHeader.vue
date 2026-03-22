@@ -7,7 +7,7 @@ import { RouterLink } from 'vue-router'
     <div
       class="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-4"
     >
-      <span class="text-text text-base font-bold">nick-site</span>
+      <span class="text-text text-base font-bold">Nick Tagliasacchi</span>
       <nav class="flex items-center gap-2">
         <RouterLink
           to="/"
