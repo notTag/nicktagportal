@@ -153,8 +153,8 @@ Update `packages/ui/src/components/TheHeader.vue`:
 - `showFooter: true` in `apps/shell/src/config/features.ts` — footer is ON, it contains the social links
 - Old "Built with Vue 3 + Vite" text removed
 - Social links extracted into their own component: `packages/ui/src/components/SocialLinks.vue`
-- `TheFooter.vue` renders `<SocialLinks />` — footer is the current host but `SocialLinks` can be relocated later without touching the footer
-- `SocialLinks.vue` imports `socialLinks.json` directly and handles the orientation logic
+- `SocialLinks.vue` receives links data via props (type `SocialLink[]`); `AppLayout` imports `socialLinks.json` and injects it through `TheFooter`'s slot as props. This respects `packages/ui` independence (no `@/` app imports inside the shared package).
+- `TheFooter.vue` exposes a `<slot />` — footer is the current host but `SocialLinks` can be relocated later without touching the footer
 
 ### PlaygroundView — Federation Hint (VIEW-05)
 
@@ -354,7 +354,7 @@ Full list populated from user-provided skills (see Specific Ideas). HomeView ren
 ### Integration Points
 
 - `HomeView.vue` imports `profile.json`, `cliDefaultOutput.json`, `cliCommands.json`, `techSkills.json` directly
-- `SocialLinks.vue` imports `socialLinks.json` directly; `TheFooter.vue` renders `<SocialLinks />`
+- `SocialLinks.vue` receives data via props from `AppLayout.vue`; `TheFooter.vue` exposes a `<slot />` for content injection
 - `TerminalPanel.vue` receives commands via props OR imports JSON directly (implementor's choice)
 - `federation/remotes.ts` sits at `apps/shell/src/federation/remotes.ts` — new directory
 

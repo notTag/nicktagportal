@@ -45,7 +45,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **FED-04**: build.target set to 'esnext' with comment explaining federation requirement
 - [ ] **FED-05**: build.minify set to false with comment noting to re-enable for production
 - [ ] **FED-06**: federation/remotes.ts with env-aware URL resolver using import.meta.env.DEV
-- [ ] **FED-07**: RemoteName type exported from remotes.ts derived from keyof typeof remoteUrls
+- [ ] **FED-07**: federation/remotes.ts exports a `RemoteName` type (initially `never`, extended as remotes are added) and an env-aware URL resolver that returns the correct remote URL for dev or production
 - [ ] **FED-08**: Commented example in remotes.ts showing local dev vs prod URL pattern
 
 ### Deployment
