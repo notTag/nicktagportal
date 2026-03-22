@@ -37,7 +37,7 @@ Plans:
 
 - [x] 01-01-PLAN.md -- Monorepo root config, shell app scaffold with Vue 3 + Router + Pinia + TailwindCSS v4, shared package scaffolds
 - [x] 01-02-PLAN.md -- UI components (TheHeader, TheFooter) in packages/ui, AppLayout wiring, feature flags, package documentation
-- [ ] 01-03-PLAN.md -- Dev tooling: ESLint v9 flat config, Prettier with Tailwind sorting, husky + lint-staged pre-commit hooks
+- [x] 01-03-PLAN.md -- Dev tooling: ESLint v9 flat config, Prettier with Tailwind sorting, husky + lint-staged pre-commit hooks
 
 ### Phase 2: Views and Federation Scaffolding
 
