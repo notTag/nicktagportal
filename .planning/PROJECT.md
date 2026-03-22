@@ -12,25 +12,26 @@ The shell app works as a polished, deployable personal site from day one — fed
 
 ### Validated
 
-(None yet — ship to validate)
+- [x] Bun monorepo with workspaces (apps/shell, packages/ui, packages/types) — Validated in Phase 1: Monorepo and Shell App Core
+- [x] Vue 3 shell app with Composition API and `<script setup>` throughout — Validated in Phase 1: Monorepo and Shell App Core
+- [x] Vue Router 4 with HTML5 history mode, lazy-loaded routes, 404 fallback — Validated in Phase 1: Monorepo and Shell App Core
+- [x] Pinia state management initialized with placeholder root store — Validated in Phase 1: Monorepo and Shell App Core
+- [x] TailwindCSS v4 with CSS-first config — Validated in Phase 1: Monorepo and Shell App Core
+- [x] TypeScript strict mode everywhere — no plain .js files — Validated in Phase 1: Monorepo and Shell App Core
+- [x] Shared packages (ui, types) scaffolded with minimal package.json and empty index.ts — Validated in Phase 1: Monorepo and Shell App Core
+- [x] Path aliases configured (@/\*, @ui/\*, @types/\*) — Validated in Phase 1: Monorepo and Shell App Core
+- [x] .gitignore covering node_modules, dist, .env\*, .DS_Store — Validated in Phase 1: Monorepo and Shell App Core
+- [x] TheHeader + TheFooter components in packages/ui with AppLayout wrapper — Validated in Phase 1: Monorepo and Shell App Core
+- [x] ESLint v9 flat config + Prettier + husky pre-commit hooks — Validated in Phase 1: Monorepo and Shell App Core
 
 ### Active
 
-- [ ] Bun monorepo with workspaces (apps/shell, packages/ui, packages/types)
-- [ ] Vue 3 shell app with Composition API and `<script setup>` throughout
-- [ ] Vite build with Module Federation configured (empty remotes, shared singletons)
-- [ ] Vue Router 4 with HTML5 history mode, lazy-loaded routes, 404 fallback
-- [ ] Pinia state management initialized with placeholder root store
-- [ ] TailwindCSS v4 with CSS-first config
-- [ ] TypeScript strict mode everywhere — no plain .js files
 - [ ] Polished HomeView with Nick's identity (Technical Lead → Director of Engineering)
 - [ ] PlaygroundView stubbed for future remote mounting
+- [ ] Vite build with Module Federation configured (empty remotes, shared singletons)
 - [ ] federation/remotes.ts with env-aware URL resolver pattern
 - [ ] GitHub Actions workflow deploying shell to GitHub Pages (custom domain: nicktag.tech)
 - [ ] CNAME file and 404.html SPA workaround for GitHub Pages
-- [ ] Shared packages (ui, types) scaffolded with minimal package.json and empty index.ts
-- [ ] Path aliases configured (@/_, @ui/_, @types/\*)
-- [ ] .gitignore covering node_modules, dist, .env\*, .DS_Store
 
 ### Out of Scope
 
@@ -91,4 +92,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-03-21 after initialization_
+_Last updated: 2026-03-21 — Phase 1 complete: monorepo scaffold, Vue 3 shell app, dev tooling_
