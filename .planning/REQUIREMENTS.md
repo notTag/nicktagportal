@@ -9,24 +9,24 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Monorepo Foundation
 
-- [ ] **MONO-01**: Bun workspace config with apps/ and packages/ directories in root package.json
-- [ ] **MONO-02**: Root scripts: dev, build, build:all, typecheck
-- [ ] **MONO-03**: TypeScript strict mode enabled across all packages
-- [ ] **MONO-04**: Path aliases configured (@/* → src/*, @ui/* → packages/ui/src/*, @types/* → packages/types/src/*)
-- [ ] **MONO-05**: packages/ui scaffolded with package.json, empty index.ts, and README explaining intended purpose
-- [ ] **MONO-06**: packages/types scaffolded with package.json, empty index.ts, and README explaining intended purpose
+- [x] **MONO-01**: Bun workspace config with apps/ and packages/ directories in root package.json
+- [x] **MONO-02**: Root scripts: dev, build, build:all, typecheck
+- [x] **MONO-03**: TypeScript strict mode enabled across all packages
+- [x] **MONO-04**: Path aliases configured (@/* → src/*, @ui/* → packages/ui/src/*, @types/* → packages/types/src/*)
+- [x] **MONO-05**: packages/ui scaffolded with package.json, empty index.ts, and README explaining intended purpose
+- [x] **MONO-06**: packages/types scaffolded with package.json, empty index.ts, and README explaining intended purpose
 
 ### Shell App
 
-- [ ] **SHELL-01**: Vue 3 app using Composition API with `<script setup>` throughout — no Options API
-- [ ] **SHELL-02**: Vue Router 4 with HTML5 history mode (`createWebHistory('/')`) and base path `/`
-- [ ] **SHELL-03**: Lazy-loaded routes for /playground and /playground/:remote
-- [ ] **SHELL-04**: Eager-loaded root route (/) for HomeView
-- [ ] **SHELL-05**: 404 catch-all fallback route
-- [ ] **SHELL-06**: Pinia initialized in main.ts with placeholder root store using Composition API style
-- [ ] **SHELL-07**: TailwindCSS v4 with CSS-first config (@import "tailwindcss"), no tailwind.config.js
+- [x] **SHELL-01**: Vue 3 app using Composition API with `<script setup>` throughout — no Options API
+- [x] **SHELL-02**: Vue Router 4 with HTML5 history mode (`createWebHistory('/')`) and base path `/`
+- [x] **SHELL-03**: Lazy-loaded routes for /playground and /playground/:remote
+- [x] **SHELL-04**: Eager-loaded root route (/) for HomeView
+- [x] **SHELL-05**: 404 catch-all fallback route
+- [x] **SHELL-06**: Pinia initialized in main.ts with placeholder root store using Composition API style
+- [x] **SHELL-07**: TailwindCSS v4 with CSS-first config (@import "tailwindcss"), no tailwind.config.js
 - [ ] **SHELL-08**: Components designed for reusability — extractable to packages/ui later
-- [ ] **SHELL-09**: All files TypeScript — no plain .js files anywhere
+- [x] **SHELL-09**: All files TypeScript — no plain .js files anywhere
 
 ### Views
 
@@ -107,21 +107,21 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| MONO-01 | Phase 1 | Pending |
-| MONO-02 | Phase 1 | Pending |
-| MONO-03 | Phase 1 | Pending |
-| MONO-04 | Phase 1 | Pending |
-| MONO-05 | Phase 1 | Pending |
-| MONO-06 | Phase 1 | Pending |
-| SHELL-01 | Phase 1 | Pending |
-| SHELL-02 | Phase 1 | Pending |
-| SHELL-03 | Phase 1 | Pending |
-| SHELL-04 | Phase 1 | Pending |
-| SHELL-05 | Phase 1 | Pending |
-| SHELL-06 | Phase 1 | Pending |
-| SHELL-07 | Phase 1 | Pending |
+| MONO-01 | Phase 1 | Complete |
+| MONO-02 | Phase 1 | Complete |
+| MONO-03 | Phase 1 | Complete |
+| MONO-04 | Phase 1 | Complete |
+| MONO-05 | Phase 1 | Complete |
+| MONO-06 | Phase 1 | Complete |
+| SHELL-01 | Phase 1 | Complete |
+| SHELL-02 | Phase 1 | Complete |
+| SHELL-03 | Phase 1 | Complete |
+| SHELL-04 | Phase 1 | Complete |
+| SHELL-05 | Phase 1 | Complete |
+| SHELL-06 | Phase 1 | Complete |
+| SHELL-07 | Phase 1 | Complete |
 | SHELL-08 | Phase 1 | Pending |
-| SHELL-09 | Phase 1 | Pending |
+| SHELL-09 | Phase 1 | Complete |
 | VIEW-01 | Phase 2 | Pending |
 | VIEW-02 | Phase 2 | Pending |
 | VIEW-03 | Phase 2 | Pending |
