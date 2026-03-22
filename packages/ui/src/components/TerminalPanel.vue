@@ -1,0 +1,107 @@
+<script setup lang="ts">
+import { ref, nextTick, onMounted } from 'vue'
+
+interface TerminalEntry {
+  input: string
+  output: string
+}
+
+interface CommandDef {
+  description: string
+  output: string
+}
+
+const { defaultOutput = [], commands = {} } = defineProps<{
+  defaultOutput?: TerminalEntry[]
+  commands?: Record<string, CommandDef>
+}>()
+
+const history = ref<TerminalEntry[]>([...defaultOutput])
+const currentInput = ref('')
+const historyEnd = ref<HTMLElement | null>(null)
+
+function executeCommand(input: string): string {
+  const [cmd, ...args] = input.trim().split(' ')
+  if (cmd === 'ls') {
+    return Object.entries(commands)
+      .map(([name, def]) => `${name} -- ${def.description}`)
+      .join('\n')
+  }
+  if (cmd === 'help' && args[0]) {
+    const target = commands[args[0]]
+    return target ? target.description : `Unknown command: ${args[0]}`
+  }
+  const entry = commands[cmd]
+  if (entry) return entry.output
+  return `command not found: ${cmd}. Type 'ls' to see available commands.`
+}
+
+async function handleSubmit() {
+  const input = currentInput.value.trim()
+  if (!input) return
+  const output = executeCommand(input)
+  history.value.push({ input, output })
+  currentInput.value = ''
+  await nextTick()
+  historyEnd.value?.scrollIntoView({ behavior: 'smooth' })
+}
+
+onMounted(() => {
+  historyEnd.value?.scrollIntoView()
+})
+</script>
+
+<template>
+  <div
+    class="border-border bg-surface-raised rounded-lg border p-8"
+    style="box-shadow: 0 0 15px rgba(114, 241, 184, 0.15)"
+  >
+    <div class="max-h-[400px] overflow-y-auto font-mono text-sm">
+      <div v-for="(entry, i) in history" :key="i" class="mb-3">
+        <div class="flex gap-2">
+          <span class="text-accent font-bold">$</span>
+          <span class="text-text">{{ entry.input }}</span>
+        </div>
+        <div
+          class="mt-1 ml-5 whitespace-pre-wrap"
+          :class="
+            entry.output.startsWith('command not found')
+              ? 'text-destructive'
+              : 'text-accent-cyan'
+          "
+        >
+          {{ entry.output }}
+        </div>
+      </div>
+      <div ref="historyEnd" />
+    </div>
+    <form
+      class="mt-4 flex items-center gap-2 font-mono text-sm"
+      @submit.prevent="handleSubmit"
+    >
+      <span class="text-accent font-bold">$</span>
+      <input
+        v-model="currentInput"
+        type="text"
+        class="text-text placeholder:text-text-muted flex-1 bg-transparent outline-none"
+        placeholder="Type a command..."
+        autofocus
+      />
+      <span
+        class="bg-accent-yellow inline-block h-4 w-2 animate-[blink_1s_step-end_infinite]"
+      />
+    </form>
+  </div>
+</template>
+
+<style>
+@keyframes blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+</style>
