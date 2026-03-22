@@ -32,7 +32,7 @@ Requirements for initial release. Each maps to roadmap phases.
 
 - [ ] **VIEW-01**: HomeView — polished landing with Nick's name, role (Technical Lead → Director of Engineering), site description as portfolio and tech playground
 - [ ] **VIEW-02**: HomeView — navigation to /playground route
-- [ ] **VIEW-03**: HomeView — styled with Tailwind, clean and minimal design
+- [x] **VIEW-03**: HomeView — styled with Tailwind, clean and minimal design
 - [ ] **VIEW-04**: PlaygroundView — heading and description of micro-frontend experimentation zone
 - [ ] **VIEW-05**: PlaygroundView — commented block showing how a future remote component would be dynamically imported and mounted
 - [ ] **VIEW-06**: PlaygroundView — accepts :remote route param for future remote mounting
@@ -124,7 +124,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SHELL-09    | Phase 1 | Complete |
 | VIEW-01     | Phase 2 | Pending  |
 | VIEW-02     | Phase 2 | Pending  |
-| VIEW-03     | Phase 2 | Pending  |
+| VIEW-03     | Phase 2 | Complete |
 | VIEW-04     | Phase 2 | Pending  |
 | VIEW-05     | Phase 2 | Pending  |
 | VIEW-06     | Phase 2 | Pending  |
