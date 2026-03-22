@@ -64,7 +64,7 @@ Terminal-specific typography:
 | Terminal input      | monospace (`font-mono`) | 14px (text-sm) | 400 (font-normal) |
 | Terminal prompt `$` | monospace (`font-mono`) | 14px (text-sm) | 700 (font-bold)   |
 
-Role trajectory ("Technical Lead -> Director of Engineering") uses 20px (text-xl), weight 600 (font-semibold), line-height 1.3. This is the only element at this size -- it bridges Display and Heading without adding a 5th tier.
+Role trajectory ("Technical Lead -> Director of Engineering") uses 24px (text-2xl), weight 700 (font-bold), line-height 1.2. It shares the Heading size class but reads as secondary to the 36px display name due to context (subtitle position beneath hero name).
 
 Source: Existing codebase (text-4xl, text-2xl, text-base, text-sm already in use). Claude's discretion for role trajectory size.
 
@@ -168,7 +168,7 @@ Components created or modified in this phase:
 | Property         | Value                                                        |
 | ---------------- | ------------------------------------------------------------ |
 | Layout           | Flex wrap, grouped by category                               |
-| Category heading | 14px semibold, accent-cyan color                             |
+| Category heading | 14px bold, accent-cyan color                                 |
 | Chip style       | `bg-surface-raised text-text text-sm px-3 py-1 rounded-full` |
 | Chip gap         | 8px (`gap-2`)                                                |
 | Category gap     | 24px (`gap-6`) between category groups                       |
