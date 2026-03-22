@@ -12,7 +12,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **MONO-01**: Bun workspace config with apps/ and packages/ directories in root package.json
 - [x] **MONO-02**: Root scripts: dev, build, build:all, typecheck
 - [x] **MONO-03**: TypeScript strict mode enabled across all packages
-- [x] **MONO-04**: Path aliases configured (@/* → src/*, @ui/* → packages/ui/src/*, @types/* → packages/types/src/*)
+- [x] **MONO-04**: Path aliases configured (@/_ → src/_, @ui/_ → packages/ui/src/_, @types/_ → packages/types/src/_)
 - [x] **MONO-05**: packages/ui scaffolded with package.json, empty index.ts, and README explaining intended purpose
 - [x] **MONO-06**: packages/types scaffolded with package.json, empty index.ts, and README explaining intended purpose
 
@@ -56,7 +56,7 @@ Requirements for initial release. Each maps to roadmap phases.
 - [ ] **DEPLOY-04**: Workflow comment noting replacement with AWS deployment when remotes are introduced
 - [ ] **DEPLOY-05**: CNAME file in public/ directory with nicktag.tech
 - [ ] **DEPLOY-06**: 404.html that copies index.html for SPA routing on GitHub Pages
-- [ ] **DEPLOY-07**: .gitignore covering node_modules, dist, .env*, .DS_Store
+- [ ] **DEPLOY-07**: .gitignore covering node_modules, dist, .env\*, .DS_Store
 
 ## v2 Requirements
 
@@ -90,65 +90,67 @@ Deferred to future release. Tracked but not in current roadmap.
 
 ## Out of Scope
 
-| Feature | Reason |
-|---------|--------|
-| SSR / SSG | Incompatible with GitHub Pages, unnecessary complexity for SPA |
-| CMS integration | Static content sufficient for portfolio |
-| Authentication / user accounts | Public portfolio, no user state needed |
-| Backend / API | Static site for now |
-| Complex animations (GSAP, etc.) | Adds bundle weight, not core to portfolio value |
-| Options API | Composition API with `<script setup>` throughout |
-| tailwind.config.js | TailwindCSS v4 uses CSS-first config exclusively |
-| Building actual remote apps | Scaffolding only — no remote apps until v2 |
+| Feature                         | Reason                                                         |
+| ------------------------------- | -------------------------------------------------------------- |
+| SSR / SSG                       | Incompatible with GitHub Pages, unnecessary complexity for SPA |
+| CMS integration                 | Static content sufficient for portfolio                        |
+| Authentication / user accounts  | Public portfolio, no user state needed                         |
+| Backend / API                   | Static site for now                                            |
+| Complex animations (GSAP, etc.) | Adds bundle weight, not core to portfolio value                |
+| Options API                     | Composition API with `<script setup>` throughout               |
+| tailwind.config.js              | TailwindCSS v4 uses CSS-first config exclusively               |
+| Building actual remote apps     | Scaffolding only — no remote apps until v2                     |
 
 ## Traceability
 
 Which phases cover which requirements. Updated during roadmap creation.
 
-| Requirement | Phase | Status |
-|-------------|-------|--------|
-| MONO-01 | Phase 1 | Complete |
-| MONO-02 | Phase 1 | Complete |
-| MONO-03 | Phase 1 | Complete |
-| MONO-04 | Phase 1 | Complete |
-| MONO-05 | Phase 1 | Complete |
-| MONO-06 | Phase 1 | Complete |
-| SHELL-01 | Phase 1 | Complete |
-| SHELL-02 | Phase 1 | Complete |
-| SHELL-03 | Phase 1 | Complete |
-| SHELL-04 | Phase 1 | Complete |
-| SHELL-05 | Phase 1 | Complete |
-| SHELL-06 | Phase 1 | Complete |
-| SHELL-07 | Phase 1 | Complete |
-| SHELL-08 | Phase 1 | Pending |
-| SHELL-09 | Phase 1 | Complete |
-| VIEW-01 | Phase 2 | Pending |
-| VIEW-02 | Phase 2 | Pending |
-| VIEW-03 | Phase 2 | Pending |
-| VIEW-04 | Phase 2 | Pending |
-| VIEW-05 | Phase 2 | Pending |
-| VIEW-06 | Phase 2 | Pending |
-| FED-01 | Phase 2 | Pending |
-| FED-02 | Phase 2 | Pending |
-| FED-03 | Phase 2 | Pending |
-| FED-04 | Phase 2 | Pending |
-| FED-05 | Phase 2 | Pending |
-| FED-06 | Phase 2 | Pending |
-| FED-07 | Phase 2 | Pending |
-| FED-08 | Phase 2 | Pending |
-| DEPLOY-01 | Phase 3 | Pending |
-| DEPLOY-02 | Phase 3 | Pending |
-| DEPLOY-03 | Phase 3 | Pending |
-| DEPLOY-04 | Phase 3 | Pending |
-| DEPLOY-05 | Phase 3 | Pending |
-| DEPLOY-06 | Phase 3 | Pending |
-| DEPLOY-07 | Phase 3 | Pending |
+| Requirement | Phase   | Status   |
+| ----------- | ------- | -------- |
+| MONO-01     | Phase 1 | Complete |
+| MONO-02     | Phase 1 | Complete |
+| MONO-03     | Phase 1 | Complete |
+| MONO-04     | Phase 1 | Complete |
+| MONO-05     | Phase 1 | Complete |
+| MONO-06     | Phase 1 | Complete |
+| SHELL-01    | Phase 1 | Complete |
+| SHELL-02    | Phase 1 | Complete |
+| SHELL-03    | Phase 1 | Complete |
+| SHELL-04    | Phase 1 | Complete |
+| SHELL-05    | Phase 1 | Complete |
+| SHELL-06    | Phase 1 | Complete |
+| SHELL-07    | Phase 1 | Complete |
+| SHELL-08    | Phase 1 | Pending  |
+| SHELL-09    | Phase 1 | Complete |
+| VIEW-01     | Phase 2 | Pending  |
+| VIEW-02     | Phase 2 | Pending  |
+| VIEW-03     | Phase 2 | Pending  |
+| VIEW-04     | Phase 2 | Pending  |
+| VIEW-05     | Phase 2 | Pending  |
+| VIEW-06     | Phase 2 | Pending  |
+| FED-01      | Phase 2 | Pending  |
+| FED-02      | Phase 2 | Pending  |
+| FED-03      | Phase 2 | Pending  |
+| FED-04      | Phase 2 | Pending  |
+| FED-05      | Phase 2 | Pending  |
+| FED-06      | Phase 2 | Pending  |
+| FED-07      | Phase 2 | Pending  |
+| FED-08      | Phase 2 | Pending  |
+| DEPLOY-01   | Phase 3 | Pending  |
+| DEPLOY-02   | Phase 3 | Pending  |
+| DEPLOY-03   | Phase 3 | Pending  |
+| DEPLOY-04   | Phase 3 | Pending  |
+| DEPLOY-05   | Phase 3 | Pending  |
+| DEPLOY-06   | Phase 3 | Pending  |
+| DEPLOY-07   | Phase 3 | Pending  |
 
 **Coverage:**
+
 - v1 requirements: 36 total
 - Mapped to phases: 36
 - Unmapped: 0
 
 ---
-*Requirements defined: 2026-03-21*
-*Last updated: 2026-03-21 after roadmap creation*
+
+_Requirements defined: 2026-03-21_
+_Last updated: 2026-03-21 after roadmap creation_

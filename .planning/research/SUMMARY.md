@@ -43,26 +43,28 @@ Based on research, suggested phase structure:
    - Avoids: CNAME deletion (Pitfall 8), routing breakage (Pitfall 3)
 
 **Phase ordering rationale:**
+
 - Foundation must come first (everything depends on the monorepo structure being correct)
 - Shell app core second because it is the deployable product and validates the build toolchain
 - Federation third because it layers on top of a working shell (and can be skipped if the plugin proves problematic)
 - Deployment last because it requires a working build to deploy, but should ship as soon as possible
 
 **Research flags for phases:**
+
 - Phase 3 (Federation): Needs a quick health check on @originjs/vite-plugin-federation at implementation time -- check GitHub for recent commits, Vite 6 compatibility, and open critical issues
 - Phase 2 (TailwindCSS v4): Reference only official v4 docs; ignore any resource mentioning tailwind.config.js
 - Phase 1 (Bun): Verify federation plugin compatibility with Bun's module resolution by running a test build early
 
 ## Confidence Assessment
 
-| Area | Confidence | Notes |
-|------|------------|-------|
-| Stack | HIGH | Vue 3, Vite 6, Pinia, Vue Router, TailwindCSS v4 are all stable, well-documented choices |
-| Stack (Federation plugin) | MEDIUM | @originjs/vite-plugin-federation maintenance status unverified; pragmatic choice for scaffolding scope |
-| Features | MEDIUM | Portfolio domain is well-understood; specific 2026 portfolio trends unverified |
-| Architecture | HIGH | Shell/remote pattern is canonical for Module Federation; monorepo structure is standard |
-| Pitfalls | HIGH | All documented pitfalls are well-established ecosystem issues; federation plugin risk is widely reported |
-| Deployment | HIGH | GitHub Pages SPA patterns and workarounds are thoroughly documented |
+| Area                      | Confidence | Notes                                                                                                    |
+| ------------------------- | ---------- | -------------------------------------------------------------------------------------------------------- |
+| Stack                     | HIGH       | Vue 3, Vite 6, Pinia, Vue Router, TailwindCSS v4 are all stable, well-documented choices                 |
+| Stack (Federation plugin) | MEDIUM     | @originjs/vite-plugin-federation maintenance status unverified; pragmatic choice for scaffolding scope   |
+| Features                  | MEDIUM     | Portfolio domain is well-understood; specific 2026 portfolio trends unverified                           |
+| Architecture              | HIGH       | Shell/remote pattern is canonical for Module Federation; monorepo structure is standard                  |
+| Pitfalls                  | HIGH       | All documented pitfalls are well-established ecosystem issues; federation plugin risk is widely reported |
+| Deployment                | HIGH       | GitHub Pages SPA patterns and workarounds are thoroughly documented                                      |
 
 ## Gaps to Address
 

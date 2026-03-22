@@ -17,17 +17,20 @@ Mistakes that cause rewrites or major issues.
 **Why it happens:** The plugin reverse-engineers Webpack 5 Module Federation semantics into Vite's Rollup-based build pipeline. This is fundamentally harder than native Webpack federation because Rollup chunks differently. The maintainer community is small.
 
 **Consequences:**
+
 - Shared singletons (vue, vue-router, pinia) load duplicate copies at runtime, causing "multiple Vue instances" errors that break reactivity, router injection, and Pinia stores.
 - Dev mode (vite dev) federation does not work the same as production builds -- you cannot reliably test federation locally without building first.
 - Upgrading Vite major versions breaks the plugin with no guaranteed fix timeline.
 
 **Warning signs:**
+
 - Console warnings about multiple Vue instances detected.
 - `inject()` returning undefined in child components after federation loads.
 - HMR stops working on federated remotes during development.
 - GitHub issues on the repo going unanswered for months.
 
 **Prevention:**
+
 - Pin exact Vite and plugin versions. Do not upgrade Vite without verifying plugin compatibility.
 - Always set `shared` config with `singleton: true` AND `requiredVersion` for vue, vue-router, and pinia.
 - Test federation with `vite build && vite preview` (not `vite dev`) to catch production discrepancies early.
@@ -49,16 +52,19 @@ Mistakes that cause rewrites or major issues.
 **Why it happens:** Bun workspaces (like all workspace managers) hoist dependencies but do not guarantee single-copy resolution. If `packages/ui` declares `vue: ^3.4.0` and `apps/shell` declares `vue: ^3.5.0`, Bun may install both. The `workspace:*` protocol helps but only if used consistently.
 
 **Consequences:**
+
 - TypeScript errors where types from one package are "incompatible" with the same types from another package (different resolution paths).
 - Runtime "multiple Vue instances" errors when the UI package bundles its own Vue copy.
 - Module Federation shared config becomes unreliable because the host and remote disagree on the actual version.
 
 **Warning signs:**
+
 - TypeScript errors like `Type 'Ref<string>' is not assignable to type 'Ref<string>'` (same type, different packages).
 - `node_modules` containing multiple copies of vue in nested directories.
 - Build output containing duplicate framework code (check bundle size).
 
 **Prevention:**
+
 - Declare vue, vue-router, pinia, and typescript as `peerDependencies` in `packages/ui` and `packages/types`. Only `apps/shell` should have them as direct `dependencies`.
 - Use `workspace:*` protocol for all internal package references.
 - Add a single root-level `package.json` with shared dependency versions. Bun workspaces hoist from the root.
@@ -80,15 +86,18 @@ Mistakes that cause rewrites or major issues.
 **Why it happens:** GitHub Pages is a static file server with no rewrite rules. It cannot redirect all paths to `index.html` like a configured Nginx or CloudFront distribution.
 
 **Consequences:**
+
 - Every route except `/` returns a 404 page on direct access or browser refresh.
 - Search engine crawlers cannot index sub-routes.
 - Shared links to specific pages break.
 
 **Warning signs:**
+
 - Works perfectly in `vite preview` (which handles SPA fallback) but breaks when deployed.
 - Users report "page not found" when bookmarking or sharing URLs.
 
 **Prevention:**
+
 - Copy `index.html` to `404.html` in the build output. GitHub Pages serves `404.html` for all missing paths, which bootstraps the SPA and lets Vue Router handle the route. This is the standard workaround.
 - In the GitHub Actions deploy workflow: `cp dist/index.html dist/404.html` after build.
 - Add a CNAME file to the dist output for custom domain preservation.
@@ -112,16 +121,19 @@ Mistakes that cause rewrites or major issues.
 **Why it happens:** v4 was a major rewrite. The CSS-first approach is fundamentally different from the JS config file. Tooling and ecosystem need time to catch up.
 
 **Consequences:**
+
 - VS Code Tailwind IntelliSense plugin may not autocomplete custom theme values defined in CSS.
 - Copy-pasting Tailwind examples from blogs/docs that assume v3 config syntax will not work.
 - Third-party component libraries (if added later) may ship their own `tailwind.config.js` that conflicts.
 
 **Warning signs:**
+
 - IntelliSense stops suggesting classes after adding custom theme tokens.
 - Classes that should work based on v3 docs produce no styles.
 - Build warnings about unrecognized at-rules (`@theme`, `@plugin`).
 
 **Prevention:**
+
 - Use `@import "tailwindcss"` as the single entry point in your main CSS file -- not the old `@tailwind base/components/utilities` directives.
 - Define all custom design tokens inside `@theme { }` blocks in CSS.
 - Install the latest Tailwind CSS IntelliSense VS Code extension (ensure v4 support).
@@ -143,16 +155,19 @@ Mistakes that cause rewrites or major issues.
 **Why it happens:** Bun uses its own module resolution algorithm and binary lockfile format. While largely npm-compatible, edge cases exist -- especially with plugins that use `require.resolve()`, manipulate `node_modules` paths, or assume a specific hoisting structure.
 
 **Consequences:**
+
 - `vite build` fails with "Cannot find module" for dependencies that exist but are hoisted differently.
 - Plugin configuration that works in CI (if CI uses npm) but fails locally (Bun).
 - Phantom dependencies: code imports a package that is not in `package.json` but is hoisted from another workspace package. Works locally, fails in CI or on clean install.
 
 **Warning signs:**
+
 - Build works after `bun install` but fails in CI.
 - Mysterious "module not found" errors for installed packages.
 - Different behavior between `bun run build` and `npx vite build`.
 
 **Prevention:**
+
 - Use Bun everywhere: local dev, CI, and all scripts. Do not mix package managers.
 - In GitHub Actions, use `oven-sh/setup-bun` action to install Bun and run `bun install` (not `npm ci`).
 - If a Vite plugin fails under Bun, check if it uses `require.resolve()` internals -- this is the most common incompatibility point.
@@ -173,14 +188,17 @@ Mistakes that cause rewrites or major issues.
 **Why it happens:** Module Federation relies on dynamic `import()` and top-level `await` for loading remote containers at runtime. These are esnext features.
 
 **Consequences:**
+
 - White screen on older browsers with no helpful error message.
 - Portfolio site unreachable for visitors on older devices (relevant for a professional portfolio where recruiter/hiring manager browser versions are unknown).
 
 **Warning signs:**
+
 - Works on your machine (latest Chrome) but users report blank pages.
 - No JavaScript errors in modern browsers but `SyntaxError` in older ones.
 
 **Prevention:**
+
 - Accept the tradeoff: esnext is required for federation. Document the browser support baseline.
 - For the shell app (Phase 1, no active federation), consider building with `build.target: 'es2020'` initially and only switching to `esnext` when federation is actively used. ES2020 covers 95%+ of browsers.
 - Add a `<noscript>` fallback and a minimal browser check script that shows a "please update your browser" message.
@@ -201,15 +219,18 @@ Mistakes that cause rewrites or major issues.
 **Why it happens:** TypeScript and Vite have independent module resolution systems. TypeScript uses `paths` in `tsconfig.json`; Vite uses `resolve.alias` in `vite.config.ts`. Neither reads the other's config by default.
 
 **Consequences:**
+
 - TypeScript shows no errors but Vite build fails (or vice versa).
 - IDE autocomplete works but runtime imports fail.
 - Refactoring moves a file but only updates one alias configuration.
 
 **Warning signs:**
+
 - Red squiggles in IDE but build succeeds (or opposite).
 - `Cannot find module '@ui/components'` at build time but TypeScript reports no errors.
 
 **Prevention:**
+
 - Use `vite-tsconfig-paths` plugin to have Vite automatically read aliases from `tsconfig.json`. This eliminates the need to maintain `resolve.alias` separately.
 - Alternatively, define aliases in `vite.config.ts` and use TypeScript `paths` that mirror them exactly. Add a comment in both files cross-referencing the other.
 - For the monorepo: use TypeScript project references or a root `tsconfig.json` with `paths` pointing to workspace packages, and extend it in each app/package.
@@ -232,6 +253,7 @@ Mistakes that cause rewrites or major issues.
 **Why it happens:** The CNAME file lives in the GitHub Pages branch root, not in the source code. Deploying fresh output overwrites it.
 
 **Prevention:**
+
 - Place a `CNAME` file containing `nicktag.tech` in the `public/` directory of the shell app. Vite copies `public/` contents to `dist/` during build, ensuring CNAME survives every deploy.
 - Verify the CNAME file is in the build output: `ls dist/CNAME` after build.
 
@@ -250,14 +272,17 @@ Mistakes that cause rewrites or major issues.
 **Why it happens:** Module Federation loads remotes asynchronously. If a remote's module-level code (outside `setup()`) accesses a Pinia store, it may execute before the host's `app.use(pinia)` call.
 
 **Consequences:**
+
 - Runtime error: `getActivePinia was called with no active Pinia`.
 - Works in development (no federation) but breaks in production (with federation).
 
 **Warning signs:**
+
 - Pinia errors only when loading federated remotes.
 - Store works in the shell but not in remotes.
 
 **Prevention:**
+
 - Never access Pinia stores at module level (top-level `const store = useMyStore()`). Always access stores inside `setup()`, `onMounted()`, or event handlers.
 - Configure Pinia as a shared singleton in the federation config with `singleton: true, eager: true`.
 - In the shell's bootstrap, ensure `app.use(pinia)` runs before any remote component is loaded or mounted.
@@ -277,11 +302,13 @@ Mistakes that cause rewrites or major issues.
 **Why it happens:** GitHub Pages has no configurable rewrite rules. The 404.html mechanism is a cosmetic fallback, not a proper SPA redirect.
 
 **Consequences:**
+
 - Google Search Console reports all sub-routes as 404 errors, harming SEO.
 - Uptime monitoring tools may report the site as "down" if they check sub-routes.
 - Social media link previews may not work for sub-routes (some crawlers refuse to render 404 pages).
 
 **Prevention:**
+
 - Accept this limitation for Phase 1. The site is a single-page portfolio -- SEO on sub-routes is not critical yet.
 - For critical SEO needs, use a meta-redirect approach or pre-rendering. But for this project, the planned AWS migration (CloudFront + S3 with proper SPA rewrite rules) is the real fix.
 - Ensure the HomeView (`/`) is the primary shared URL. Avoid sharing direct links to sub-routes in professional contexts until AWS migration.
@@ -296,15 +323,15 @@ Mistakes that cause rewrites or major issues.
 
 ## Phase-Specific Warnings
 
-| Phase Topic | Likely Pitfall | Mitigation |
-|-------------|---------------|------------|
-| Monorepo scaffolding | Dependency version skew (Pitfall 2) | Use peerDependencies in packages, `resolve.dedupe` in Vite |
-| Vite + Federation config | Plugin instability (Pitfall 1) | Configure but do not depend on; shell must work standalone |
-| TailwindCSS v4 setup | v3/v4 config confusion (Pitfall 4) | Use `@import "tailwindcss"` only, no `tailwind.config.js` |
-| Path aliases | Triple-sync problem (Pitfall 7) | Use `vite-tsconfig-paths` or strict mirroring |
-| GitHub Pages deploy | CNAME deletion (Pitfall 8), 404 routing (Pitfall 3) | CNAME in `public/`, `cp index.html 404.html` in CI |
-| Build target | esnext browser compat (Pitfall 6) | Use es2020 until federation is active |
-| Adding remotes (future) | Pinia init order (Pitfall 9), shared dep duplication (Pitfall 1) | Enforce store-in-setup pattern, re-evaluate plugin health |
+| Phase Topic              | Likely Pitfall                                                   | Mitigation                                                 |
+| ------------------------ | ---------------------------------------------------------------- | ---------------------------------------------------------- |
+| Monorepo scaffolding     | Dependency version skew (Pitfall 2)                              | Use peerDependencies in packages, `resolve.dedupe` in Vite |
+| Vite + Federation config | Plugin instability (Pitfall 1)                                   | Configure but do not depend on; shell must work standalone |
+| TailwindCSS v4 setup     | v3/v4 config confusion (Pitfall 4)                               | Use `@import "tailwindcss"` only, no `tailwind.config.js`  |
+| Path aliases             | Triple-sync problem (Pitfall 7)                                  | Use `vite-tsconfig-paths` or strict mirroring              |
+| GitHub Pages deploy      | CNAME deletion (Pitfall 8), 404 routing (Pitfall 3)              | CNAME in `public/`, `cp index.html 404.html` in CI         |
+| Build target             | esnext browser compat (Pitfall 6)                                | Use es2020 until federation is active                      |
+| Adding remotes (future)  | Pinia init order (Pitfall 9), shared dep duplication (Pitfall 1) | Enforce store-in-setup pattern, re-evaluate plugin health  |
 
 ---
 

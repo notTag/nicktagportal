@@ -29,8 +29,8 @@ The shell app works as a polished, deployable personal site from day one — fed
 - [ ] GitHub Actions workflow deploying shell to GitHub Pages (custom domain: nicktag.tech)
 - [ ] CNAME file and 404.html SPA workaround for GitHub Pages
 - [ ] Shared packages (ui, types) scaffolded with minimal package.json and empty index.ts
-- [ ] Path aliases configured (@/*, @ui/*, @types/*)
-- [ ] .gitignore covering node_modules, dist, .env*, .DS_Store
+- [ ] Path aliases configured (@/_, @ui/_, @types/\*)
+- [ ] .gitignore covering node_modules, dist, .env\*, .DS_Store
 
 ### Out of Scope
 
@@ -61,20 +61,21 @@ Router uses HTML5 history mode with clean URLs. GitHub Pages requires a 404.html
 
 ## Key Decisions
 
-| Decision | Rationale | Outcome |
-|----------|-----------|---------|
-| Bun over npm/pnpm | Faster installs and native workspace support | — Pending |
-| Module Federation via @originjs/vite-plugin-federation | Vite-native federation without webpack | — Pending |
-| TailwindCSS v4 CSS-first config | No JS config file, cleaner setup | — Pending |
-| HTML5 history mode over hash | Clean URLs; 404.html workaround acceptable since migrating to AWS | — Pending |
-| GitHub Pages initially | Quick deploy for single app; AWS when remotes need proper hosting | — Pending |
-| Monorepo scaffolded upfront | Federation plumbing ready when remotes are added, avoids restructuring later | — Pending |
+| Decision                                               | Rationale                                                                    | Outcome   |
+| ------------------------------------------------------ | ---------------------------------------------------------------------------- | --------- |
+| Bun over npm/pnpm                                      | Faster installs and native workspace support                                 | — Pending |
+| Module Federation via @originjs/vite-plugin-federation | Vite-native federation without webpack                                       | — Pending |
+| TailwindCSS v4 CSS-first config                        | No JS config file, cleaner setup                                             | — Pending |
+| HTML5 history mode over hash                           | Clean URLs; 404.html workaround acceptable since migrating to AWS            | — Pending |
+| GitHub Pages initially                                 | Quick deploy for single app; AWS when remotes need proper hosting            | — Pending |
+| Monorepo scaffolded upfront                            | Federation plumbing ready when remotes are added, avoids restructuring later | — Pending |
 
 ## Evolution
 
 This document evolves at phase transitions and milestone boundaries.
 
 **After each phase transition** (via `/gsd:transition`):
+
 1. Requirements invalidated? → Move to Out of Scope with reason
 2. Requirements validated? → Move to Validated with phase reference
 3. New requirements emerged? → Add to Active
@@ -82,10 +83,12 @@ This document evolves at phase transitions and milestone boundaries.
 5. "What This Is" still accurate? → Update if drifted
 
 **After each milestone** (via `/gsd:complete-milestone`):
+
 1. Full review of all sections
 2. Core Value check — still the right priority?
 3. Audit Out of Scope — reasons still valid?
 4. Update Context with current state
 
 ---
-*Last updated: 2026-03-21 after initialization*
+
+_Last updated: 2026-03-21 after initialization_

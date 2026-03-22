@@ -11,5 +11,11 @@
       "@types/*": ["../../packages/types/src/*"]
     }
   },
-  "include": ["env.d.ts", "src/**/*", "src/**/*.vue", "../../packages/ui/src/**/*", "../../packages/types/src/**/*"]
+  "include": [
+    "env.d.ts",
+    "src/**/*",
+    "src/**/*.vue",
+    "../../packages/ui/src/**/*",
+    "../../packages/types/src/**/*"
+  ]
 }

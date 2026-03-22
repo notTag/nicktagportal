@@ -5,11 +5,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import { resolve } from 'path'
 
 export default defineConfig({
-  plugins: [
-    vue(),
-    tailwindcss(),
-    vueDevTools(),
-  ],
+  plugins: [vue(), tailwindcss(), vueDevTools()],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),

@@ -52,20 +52,20 @@
 
 ### Component Boundaries
 
-| Component | Responsibility | Communicates With | Location |
-|-----------|---------------|-------------------|----------|
-| **Shell (Host)** | Top-level layout, navigation, router orchestration, federation host config, mounts remotes into designated DOM regions | All remotes (loads them), packages/ui, packages/types | `apps/shell` |
-| **Remote Apps** | Self-contained feature domains; expose Vue components or micro-apps via Module Federation `exposes` config | Shell (mounted by), packages/ui, packages/types | `apps/<name>` |
-| **packages/ui** | Shared Vue component library (buttons, cards, layout primitives) consumed by shell and all remotes | Shell and all remotes import from it | `packages/ui` |
-| **packages/types** | Shared TypeScript interfaces, type definitions, and constants | Shell and all remotes import from it | `packages/types` |
-| **Shared Singletons** | vue, vue-router, pinia -- single instances shared at runtime via federation `shared` config to prevent duplicate Vue instances | All apps at runtime | Defined in each app's vite federation config |
+| Component             | Responsibility                                                                                                                 | Communicates With                                     | Location                                     |
+| --------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------- | -------------------------------------------- |
+| **Shell (Host)**      | Top-level layout, navigation, router orchestration, federation host config, mounts remotes into designated DOM regions         | All remotes (loads them), packages/ui, packages/types | `apps/shell`                                 |
+| **Remote Apps**       | Self-contained feature domains; expose Vue components or micro-apps via Module Federation `exposes` config                     | Shell (mounted by), packages/ui, packages/types       | `apps/<name>`                                |
+| **packages/ui**       | Shared Vue component library (buttons, cards, layout primitives) consumed by shell and all remotes                             | Shell and all remotes import from it                  | `packages/ui`                                |
+| **packages/types**    | Shared TypeScript interfaces, type definitions, and constants                                                                  | Shell and all remotes import from it                  | `packages/types`                             |
+| **Shared Singletons** | vue, vue-router, pinia -- single instances shared at runtime via federation `shared` config to prevent duplicate Vue instances | All apps at runtime                                   | Defined in each app's vite federation config |
 
 ### Boundary Rules
 
 1. **Shell owns the router.** Remotes do NOT create their own Vue Router instances. They receive route context from the shell or export route definitions that the shell registers.
 2. **Shell owns the Pinia root store.** Remotes can define their own Pinia store modules, but the Pinia instance is the shell's singleton.
 3. **Remotes are independently deployable.** Each remote has its own `vite.config.ts` with `federation({ name, exposes, shared })`. Remotes produce a `remoteEntry.js` that the shell fetches at runtime.
-4. **packages/* are build-time dependencies.** They are NOT federated at runtime. They are imported normally via monorepo workspace resolution (Bun workspaces). This keeps the shared UI library simple and avoids federation overhead for common components.
+4. **packages/\* are build-time dependencies.** They are NOT federated at runtime. They are imported normally via monorepo workspace resolution (Bun workspaces). This keeps the shared UI library simple and avoids federation overhead for common components.
 5. **Remotes never import from other remotes.** Communication between remotes goes through the shell (via Pinia stores, events, or router state).
 
 ---
@@ -130,6 +130,7 @@ Shell Pinia Store (root)
 ```
 
 **State sharing rules:**
+
 - Shell exposes a root Pinia instance via the shared singleton mechanism.
 - Remotes register their own store modules when they mount (e.g., `usePlaygroundStore()`).
 - Cross-remote communication happens through shared Pinia state or custom events on a shared event bus, NOT direct imports.
@@ -150,9 +151,9 @@ Shell owns the Vue Router instance
 
 **Two routing strategies for remotes:**
 
-| Strategy | How It Works | When to Use |
-|----------|-------------|-------------|
-| **Shell-managed routes** | Shell defines all routes; remote exports plain Vue components | Simple remotes, single-view features |
+| Strategy                      | How It Works                                                             | When to Use                              |
+| ----------------------------- | ------------------------------------------------------------------------ | ---------------------------------------- |
+| **Shell-managed routes**      | Shell defines all routes; remote exports plain Vue components            | Simple remotes, single-view features     |
 | **Remote-managed sub-routes** | Remote exports a route config; shell registers it under a catch-all path | Complex remotes with internal navigation |
 
 **Recommendation for this project:** Start with shell-managed routes. The shell defines a catch-all route per remote (e.g., `/playground/:pathMatch(.*)*`) and the remote handles its own internal routing within that prefix. This keeps the shell in control while giving remotes autonomy for their sub-navigation.
@@ -231,14 +232,15 @@ nicktagportal/
 **When:** Always -- this is the backbone of how the shell finds remotes.
 
 **Example:**
+
 ```typescript
 // apps/shell/src/federation/remotes.ts
 
 interface RemoteConfig {
-  name: string;
-  devUrl: string;
-  prodUrl: string;
-  entry: string; // typically "remoteEntry.js"
+  name: string
+  devUrl: string
+  prodUrl: string
+  entry: string // typically "remoteEntry.js"
 }
 
 const remotes: Record<string, RemoteConfig> = {
@@ -248,14 +250,14 @@ const remotes: Record<string, RemoteConfig> = {
     prodUrl: 'https://playground.nicktag.tech',
     entry: 'assets/remoteEntry.js',
   },
-};
+}
 
 export function getRemoteUrl(remoteName: string): string {
-  const config = remotes[remoteName];
-  if (!config) throw new Error(`Unknown remote: ${remoteName}`);
+  const config = remotes[remoteName]
+  if (!config) throw new Error(`Unknown remote: ${remoteName}`)
 
-  const baseUrl = import.meta.env.DEV ? config.devUrl : config.prodUrl;
-  return `${baseUrl}/${config.entry}`;
+  const baseUrl = import.meta.env.DEV ? config.devUrl : config.prodUrl
+  return `${baseUrl}/${config.entry}`
 }
 ```
 
@@ -268,6 +270,7 @@ export function getRemoteUrl(remoteName: string): string {
 **When:** Every remote mount point in the shell.
 
 **Example:**
+
 ```typescript
 // apps/shell/src/views/PlaygroundView.vue
 <script setup lang="ts">
@@ -298,9 +301,10 @@ const PlaygroundApp = defineAsyncComponent({
 **When:** In every app's `vite.config.ts` federation config.
 
 **Example:**
+
 ```typescript
 // vite.config.ts (both shell and remotes)
-import federation from '@nicktag/vite-plugin-federation';
+import federation from '@nicktag/vite-plugin-federation'
 
 export default defineConfig({
   plugins: [
@@ -316,11 +320,11 @@ export default defineConfig({
     }),
   ],
   build: {
-    target: 'esnext',       // Required for Module Federation
-    minify: false,          // Recommended during development for debugging
-    cssCodeSplit: false,    // Avoids CSS loading issues with federation
+    target: 'esnext', // Required for Module Federation
+    minify: false, // Recommended during development for debugging
+    cssCodeSplit: false, // Avoids CSS loading issues with federation
   },
-});
+})
 ```
 
 ### Pattern 4: Remote Bootstrap Dual-Mode
@@ -330,15 +334,16 @@ export default defineConfig({
 **When:** Every remote app needs this for developer experience.
 
 **Example:**
+
 ```typescript
 // apps/playground/src/main.ts (standalone entry)
-import { createApp } from 'vue';
-import { createPinia } from 'pinia';
-import App from './App.vue';
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import App from './App.vue'
 
-const app = createApp(App);
-app.use(createPinia());
-app.mount('#app');
+const app = createApp(App)
+app.use(createPinia())
+app.mount('#app')
 
 // apps/playground/src/App.vue (exposed to federation)
 // This is the component exposed via federation -- it does NOT create its own app instance.
@@ -352,12 +357,13 @@ app.mount('#app');
 **When:** Always -- without this, `import('playground/App')` has type `any`.
 
 **Example:**
+
 ```typescript
 // apps/shell/src/federation/types.d.ts
 declare module 'playground/App' {
-  import { DefineComponent } from 'vue';
-  const component: DefineComponent<{}, {}, any>;
-  export default component;
+  import { DefineComponent } from 'vue'
+  const component: DefineComponent<{}, {}, any>
+  export default component
 }
 
 // Repeat for each remote and each exposed module
@@ -389,7 +395,7 @@ declare module 'playground/App' {
 
 **Why bad:** Adds runtime overhead, introduces version negotiation complexity, and creates failure modes (what if the federated package server is down?). These packages change rarely and are small -- bundle them into each app.
 
-**Instead:** Keep packages/* as normal monorepo workspace dependencies. Each app bundles its own copy at build time. The slight duplication is negligible compared to the reliability gain.
+**Instead:** Keep packages/\* as normal monorepo workspace dependencies. Each app bundles its own copy at build time. The slight duplication is negligible compared to the reliability gain.
 
 ### Anti-Pattern 4: Remote-Owned Top-Level Navigation
 
@@ -411,14 +417,14 @@ declare module 'playground/App' {
 
 ## Scalability Considerations
 
-| Concern | 1 App (Shell Only) | 3-5 Remotes | 10+ Remotes |
-|---------|---------------------|-------------|-------------|
-| **Build time** | Fast (single Vite build) | Moderate (parallel builds per app) | Need build orchestration (Turborepo or Bun scripts) |
-| **Dev experience** | `bun dev` in shell | Run shell + 1-2 remotes locally, others mocked | Service mesh dev tooling, mock remotes for unrelated work |
-| **Deployment** | Single GitHub Pages deploy | Per-app deploys to separate origins (AWS S3 buckets) | CI/CD matrix builds, canary deploys per remote |
-| **Shared dep versions** | Trivial | Pin versions in root package.json | Automated dependency sync tooling |
-| **CSS conflicts** | None | TailwindCSS shared config in packages/ui | CSS Module scoping or Shadow DOM isolation |
-| **Type safety** | Full monorepo TS | Shared types package covers interfaces | Contract testing for remote APIs |
+| Concern                 | 1 App (Shell Only)         | 3-5 Remotes                                          | 10+ Remotes                                               |
+| ----------------------- | -------------------------- | ---------------------------------------------------- | --------------------------------------------------------- |
+| **Build time**          | Fast (single Vite build)   | Moderate (parallel builds per app)                   | Need build orchestration (Turborepo or Bun scripts)       |
+| **Dev experience**      | `bun dev` in shell         | Run shell + 1-2 remotes locally, others mocked       | Service mesh dev tooling, mock remotes for unrelated work |
+| **Deployment**          | Single GitHub Pages deploy | Per-app deploys to separate origins (AWS S3 buckets) | CI/CD matrix builds, canary deploys per remote            |
+| **Shared dep versions** | Trivial                    | Pin versions in root package.json                    | Automated dependency sync tooling                         |
+| **CSS conflicts**       | None                       | TailwindCSS shared config in packages/ui             | CSS Module scoping or Shadow DOM isolation                |
+| **Type safety**         | Full monorepo TS           | Shared types package covers interfaces               | Contract testing for remote APIs                          |
 
 ---
 
@@ -450,6 +456,7 @@ Phase 4+: Additional Remotes (repeat the pattern)
 ```
 
 **Build order rationale:**
+
 - packages/types first because everything depends on shared types.
 - packages/ui second because it establishes the design system before any app uses it.
 - Shell third because it is the deployable product from day one (per project requirements).
@@ -457,6 +464,7 @@ Phase 4+: Additional Remotes (repeat the pattern)
 - First remote last because it validates the entire federation architecture end-to-end.
 
 **Critical dependency chain:**
+
 ```
 packages/types --> packages/ui --> apps/shell --> federation config --> apps/playground
        ^                                  |
@@ -509,6 +517,7 @@ blog.nicktag.tech -------> CloudFront --> S3 (blog remote)
 - Training data on Module Federation concepts from webpack 5 applied to Vite (MEDIUM confidence -- Vite federation is less mature than webpack's)
 
 **Verification needed:**
+
 - @originjs/vite-plugin-federation current API surface and version compatibility with Vite 6+
 - Whether dynamic remote loading is supported (vs. build-time static remotes only)
 - TailwindCSS v4 CSS-first config interaction with federation CSS code splitting

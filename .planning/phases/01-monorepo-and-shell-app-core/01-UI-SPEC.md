@@ -15,13 +15,13 @@ created: 2026-03-21
 
 ## Design System
 
-| Property | Value |
-|----------|-------|
-| Tool | none (Vue 3 project -- shadcn not applicable) |
-| Preset | not applicable |
-| Component library | none -- hand-authored Vue 3 SFCs in `packages/ui` |
-| Icon library | none (no icons needed in Phase 1 stubs) |
-| Font | Inter via Google Fonts CDN (`<link>` in `index.html`) |
+| Property          | Value                                                 |
+| ----------------- | ----------------------------------------------------- |
+| Tool              | none (Vue 3 project -- shadcn not applicable)         |
+| Preset            | not applicable                                        |
+| Component library | none -- hand-authored Vue 3 SFCs in `packages/ui`     |
+| Icon library      | none (no icons needed in Phase 1 stubs)               |
+| Font              | Inter via Google Fonts CDN (`<link>` in `index.html`) |
 
 **Source:** CLAUDE.md stack constraints, RESEARCH.md Pattern 3 (TailwindCSS v4 @theme example uses Inter). No design system library exists for Vue 3 + TailwindCSS v4 that matches the project's federation architecture. All components are hand-authored SFCs per D-09.
 
@@ -31,15 +31,15 @@ created: 2026-03-21
 
 Declared values (must be multiples of 4):
 
-| Token | Value | Usage |
-|-------|-------|-------|
-| xs | 4px | Icon gaps, inline element margins |
-| sm | 8px | Compact element spacing, nav link gaps |
-| md | 16px | Default element padding, card padding |
-| lg | 24px | Section internal padding |
-| xl | 32px | Layout gaps between major sections |
-| 2xl | 48px | Major section vertical breaks |
-| 3xl | 64px | Page-level top/bottom padding |
+| Token | Value | Usage                                  |
+| ----- | ----- | -------------------------------------- |
+| xs    | 4px   | Icon gaps, inline element margins      |
+| sm    | 8px   | Compact element spacing, nav link gaps |
+| md    | 16px  | Default element padding, card padding  |
+| lg    | 24px  | Section internal padding               |
+| xl    | 32px  | Layout gaps between major sections     |
+| 2xl   | 48px  | Major section vertical breaks          |
+| 3xl   | 64px  | Page-level top/bottom padding          |
 
 Exceptions: none
 
@@ -49,14 +49,15 @@ Exceptions: none
 
 ## Typography
 
-| Role | Size | Weight | Line Height | Tailwind Class |
-|------|------|--------|-------------|----------------|
-| Body | 16px | 400 (regular) | 1.5 | `text-base font-normal leading-relaxed` |
-| Label | 14px | 400 (regular) | 1.4 | `text-sm font-normal leading-snug` |
-| Heading | 24px | 700 (bold) | 1.2 | `text-2xl font-bold leading-tight` |
-| Display | 36px | 700 (bold) | 1.1 | `text-4xl font-bold leading-none` |
+| Role    | Size | Weight        | Line Height | Tailwind Class                          |
+| ------- | ---- | ------------- | ----------- | --------------------------------------- |
+| Body    | 16px | 400 (regular) | 1.5         | `text-base font-normal leading-relaxed` |
+| Label   | 14px | 400 (regular) | 1.4         | `text-sm font-normal leading-snug`      |
+| Heading | 24px | 700 (bold)    | 1.2         | `text-2xl font-bold leading-tight`      |
+| Display | 36px | 700 (bold)    | 1.1         | `text-4xl font-bold leading-none`       |
 
 **Font stack in `@theme`:**
+
 ```css
 @theme {
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
@@ -64,8 +65,12 @@ Exceptions: none
 ```
 
 **Google Fonts `<link>`:** Load only weights 400 and 700:
+
 ```html
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap"
+  rel="stylesheet"
+/>
 ```
 
 **Weight constraint:** Only use weights 400 and 700. No other weights (300, 500, 600, 900) are permitted. Use `font-normal` (400) for body text, labels, and secondary content. Use `font-bold` (700) for headings, display text, and emphasis.
@@ -76,24 +81,26 @@ Exceptions: none
 
 Phase 1 establishes the dark-themed foundation. All colors defined as CSS custom properties in `@theme` for TailwindCSS v4.
 
-| Role | Value | Tailwind Token | Usage |
-|------|-------|----------------|-------|
-| Dominant (60%) | `#0f172a` (slate-900) | `--color-surface` | Page background, main surfaces |
-| Secondary (30%) | `#1e293b` (slate-800) | `--color-surface-raised` | Header, footer, card backgrounds |
-| Accent (10%) | `#3b82f6` (blue-500) | `--color-accent` | See reserved list below |
-| Destructive | `#ef4444` (red-500) | `--color-destructive` | Destructive actions only (none in Phase 1) |
-| Text primary | `#f1f5f9` (slate-100) | `--color-text` | Body text, headings |
-| Text secondary | `#94a3b8` (slate-400) | `--color-text-muted` | Placeholder text, footer text, secondary labels |
-| Border | `#334155` (slate-700) | `--color-border` | Dividers, card borders |
+| Role            | Value                 | Tailwind Token           | Usage                                           |
+| --------------- | --------------------- | ------------------------ | ----------------------------------------------- |
+| Dominant (60%)  | `#0f172a` (slate-900) | `--color-surface`        | Page background, main surfaces                  |
+| Secondary (30%) | `#1e293b` (slate-800) | `--color-surface-raised` | Header, footer, card backgrounds                |
+| Accent (10%)    | `#3b82f6` (blue-500)  | `--color-accent`         | See reserved list below                         |
+| Destructive     | `#ef4444` (red-500)   | `--color-destructive`    | Destructive actions only (none in Phase 1)      |
+| Text primary    | `#f1f5f9` (slate-100) | `--color-text`           | Body text, headings                             |
+| Text secondary  | `#94a3b8` (slate-400) | `--color-text-muted`     | Placeholder text, footer text, secondary labels |
+| Border          | `#334155` (slate-700) | `--color-border`         | Dividers, card borders                          |
 
 **Accent reserved for:**
+
 - Active/current navigation link underline or indicator
 - Primary CTA buttons (none in Phase 1 stubs, but the token is established)
 - Hover state on nav links
 
 **@theme block for `main.css`:**
+
 ```css
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
@@ -183,24 +190,25 @@ Phase 1 establishes the dark-themed foundation. All colors defined as CSS custom
 
 ## Copywriting Contract
 
-| Element | Copy |
-|---------|------|
-| Site name (header) | nick-site |
-| Nav link 1 | Home |
-| Nav link 2 | Playground |
-| Home hero name | Nick |
-| Home hero title | Technical Lead |
-| Home hero description | Portfolio and tech playground |
-| Playground heading | Playground |
-| Playground description | Micro-frontend experimentation zone |
-| Playground empty state | No remotes loaded |
-| 404 error code | 404 |
-| 404 heading | Page not found |
-| 404 body | The page you're looking for doesn't exist or has been moved. |
-| 404 action (link) | Go back home |
-| Footer text | Built with Vue 3 + Vite |
+| Element                | Copy                                                         |
+| ---------------------- | ------------------------------------------------------------ |
+| Site name (header)     | nick-site                                                    |
+| Nav link 1             | Home                                                         |
+| Nav link 2             | Playground                                                   |
+| Home hero name         | Nick                                                         |
+| Home hero title        | Technical Lead                                               |
+| Home hero description  | Portfolio and tech playground                                |
+| Playground heading     | Playground                                                   |
+| Playground description | Micro-frontend experimentation zone                          |
+| Playground empty state | No remotes loaded                                            |
+| 404 error code         | 404                                                          |
+| 404 heading            | Page not found                                               |
+| 404 body               | The page you're looking for doesn't exist or has been moved. |
+| 404 action (link)      | Go back home                                                 |
+| Footer text            | Built with Vue 3 + Vite                                      |
 
 **Phase 1 has no:**
+
 - Primary CTA buttons (stubs only -- CTAs come in Phase 2)
 - Destructive actions (no delete/remove operations)
 - Error states beyond 404 (no data loading, no forms)
@@ -211,19 +219,23 @@ Phase 1 establishes the dark-themed foundation. All colors defined as CSS custom
 ## Interaction Contracts
 
 ### Navigation
+
 - Header nav links use `<RouterLink>` for client-side navigation (no full page reload)
 - Active route indicated by accent color on the nav link text
 - Hover state on nav links: transition from `text-text-muted` to `text-accent` with `transition-colors` (150ms default)
 
 ### 404 Recovery
+
 - "Go back home" link navigates to `/` via `<RouterLink>`
 - No automatic redirect -- user must click
 
 ### Transitions
+
 - No page transition animations in Phase 1 (deferred to Phase 2 polish)
 - CSS `transition-colors` on interactive elements (nav links, 404 action link) for hover feedback
 
 ### Responsive Behavior
+
 - Content max-width: `max-w-5xl` (1024px) centered with `mx-auto`
 - Horizontal padding: `px-4` (16px) on all content containers
 - Header and footer are full-width background, content within is max-width constrained
@@ -234,9 +246,9 @@ Phase 1 establishes the dark-themed foundation. All colors defined as CSS custom
 
 ## Registry Safety
 
-| Registry | Blocks Used | Safety Gate |
-|----------|-------------|-------------|
-| none | not applicable | not applicable |
+| Registry | Blocks Used    | Safety Gate    |
+| -------- | -------------- | -------------- |
+| none     | not applicable | not applicable |
 
 No component registries are used. All components are hand-authored Vue 3 SFCs. shadcn is React-only and not applicable to this Vue 3 project.
 
