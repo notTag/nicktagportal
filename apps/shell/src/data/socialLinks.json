@@ -1,0 +1,29 @@
+{
+  "orientation": "center",
+  "links": [
+    {
+      "type": "github",
+      "label": "GitHub",
+      "url": "https://github.com/nicktag",
+      "icon": "github"
+    },
+    {
+      "type": "linkedin",
+      "label": "LinkedIn",
+      "url": "https://linkedin.com/in/nicktag",
+      "icon": "linkedin"
+    },
+    {
+      "type": "email",
+      "label": "Email",
+      "url": "mailto:nick@nicktag.tech",
+      "icon": "email"
+    },
+    {
+      "type": "phone",
+      "label": "Phone",
+      "url": "tel:+1XXXXXXXXXX",
+      "icon": "phone"
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "whoami": {
+    "description": "Display current user",
+    "output": "Nick Tagliasacchi"
+  },
+  "ls": {
+    "description": "List available commands",
+    "output": "auto-generated from this file"
+  },
+  "help": {
+    "description": "Show help for a command",
+    "output": "Usage: help <command>"
+  }
+}
