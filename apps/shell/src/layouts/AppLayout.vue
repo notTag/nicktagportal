@@ -4,7 +4,7 @@ import { features } from '@/config/features'
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col bg-surface text-text">
+  <div class="bg-surface text-text flex min-h-screen flex-col">
     <TheHeader />
     <main class="flex-1">
       <RouterView />
