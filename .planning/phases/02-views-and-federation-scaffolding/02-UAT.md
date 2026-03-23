@@ -1,9 +1,9 @@
 ---
-status: diagnosed
+status: resolved
 phase: 02-views-and-federation-scaffolding
 source: [02-01-SUMMARY.md, 02-02-SUMMARY.md, 02-03-SUMMARY.md]
 started: 2026-03-22T22:15:00Z
-updated: 2026-03-22T22:35:00Z
+updated: 2026-03-23T00:00:00Z
 ---
 
 ## Current Test
@@ -67,7 +67,7 @@ blocked: 0
 ## Gaps
 
 - truth: "Footer social links have correct URLs, hover turns pink, text is readable, footer is sticky"
-  status: failed
+  status: resolved
   reason: "User reported: Hovering links do not turn it pink/magenta. The github link redirects to nicktag instead of notTag. Linkedin redirects to /nicktag instead of https://www.linkedin.com/in/nicktagliasacchi/. Email should be: nick.tagliasacchi@gmail.com. Phone should be: 6319026516. The foot text is too small and should be sticky and always visible at the bottom of the page."
   severity: major
   test: 2
@@ -85,7 +85,7 @@ blocked: 0
   - "sticky bottom-0 on footer in AppLayout.vue"
 
 - truth: "Header has proper spacing between brand name and nav links; CLI has its own nav tab between Home and Playground"
-  status: failed
+  status: resolved
   reason: "User reported: The header bar needs proper spacing between the links and name. The cli on the main page should have its own dedicated tab between Home and Playground in the header."
   severity: major
   test: 3
@@ -104,7 +104,7 @@ blocked: 0
   - "gap-6/gap-8 on nav in TheHeader.vue"
 
 - truth: "Terminal: Enter key doesn't scroll page; ls shows directory contents; no help command; error text is red"
-  status: failed
+  status: resolved
   reason: "User reported: after pressing enter on the cli the page scrolls down when it should stay where it is. ls lists available commands but it shouldn't. ls should display the contents of the current directory. remove the help command. badcmd displays an error but the text is not red."
   severity: major
   test: 4
@@ -123,7 +123,7 @@ blocked: 0
   - "Confirm main.css imported in main.ts for error color"
 
 - truth: "Skills section uses responsive multi-column grid layout based on screen size"
-  status: failed
+  status: resolved
   reason: "User reported: The skills section is there. Let's reformat it so that the section is n columns wide. The n number of columns is determined by the screen size."
   severity: minor
   test: 5
