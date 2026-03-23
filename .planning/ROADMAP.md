@@ -102,6 +102,16 @@ Plans:
 
 - [ ] TBD (promote with /gsd:review-backlog when ready)
 
+### Phase 999.3: Header Spacing Fix (BACKLOG)
+
+**Goal:** Diagnose and fix the visual spacing between the brand name ("Nick Tagliasacchi") and the nav links in TheHeader. gap-16 was applied but the spacing still looks wrong in the browser — root cause unknown (possible Tailwind v4 scanning issue, layout conflict, or incorrect approach).
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
+
 ### Phase 999.2: Skills Animated Diamond Wall (BACKLOG)
 
 **Goal:** A dedicated `/skills` route showing an animated scrolling wall of technology icon diamonds moving slowly at an angle (diamond grid). Icons sourced from techSkills.json (already created in Phase 2). Full visual tech showcase.
