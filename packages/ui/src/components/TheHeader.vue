@@ -8,13 +8,20 @@ import { RouterLink } from 'vue-router'
       class="mx-auto flex h-16 w-full max-w-5xl items-center justify-between px-4"
     >
       <span class="text-text text-base font-bold">Nick Tagliasacchi</span>
-      <nav class="flex items-center gap-2">
+      <nav class="flex items-center gap-6">
         <RouterLink
           to="/"
           class="text-text-muted hover:text-accent text-sm font-normal transition-colors"
           exact-active-class="!text-accent"
         >
           Home
+        </RouterLink>
+        <RouterLink
+          to="/cli"
+          class="text-text-muted hover:text-accent text-sm font-normal transition-colors"
+          active-class="!text-accent"
+        >
+          CLI
         </RouterLink>
         <RouterLink
           to="/playground"
