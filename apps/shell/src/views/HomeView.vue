@@ -1,10 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import { TerminalPanel } from '@ui'
 import profile from '@/data/profile.json'
-import cliDefaultOutput from '@/data/cliDefaultOutput.json'
-import cliCommands from '@/data/cliCommands.json'
 import techSkills from '@/data/techSkills.json'
 
 const skillsByCategory = computed(() => {
@@ -38,13 +35,9 @@ const skillsByCategory = computed(() => {
     </RouterLink>
   </section>
 
-  <section class="mx-auto max-w-3xl px-4 py-12">
-    <TerminalPanel :default-output="cliDefaultOutput" :commands="cliCommands" />
-  </section>
-
   <section class="mx-auto max-w-4xl px-4 pt-12 pb-16">
     <h2 class="text-text mb-6 text-2xl font-bold">Tech Stack</h2>
-    <div class="flex flex-col gap-6">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
       <div v-for="(skills, category) in skillsByCategory" :key="category">
         <h3 class="text-accent-cyan mb-2 text-sm font-bold">
           {{ category }}
