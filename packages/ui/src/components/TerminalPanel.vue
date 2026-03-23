@@ -21,19 +21,10 @@ const currentInput = ref('')
 const historyEnd = ref<HTMLElement | null>(null)
 
 function executeCommand(input: string): string {
-  const [cmd, ...args] = input.trim().split(' ')
-  if (cmd === 'ls') {
-    return Object.entries(commands)
-      .map(([name, def]) => `${name} -- ${def.description}`)
-      .join('\n')
-  }
-  if (cmd === 'help' && args[0]) {
-    const target = commands[args[0]]
-    return target ? target.description : `Unknown command: ${args[0]}`
-  }
+  const [cmd] = input.trim().split(' ')
   const entry = commands[cmd]
   if (entry) return entry.output
-  return `command not found: ${cmd}. Type 'ls' to see available commands.`
+  return `command not found: ${cmd}`
 }
 
 async function handleSubmit() {
@@ -43,11 +34,11 @@ async function handleSubmit() {
   history.value.push({ input, output })
   currentInput.value = ''
   await nextTick()
-  historyEnd.value?.scrollIntoView({ behavior: 'smooth' })
+  historyEnd.value?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
 }
 
 onMounted(() => {
-  historyEnd.value?.scrollIntoView()
+  historyEnd.value?.scrollIntoView({ block: 'nearest' })
 })
 </script>
 

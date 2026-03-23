@@ -4,11 +4,7 @@
     "output": "Nick Tagliasacchi"
   },
   "ls": {
-    "description": "List available commands",
-    "output": "auto-generated from this file"
-  },
-  "help": {
-    "description": "Show help for a command",
-    "output": "Usage: help <command>"
+    "description": "List directory contents",
+    "output": "home/\nplayground/\nskills/"
   }
 }
