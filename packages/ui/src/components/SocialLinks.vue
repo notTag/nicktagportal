@@ -32,7 +32,7 @@ const orientationClass = computed(() => {
       :href="link.url"
       target="_blank"
       rel="noopener noreferrer"
-      class="text-text-muted hover:text-accent text-sm transition-colors"
+      class="text-text-muted hover:text-accent text-base transition-colors"
     >
       {{ link.label }}
     </a>

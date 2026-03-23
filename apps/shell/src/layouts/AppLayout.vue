@@ -7,9 +7,9 @@ type Orientation = 'left' | 'right' | 'center' | 'none'
 </script>
 
 <template>
-  <div class="bg-surface text-text flex min-h-screen flex-col">
+  <div class="bg-surface text-text flex h-screen flex-col">
     <TheHeader />
-    <main class="flex-1">
+    <main class="flex-1 overflow-y-auto">
       <RouterView />
     </main>
     <TheFooter v-if="features.showFooter">

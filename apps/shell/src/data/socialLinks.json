@@ -4,25 +4,25 @@
     {
       "type": "github",
       "label": "GitHub",
-      "url": "https://github.com/nicktag",
+      "url": "https://github.com/notTag",
       "icon": "github"
     },
     {
       "type": "linkedin",
       "label": "LinkedIn",
-      "url": "https://linkedin.com/in/nicktag",
+      "url": "https://www.linkedin.com/in/nicktagliasacchi/",
       "icon": "linkedin"
     },
     {
       "type": "email",
       "label": "Email",
-      "url": "mailto:nick@nicktag.tech",
+      "url": "mailto:nick.tagliasacchi@gmail.com",
       "icon": "email"
     },
     {
       "type": "phone",
       "label": "Phone",
-      "url": "tel:+1XXXXXXXXXX",
+      "url": "tel:+16319026516",
       "icon": "phone"
     }
   ]
