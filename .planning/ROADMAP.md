@@ -60,7 +60,7 @@ Plans:
 - [x] 02-03-PLAN.md -- Module Federation plugin install, vite.config.ts configuration, federation/remotes.ts URL resolver
 - [x] 02-04-PLAN.md -- [GAP CLOSURE] Fix footer social link URLs, hover color, text size, and sticky positioning
 - [x] 02-05-PLAN.md -- [GAP CLOSURE] Fix terminal scroll, ls output, remove help command, red error text
-- [ ] 02-06-PLAN.md -- [GAP CLOSURE] Header spacing, CLI nav tab + /cli route, responsive skills grid
+- [x] 02-06-PLAN.md -- [GAP CLOSURE] Header spacing, CLI nav tab + /cli route, responsive skills grid
 
 ### Phase 3: Deployment Pipeline
 
