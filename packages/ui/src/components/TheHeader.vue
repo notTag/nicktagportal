@@ -4,7 +4,7 @@ import { RouterLink } from 'vue-router'
 
 <template>
   <header class="bg-surface-raised border-border border-b">
-    <div class="mx-auto flex h-16 w-full max-w-5xl items-center gap-8 px-4">
+    <div class="mx-auto flex h-16 w-full max-w-5xl items-center gap-16 px-4">
       <span class="text-text text-base font-bold">Nick Tagliasacchi</span>
       <nav class="flex items-center gap-6">
         <RouterLink
