@@ -30,6 +30,10 @@ The shell app works as a polished, deployable personal site from day one — fed
 - [x] PlaygroundView stubbed for future remote mounting — Validated in Phase 2: Views and Federation Scaffolding
 - [x] Vite build with Module Federation configured (empty remotes, shared singletons) — Validated in Phase 2: Views and Federation Scaffolding
 - [x] federation/remotes.ts with env-aware URL resolver pattern — Validated in Phase 2: Views and Federation Scaffolding
+- [x] CliView with interactive terminal (ls shows directories, no help command, red errors, no scroll jump) — Validated in Phase 2 gap closure
+- [x] Footer social links with correct URLs, readable text, sticky positioning — Validated in Phase 2 gap closure
+- [x] Header nav with proper spacing (gap-6) and 3 tabs: Home, CLI, Playground — Validated in Phase 2 gap closure
+- [x] Skills section with responsive multi-column grid — Validated in Phase 2 gap closure
 
 ### Active
 
@@ -95,4 +99,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-03-22 — Phase 2 complete: SynthWave '84 theme, HomeView, PlaygroundView, federation scaffolding_
+_Last updated: 2026-03-23 — Phase 2 gap closure complete: CLI tab, correct social links, terminal fixes, responsive skills grid_
