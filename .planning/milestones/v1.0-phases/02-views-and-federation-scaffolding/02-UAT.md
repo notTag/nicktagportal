@@ -71,7 +71,7 @@ blocked: 0
   reason: "User reported: Hovering links do not turn it pink/magenta. The github link redirects to nicktag instead of notTag. Linkedin redirects to /nicktag instead of https://www.linkedin.com/in/nicktagliasacchi/. Email should be: nick.tagliasacchi@gmail.com. Phone should be: 6319026516. The foot text is too small and should be sticky and always visible at the bottom of the page."
   severity: major
   test: 2
-  root_cause: "socialLinks.json has wrong placeholder URLs. hover:text-accent not rendering because packages/ui/src/\*_/_.vue not in Tailwind content scan. SocialLinks uses text-sm (too small). AppLayout footer not sticky."
+  root*cause: "socialLinks.json has wrong placeholder URLs. hover:text-accent not rendering because packages/ui/src/\**/\_.vue not in Tailwind content scan. SocialLinks uses text-sm (too small). AppLayout footer not sticky."
   artifacts:
   - path: "apps/shell/src/data/socialLinks.json"
     issue: "Wrong URLs for GitHub (nicktag → notTag), LinkedIn, email, phone"

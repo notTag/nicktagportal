@@ -1,0 +1,21 @@
+# Milestones
+
+## v1.0 MVP (Shipped: 2026-03-24)
+
+**Phases completed:** 4 phases, 11 plans, 19 tasks
+
+**Key accomplishments:**
+
+- Bun monorepo with Vue 3 shell app, TailwindCSS v4 dark theme, Vue Router 4 (eager/lazy/404), Pinia setup store, and TypeScript strict mode across all packages
+- TheHeader/TheFooter components in packages/ui with RouterLink navigation, AppLayout wrapper, feature flags, and package documentation
+- ESLint v9 flat config with Vue 3 + TypeScript rules, Prettier with Tailwind class sorting, and husky + lint-staged pre-commit hooks enforcing code quality on every commit
+- SynthWave '84 palette with 9 color tokens, 5 JSON data files driving views, and SocialLinks component wired into footer via slot pattern
+- Interactive terminal CLI with command registry, polished HomeView with hero/terminal/skills sections, and PlaygroundView with federation comment block
+- Module Federation plugin installed with shared vue/vue-router/pinia singletons and env-aware URL resolver for future remote micro-frontends
+- Corrected social link URLs, increased text to readable size, and made footer sticky at viewport bottom
+- Fixed terminal scroll, ls directory output, removed help command, ensured red error text via @source directive
+- Dedicated /cli route with TerminalPanel, header nav with 3 links at gap-6 spacing, and responsive multi-column skills grid
+- GitHub Actions CI/CD deploying shell app to GitHub Pages at nicktag.tech with production gate and rollback capability
+- Fixed Tailwind v4 @source directive path resolving to wrong directory, restoring gap-16, border-b, and border-t classes in build output
+
+---

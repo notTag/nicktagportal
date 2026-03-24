@@ -26,11 +26,11 @@ key-files:
     - apps/shell/src/views/HomeView.vue
 
 key-decisions:
-  - "CliView uses same max-w-3xl container as original terminal section for visual consistency"
-  - "Skills grid uses 4-tier responsive breakpoints: 1col mobile, 2col sm, 3col lg, 4col xl"
+  - 'CliView uses same max-w-3xl container as original terminal section for visual consistency'
+  - 'Skills grid uses 4-tier responsive breakpoints: 1col mobile, 2col sm, 3col lg, 4col xl'
 
 patterns-established:
-  - "Feature extraction: move feature to dedicated view rather than embedding in HomeView"
+  - 'Feature extraction: move feature to dedicated view rather than embedding in HomeView'
 
 requirements-completed: [VIEW-01, VIEW-02, VIEW-05]
 
@@ -51,6 +51,7 @@ completed: 2026-03-23
 - **Files modified:** 4
 
 ## Accomplishments
+
 - Created CliView.vue as a dedicated view hosting the TerminalPanel with same data props
 - Added /cli route to router between home and playground routes (lazy-loaded)
 - Updated TheHeader nav with CLI link between Home and Playground, widened gap from gap-2 to gap-6
@@ -65,12 +66,14 @@ Each task was committed atomically:
 2. **Task 2: Remove terminal from HomeView, make skills grid responsive** - `4217cea` (refactor)
 
 ## Files Created/Modified
+
 - `apps/shell/src/views/CliView.vue` - New dedicated CLI view with TerminalPanel component
 - `apps/shell/src/router/index.ts` - Added /cli lazy-loaded route
 - `packages/ui/src/components/TheHeader.vue` - Added CLI nav link, widened gap to gap-6
 - `apps/shell/src/views/HomeView.vue` - Removed terminal section, responsive skills grid
 
 ## Decisions Made
+
 - CliView uses same max-w-3xl container width as the original terminal section for visual consistency
 - Skills grid uses 4-tier responsive breakpoints (1/2/3/4 columns) matching standard Tailwind breakpoints
 - No new dependencies needed -- all components and data files already existed
@@ -80,15 +83,19 @@ Each task was committed atomically:
 None - plan executed exactly as written.
 
 ## Issues Encountered
+
 None
 
 ## User Setup Required
+
 None - no external service configuration required.
 
 ## Known Stubs
+
 None - all views render real data from existing JSON data files.
 
 ## Next Phase Readiness
+
 - UAT tests 3 and 5 should now pass with proper header spacing and responsive skills grid
 - CLI terminal is accessible via dedicated /cli route
 - All three nav links (Home, CLI, Playground) visible and functional
@@ -99,5 +106,6 @@ None - all views render real data from existing JSON data files.
 - Both commit hashes (24c0dd9, 4217cea) found in git log
 
 ---
-*Phase: 02-views-and-federation-scaffolding*
-*Completed: 2026-03-23*
+
+_Phase: 02-views-and-federation-scaffolding_
+_Completed: 2026-03-23_

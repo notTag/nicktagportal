@@ -2,7 +2,7 @@
 
 ## What This Is
 
-A personal website and micro-frontend playground for Nick — a professional portfolio and tech experimentation platform. Built as a Bun monorepo with a Vue 3 shell app that hosts micro-frontends via Module Federation. The shell app is the only app built initially; the monorepo structure and federation plumbing are scaffolded upfront for future remotes.
+A personal portfolio and micro-frontend playground live at nicktag.tech — built as a Bun monorepo with a Vue 3 shell app featuring a SynthWave '84 themed UI, interactive terminal CLI, and Module Federation scaffolding ready for future remotes. Deployed via GitHub Actions to GitHub Pages with automated CI/CD and rollback capability.
 
 ## Core Value
 
@@ -34,11 +34,13 @@ The shell app works as a polished, deployable personal site from day one — fed
 - [x] Footer social links with correct URLs, readable text, sticky positioning — Validated in Phase 2 gap closure
 - [x] Header nav with proper spacing (gap-6) and 3 tabs: Home, CLI, Playground — Validated in Phase 2 gap closure
 - [x] Skills section with responsive multi-column grid — Validated in Phase 2 gap closure
+- [x] GitHub Actions CI/CD deploying shell to GitHub Pages with production gate and rollback — Validated in Phase 3: Deployment Pipeline
+- [x] CNAME file and 404.html SPA workaround for GitHub Pages — Validated in Phase 3: Deployment Pipeline
+- [x] Tailwind v4 @source path for packages/ui classes in build output — Validated in Phase 4: Header Spacing Fix
 
 ### Active
 
-- [ ] GitHub Actions workflow deploying shell to GitHub Pages (custom domain: nicktag.tech)
-- [ ] CNAME file and 404.html SPA workaround for GitHub Pages
+(None — v1.0 shipped. Next requirements defined in v1.1 milestone.)
 
 ### Out of Scope
 
@@ -48,6 +50,16 @@ The shell app works as a polished, deployable personal site from day one — fed
 - Backend or API integration — static site for now
 - Authentication or user accounts — public portfolio
 - CI testing pipeline — deploy workflow only for now
+
+## Current State
+
+**v1.0 shipped 2026-03-24** — Live at nicktag.tech
+
+- 4 phases, 11 plans, 19 tasks executed over 4 days
+- ~19,500 lines of TypeScript/Vue across 145 files
+- Tech stack: Vue 3, Vite 6, TailwindCSS v4, Pinia, Vue Router 4, Bun
+- SynthWave '84 themed dark UI with interactive terminal, skills grid, and federation scaffolding
+- CI/CD: GitHub Actions → GitHub Pages with production approval gate and rollback workflow
 
 ## Context
 
@@ -69,14 +81,17 @@ Router uses HTML5 history mode with clean URLs. GitHub Pages requires a 404.html
 
 ## Key Decisions
 
-| Decision                                               | Rationale                                                                    | Outcome   |
-| ------------------------------------------------------ | ---------------------------------------------------------------------------- | --------- |
-| Bun over npm/pnpm                                      | Faster installs and native workspace support                                 | — Pending |
-| Module Federation via @originjs/vite-plugin-federation | Vite-native federation without webpack                                       | — Pending |
-| TailwindCSS v4 CSS-first config                        | No JS config file, cleaner setup                                             | — Pending |
-| HTML5 history mode over hash                           | Clean URLs; 404.html workaround acceptable since migrating to AWS            | — Pending |
-| GitHub Pages initially                                 | Quick deploy for single app; AWS when remotes need proper hosting            | — Pending |
-| Monorepo scaffolded upfront                            | Federation plumbing ready when remotes are added, avoids restructuring later | — Pending |
+| Decision                                               | Rationale                                                                    | Outcome    |
+| ------------------------------------------------------ | ---------------------------------------------------------------------------- | ---------- |
+| Bun over npm/pnpm                                      | Faster installs and native workspace support                                 | ✓ Good     |
+| Module Federation via @originjs/vite-plugin-federation | Vite-native federation without webpack                                       | ✓ Good     |
+| TailwindCSS v4 CSS-first config                        | No JS config file, cleaner setup                                             | ⚠️ Revisit |
+| HTML5 history mode over hash                           | Clean URLs; 404.html workaround acceptable since migrating to AWS            | ✓ Good     |
+| GitHub Pages initially                                 | Quick deploy for single app; AWS when remotes need proper hosting            | ✓ Good     |
+| Monorepo scaffolded upfront                            | Federation plumbing ready when remotes are added, avoids restructuring later | ✓ Good     |
+| SynthWave '84 as default theme                         | Distinctive visual identity; CSS custom properties ready for theme swapping  | ✓ Good     |
+| h-screen + overflow-y-auto for sticky footer           | Simpler than position:sticky, works with current layout                      | ✓ Good     |
+| @source directive for packages/ui scanning             | Required for Tailwind v4 to detect utility classes in monorepo packages      | ⚠️ Revisit |
 
 ## Evolution
 
@@ -99,4 +114,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-03-23 — Phase 2 gap closure complete: CLI tab, correct social links, terminal fixes, responsive skills grid_
+_Last updated: 2026-03-24 after v1.0 milestone_

@@ -17,8 +17,22 @@ affects: [aws-migration, micro-frontend-remotes]
 
 # Tech tracking
 tech-stack:
-  added: [github-actions, actions/checkout@v4, oven-sh/setup-bun@v2, actions/upload-pages-artifact@v3, actions/deploy-pages@v4, actions/download-artifact@v4]
-  patterns: [two-job-deploy-pattern, environment-protection-gate, concurrency-group, cross-run-artifact-download]
+  added:
+    [
+      github-actions,
+      actions/checkout@v4,
+      oven-sh/setup-bun@v2,
+      actions/upload-pages-artifact@v3,
+      actions/deploy-pages@v4,
+      actions/download-artifact@v4,
+    ]
+  patterns:
+    [
+      two-job-deploy-pattern,
+      environment-protection-gate,
+      concurrency-group,
+      cross-run-artifact-download,
+    ]
 
 key-files:
   created:
@@ -29,17 +43,18 @@ key-files:
     - apps/shell/vite.config.ts
 
 key-decisions:
-  - "Permissions scoped to deploy job only (not workflow-level) to follow least-privilege"
-  - "bun install --frozen-lockfile for reproducible CI builds"
-  - "Concurrency group pages-${{ github.ref }} prevents overlapping deploys"
-  - "404.html generated via cp at build time (not committed) per D-08"
+  - 'Permissions scoped to deploy job only (not workflow-level) to follow least-privilege'
+  - 'bun install --frozen-lockfile for reproducible CI builds'
+  - 'Concurrency group pages-${{ github.ref }} prevents overlapping deploys'
+  - '404.html generated via cp at build time (not committed) per D-08'
 
 patterns-established:
-  - "Two-job deploy: build (auto) + deploy (gated via environment protection)"
-  - "Rollback via re-deploying prior run artifact by run_id"
-  - "CNAME in public/ directory for Vite automatic copy to dist/"
+  - 'Two-job deploy: build (auto) + deploy (gated via environment protection)'
+  - 'Rollback via re-deploying prior run artifact by run_id'
+  - 'CNAME in public/ directory for Vite automatic copy to dist/'
 
-requirements-completed: [DEPLOY-01, DEPLOY-02, DEPLOY-03, DEPLOY-04, DEPLOY-05, DEPLOY-06, DEPLOY-07]
+requirements-completed:
+  [DEPLOY-01, DEPLOY-02, DEPLOY-03, DEPLOY-04, DEPLOY-05, DEPLOY-06, DEPLOY-07]
 
 # Metrics
 duration: 1min
@@ -59,6 +74,7 @@ completed: 2026-03-24
 - **Files modified:** 4
 
 ## Accomplishments
+
 - Deploy workflow triggers on push to main, builds with Bun, creates 404.html for SPA routing, and deploys through production environment gate
 - Rollback workflow accepts a prior run_id via workflow_dispatch to re-deploy a previous artifact
 - CNAME file ensures nicktag.tech custom domain persists across deploys
@@ -72,12 +88,14 @@ Each task was committed atomically:
 2. **Task 2: Create deploy.yml and rollback.yml GitHub Actions workflows** - `979404d` (feat)
 
 ## Files Created/Modified
+
 - `.github/workflows/deploy.yml` - CI/CD pipeline: build on push to main, deploy to GitHub Pages with production gate
 - `.github/workflows/rollback.yml` - Manual rollback workflow via workflow_dispatch with run_id input
 - `apps/shell/public/CNAME` - Custom domain file (nicktag.tech) copied to dist/ by Vite at build time
 - `apps/shell/vite.config.ts` - Updated minify comment to "re-enable after confirming live"
 
 ## Decisions Made
+
 - Permissions scoped to deploy job only (not workflow-level) to follow least-privilege principle
 - Used `bun install --frozen-lockfile` for reproducible CI builds
 - Added concurrency group `pages-${{ github.ref }}` to prevent overlapping deploys
@@ -101,6 +119,7 @@ None - plan executed exactly as written.
 None - all files are production-ready with no placeholder content.
 
 ## Next Phase Readiness
+
 - Deployment pipeline is fully configured and ready for first deploy after user completes GitHub Pages and DNS setup
 - AWS migration path is documented via TODO comment; when micro-frontend remotes are introduced, replace deploy.yml with CloudFront+S3 workflow
 
@@ -109,5 +128,6 @@ None - all files are production-ready with no placeholder content.
 All 5 files verified present. Both task commits (186e075, 979404d) confirmed in git log.
 
 ---
-*Phase: 03-deployment-pipeline*
-*Completed: 2026-03-24*
+
+_Phase: 03-deployment-pipeline_
+_Completed: 2026-03-24_
