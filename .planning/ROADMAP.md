@@ -134,3 +134,13 @@ Plans:
 Plans:
 
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.5: Tree Shaking (BACKLOG)
+
+**Goal:** Audit and optimize bundle output with tree shaking. Ensure dead code elimination is working correctly across the monorepo — verify Vite/Rollup tree shaking config, check for side-effect barriers in shared packages, and measure bundle size before/after.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
