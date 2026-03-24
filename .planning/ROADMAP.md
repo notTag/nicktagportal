@@ -89,7 +89,7 @@ Plans:
 
 Plans:
 
-- [ ] 04-01-PLAN.md -- Fix @source path depth (3 levels to 4 levels), verify build output contains packages/ui classes, visual checkpoint
+- [x] 04-01-PLAN.md -- Fix @source path depth (3 levels to 4 levels), verify build output contains packages/ui classes, visual checkpoint
 
 ## Progress
 
