@@ -73,11 +73,11 @@ Plans:
 2. Visiting `https://nicktag.tech` in a browser loads the HomeView with all styles rendered correctly
 3. Directly navigating to `https://nicktag.tech/playground` (not via client-side routing) loads the PlaygroundView instead of a 404 error
 4. The repository has a `.gitignore` covering `node_modules`, `dist`, `.env*`, and `.DS_Store`, and a `CNAME` file with `nicktag.tech` in the shell's public directory
-   **Plans**: TBD
+   **Plans**: 1 plan
 
 Plans:
 
-- [ ] 03-01: TBD
+- [ ] 03-01-PLAN.md -- GitHub Actions deploy + rollback workflows, CNAME file, vite config comment update, .gitignore verification
 
 ## Progress
 
@@ -87,7 +87,7 @@ Phases execute in numeric order: 1 -> 2 -> 3
 | Phase                               | Plans Complete | Status      | Completed |
 | ----------------------------------- | -------------- | ----------- | --------- |
 | 1. Monorepo and Shell App Core      | 3/3            | Complete    | -         |
-| 2. Views and Federation Scaffolding | 3/6            | In progress | -         |
+| 2. Views and Federation Scaffolding | 6/6            | Complete    | -         |
 | 3. Deployment Pipeline              | 0/1            | Not started | -         |
 
 ## Backlog
