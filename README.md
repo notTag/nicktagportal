@@ -1,4 +1,10 @@
-# nick-site
+'|.   '|' '||'   ..|'''.| '||'  |'     |''||''|     |      ..|'''.|     |''||''| '||''''|    ..|'''.| '||'  '||' 
+ |'|   |   ||  .|'     '   || .'          ||       |||    .|'     '        ||     ||  .    .|'     '   ||    ||  
+ | '|. |   ||  ||          ||'|.          ||      |  ||   ||    ....       ||     ||''|    ||          ||''''||  
+ |   |||   ||  '|.      .  ||  ||         ||     .''''|.  '|.    ||        ||     ||       '|.      .  ||    ||  
+.|.   '|  .||.  ''|....'  .||.  ||.      .||.   .|.  .||.  ''|...'|       .||.   .||.....|  ''|....'  .||.  .||. 
+                                                                                                                 
+                                                                                                                 
 
 A personal portfolio and micro-frontend playground built as a Bun monorepo with a Vue 3 shell app. The shell app hosts micro-frontends via Module Federation — federation infrastructure is scaffolded upfront but the shell works as a polished standalone site from day one.
 
