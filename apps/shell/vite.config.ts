@@ -28,6 +28,6 @@ export default defineConfig({
   },
   build: {
     target: 'esnext', // Required: Module Federation uses top-level await and dynamic imports
-    minify: false, // Development convenience -- re-enable for production
+    minify: false, // re-enable after confirming live
   },
 })
