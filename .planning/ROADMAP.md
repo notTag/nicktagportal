@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [ ] **Phase 1: Monorepo and Shell App Core** - Bun workspace, TypeScript config, Vue 3 shell with routing, Pinia, and TailwindCSS v4
 - [ ] **Phase 2: Views and Federation Scaffolding** - Polished HomeView, PlaygroundView stub, Module Federation config with empty remotes and env-aware resolver
 - [ ] **Phase 3: Deployment Pipeline** - GitHub Actions CI, GitHub Pages hosting on nicktag.tech, SPA routing workaround
-- [ ] **Phase 4: Header Spacing Fix** - Diagnose and fix spacing between brand name and nav links in TheHeader
+- [ ] **Phase 4: Header Spacing Fix** - Fix broken @source path in Tailwind v4 config, restore packages/ui CSS scanning
 
 ## Phase Details
 
@@ -82,14 +82,14 @@ Plans:
 
 ### Phase 4: Header Spacing Fix
 
-**Goal**: Diagnose and fix the visual spacing between the brand name ("Nick Tagliasacchi") and the nav links in TheHeader. gap-16 was applied but the spacing still looks wrong in the browser — root cause unknown (possible Tailwind v4 scanning issue, layout conflict, or incorrect approach).
+**Goal**: Fix the broken Tailwind v4 `@source` directive path in main.css that prevents packages/ui utility classes from being scanned and generated in build output, then verify header spacing is visually correct
 **Depends on**: Phase 2
-**Requirements**: TBD
-**Plans:** 0 plans
+**Requirements**: HEADER-01
+**Plans:** 1 plan
 
 Plans:
 
-- [ ] TBD (run /gsd:plan-phase 4 to break down)
+- [ ] 04-01-PLAN.md -- Fix @source path depth (3 levels to 4 levels), verify build output contains packages/ui classes, visual checkpoint
 
 ## Progress
 
@@ -101,7 +101,7 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | 1. Monorepo and Shell App Core      | 3/3            | Complete    | -         |
 | 2. Views and Federation Scaffolding | 6/6            | Complete    | -         |
 | 3. Deployment Pipeline              | 0/1            | Not started | -         |
-| 4. Header Spacing Fix               | 0/0            | Not started | -         |
+| 4. Header Spacing Fix               | 0/1            | Not started | -         |
 
 ## Backlog
 
