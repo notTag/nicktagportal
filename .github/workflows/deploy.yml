@@ -1,0 +1,51 @@
+# Deploy shell app to GitHub Pages on push to main
+# TODO: Replace with AWS deployment (CloudFront + S3) when micro-frontend remotes are introduced
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: '1.1'
+
+      - name: Install dependencies
+        run: bun install --frozen-lockfile
+
+      - name: Build shell app
+        working-directory: apps/shell
+        run: bun run build
+
+      - name: Create 404.html for SPA routing
+        run: cp apps/shell/dist/index.html apps/shell/dist/404.html
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/shell/dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: production
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
