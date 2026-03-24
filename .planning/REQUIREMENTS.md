@@ -50,13 +50,13 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Deployment
 
-- [ ] **DEPLOY-01**: GitHub Actions workflow triggered on push to main
-- [ ] **DEPLOY-02**: Workflow builds only apps/shell (bun run build from shell directory)
-- [ ] **DEPLOY-03**: Deploys dist to GitHub Pages using actions/deploy-pages
-- [ ] **DEPLOY-04**: Workflow comment noting replacement with AWS deployment when remotes are introduced
-- [ ] **DEPLOY-05**: CNAME file in public/ directory with nicktag.tech
-- [ ] **DEPLOY-06**: 404.html that copies index.html for SPA routing on GitHub Pages
-- [ ] **DEPLOY-07**: .gitignore covering node_modules, dist, .env\*, .DS_Store
+- [x] **DEPLOY-01**: GitHub Actions workflow triggered on push to main
+- [x] **DEPLOY-02**: Workflow builds only apps/shell (bun run build from shell directory)
+- [x] **DEPLOY-03**: Deploys dist to GitHub Pages using actions/deploy-pages
+- [x] **DEPLOY-04**: Workflow comment noting replacement with AWS deployment when remotes are introduced
+- [x] **DEPLOY-05**: CNAME file in public/ directory with nicktag.tech
+- [x] **DEPLOY-06**: 404.html that copies index.html for SPA routing on GitHub Pages
+- [x] **DEPLOY-07**: .gitignore covering node_modules, dist, .env\*, .DS_Store
 
 ## v2 Requirements
 
@@ -136,13 +136,13 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FED-06      | Phase 2 | Complete |
 | FED-07      | Phase 2 | Complete |
 | FED-08      | Phase 2 | Complete |
-| DEPLOY-01   | Phase 3 | Pending  |
-| DEPLOY-02   | Phase 3 | Pending  |
-| DEPLOY-03   | Phase 3 | Pending  |
-| DEPLOY-04   | Phase 3 | Pending  |
-| DEPLOY-05   | Phase 3 | Pending  |
-| DEPLOY-06   | Phase 3 | Pending  |
-| DEPLOY-07   | Phase 3 | Pending  |
+| DEPLOY-01   | Phase 3 | Complete |
+| DEPLOY-02   | Phase 3 | Complete |
+| DEPLOY-03   | Phase 3 | Complete |
+| DEPLOY-04   | Phase 3 | Complete |
+| DEPLOY-05   | Phase 3 | Complete |
+| DEPLOY-06   | Phase 3 | Complete |
+| DEPLOY-07   | Phase 3 | Complete |
 
 **Coverage:**
 

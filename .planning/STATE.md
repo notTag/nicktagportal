@@ -2,13 +2,14 @@
 gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
-status: unknown
-stopped_at: Completed 02-06-PLAN.md
-last_updated: '2026-03-23T16:50:28.781Z'
+status: Phase complete — ready for verification
+stopped_at: Completed 03-01-PLAN.md
+last_updated: '2026-03-24T04:03:17.379Z'
+last_activity: 2026-03-24
 progress:
-  total_phases: 5
+  total_phases: 6
   completed_phases: 2
-  total_plans: 9
+  total_plans: 10
   completed_plans: 9
 ---
 
@@ -19,12 +20,12 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-21)
 
 **Core value:** The shell app works as a polished, deployable personal site from day one -- federation infrastructure is ready but never blocks the core experience.
-**Current focus:** Phase 02 — views-and-federation-scaffolding
+**Current focus:** Phase 03 — deployment-pipeline
 
 ## Current Position
 
-Phase: 999.1
-Plan: Not started
+Phase: 03 (deployment-pipeline) — EXECUTING
+Plan: 1 of 1
 
 ## Performance Metrics
 
@@ -55,6 +56,7 @@ _Updated after each plan completion_
 | Phase 02 P04 | 1min | 1 tasks | 3 files |
 | Phase 02 P05 | 1min | 1 tasks | 3 files |
 | Phase 02 P06 | 1min | 2 tasks | 4 files |
+| Phase 03 P01 | 1min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -79,6 +81,9 @@ Recent decisions affecting current work:
 - [Phase 02]: Used h-screen + overflow-y-auto for sticky footer instead of position:sticky
 - [Phase 02]: Added @source directive for packages/ui since plan 04 may run in parallel
 - [Phase 02]: CliView uses same max-w-3xl container as original terminal section for visual consistency
+- [Phase 03]: Permissions scoped to deploy job only (least-privilege)
+- [Phase 03]: 404.html generated via cp at build time, not committed to repo (D-08)
+- [Phase 03]: bun install --frozen-lockfile for reproducible CI builds
 
 ### Pending Todos
 
@@ -98,7 +103,7 @@ None yet.
 
 ## Session Continuity
 
-Last session: 2026-03-23
-Last activity: 2026-03-23 - Completed quick task 260323-i3g: Fix spacing in TheHeader between the brand name and the nav routing links
-Stopped at: Completed 02-06-PLAN.md
+Last session: 2026-03-24T04:03:17.376Z
+Last activity: 2026-03-24
+Stopped at: Completed 03-01-PLAN.md
 Resume file: None
