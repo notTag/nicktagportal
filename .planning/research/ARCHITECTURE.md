@@ -1,524 +1,893 @@
 # Architecture Patterns
 
-**Domain:** Vue 3 Monorepo Micro-Frontend (Module Federation via Vite)
-**Researched:** 2026-03-21
-**Confidence:** MEDIUM (training data, not verified against live docs -- @originjs/vite-plugin-federation API may have evolved)
-
-## Recommended Architecture
-
-### High-Level System Diagram
-
-```
-                        +---------------------------+
-                        |     GitHub Pages / AWS    |
-                        |      (Static Hosting)     |
-                        +---------------------------+
-                                    |
-                        +-----------v-----------+
-                        |     Shell App (Host)   |
-                        |   apps/shell           |
-                        |                        |
-                        |  - Vue Router 4        |
-                        |  - Pinia root store    |
-                        |  - Layout / Nav        |
-                        |  - Federation Host     |
-                        |    config (remotes)    |
-                        +---+--------+--------+--+
-                            |        |        |
-               +------------+   +----+----+   +------------+
-               |                |         |                |
-      +--------v-------+ +-----v-----+ +-v---------+ +----v-------+
-      | Remote App A   | | Remote B  | | Remote C  | | Remote ... |
-      | apps/playground| | apps/blog | | apps/lab  | | apps/xyz   |
-      | (future)       | | (future)  | | (future)  | | (future)   |
-      +--------+-------+ +-----+-----+ +-+---------+ +----+-------+
-               |                |         |                |
-               +-------+-------+---------+-------+--------+
-                       |                         |
-              +--------v--------+      +---------v--------+
-              |  packages/ui    |      |  packages/types  |
-              |  Shared Vue     |      |  Shared TS       |
-              |  components     |      |  interfaces      |
-              +--------+--------+      +---------+--------+
-                       |                         |
-                       +------------+------------+
-                                    |
-                        +-----------v-----------+
-                        |   Shared Singletons   |
-                        |   vue, vue-router,    |
-                        |   pinia, tailwindcss  |
-                        +------------------------+
-```
-
-### Component Boundaries
-
-| Component             | Responsibility                                                                                                                 | Communicates With                                     | Location                                     |
-| --------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------- | -------------------------------------------- |
-| **Shell (Host)**      | Top-level layout, navigation, router orchestration, federation host config, mounts remotes into designated DOM regions         | All remotes (loads them), packages/ui, packages/types | `apps/shell`                                 |
-| **Remote Apps**       | Self-contained feature domains; expose Vue components or micro-apps via Module Federation `exposes` config                     | Shell (mounted by), packages/ui, packages/types       | `apps/<name>`                                |
-| **packages/ui**       | Shared Vue component library (buttons, cards, layout primitives) consumed by shell and all remotes                             | Shell and all remotes import from it                  | `packages/ui`                                |
-| **packages/types**    | Shared TypeScript interfaces, type definitions, and constants                                                                  | Shell and all remotes import from it                  | `packages/types`                             |
-| **Shared Singletons** | vue, vue-router, pinia -- single instances shared at runtime via federation `shared` config to prevent duplicate Vue instances | All apps at runtime                                   | Defined in each app's vite federation config |
-
-### Boundary Rules
-
-1. **Shell owns the router.** Remotes do NOT create their own Vue Router instances. They receive route context from the shell or export route definitions that the shell registers.
-2. **Shell owns the Pinia root store.** Remotes can define their own Pinia store modules, but the Pinia instance is the shell's singleton.
-3. **Remotes are independently deployable.** Each remote has its own `vite.config.ts` with `federation({ name, exposes, shared })`. Remotes produce a `remoteEntry.js` that the shell fetches at runtime.
-4. **packages/\* are build-time dependencies.** They are NOT federated at runtime. They are imported normally via monorepo workspace resolution (Bun workspaces). This keeps the shared UI library simple and avoids federation overhead for common components.
-5. **Remotes never import from other remotes.** Communication between remotes goes through the shell (via Pinia stores, events, or router state).
+**Domain:** v1.1 Feature Integration -- CLI Remote, Theme System, Skills Diamond Wall
+**Researched:** 2026-03-27
+**Confidence:** MEDIUM-HIGH (existing codebase verified, xterm.js ITheme from official docs, federation patterns from originjs docs + community)
 
 ---
 
-## Data Flow
-
-### 1. Build-Time Flow (Monorepo)
+## System Diagram (v1.1 Additions)
 
 ```
-packages/types ──(TS imports)──> apps/shell
-packages/types ──(TS imports)──> apps/<remote>
-packages/ui   ──(Vue imports)──> apps/shell
-packages/ui   ──(Vue imports)──> apps/<remote>
-```
-
-Bun workspaces resolve `@ui/*` and `@types/*` path aliases to local packages at build time. Each app bundles what it needs from shared packages into its own output.
-
-### 2. Runtime Flow (Module Federation)
-
-```
-Browser loads shell (index.html)
-  |
-  v
-Shell's Vite federation host config declares remotes:
-  { playground: "https://playground.nicktag.tech/assets/remoteEntry.js" }
-  |
-  v
-User navigates to /playground route
-  |
-  v
-Vue Router triggers lazy-loaded route component
-  |
-  v
-Shell dynamically imports remote:
-  const PlaygroundApp = defineAsyncComponent(() => import("playground/App"))
-  |
-  v
-Federation runtime fetches remoteEntry.js from remote's hosting URL
-  |
-  v
-Shared singletons (vue, vue-router, pinia) are negotiated:
-  - Shell provides the singleton instances
-  - Remote reuses them (no duplicate Vue runtime)
-  |
-  v
-Remote component mounts inside shell's <RouterView> or designated <div>
-  |
-  v
-Remote can access shell's Pinia store for cross-app state
-```
-
-### 3. State Flow
-
-```
-Shell Pinia Store (root)
-  |
-  +-- Shell-owned state (user identity, theme, nav state)
-  |
-  +-- Remote A store module (registered on mount, unregistered on unmount)
-  |
-  +-- Remote B store module (same pattern)
-```
-
-**State sharing rules:**
-
-- Shell exposes a root Pinia instance via the shared singleton mechanism.
-- Remotes register their own store modules when they mount (e.g., `usePlaygroundStore()`).
-- Cross-remote communication happens through shared Pinia state or custom events on a shared event bus, NOT direct imports.
-
-### 4. Routing Flow
-
-```
-Shell owns the Vue Router instance
-  |
-  +-- Static routes (HomeView, AboutView, etc.)
-  |
-  +-- Dynamic/lazy routes for remotes:
-      {
-        path: '/playground/:pathMatch(.*)*',
-        component: () => import('playground/App'),  // federation import
-      }
-```
-
-**Two routing strategies for remotes:**
-
-| Strategy                      | How It Works                                                             | When to Use                              |
-| ----------------------------- | ------------------------------------------------------------------------ | ---------------------------------------- |
-| **Shell-managed routes**      | Shell defines all routes; remote exports plain Vue components            | Simple remotes, single-view features     |
-| **Remote-managed sub-routes** | Remote exports a route config; shell registers it under a catch-all path | Complex remotes with internal navigation |
-
-**Recommendation for this project:** Start with shell-managed routes. The shell defines a catch-all route per remote (e.g., `/playground/:pathMatch(.*)*`) and the remote handles its own internal routing within that prefix. This keeps the shell in control while giving remotes autonomy for their sub-navigation.
-
----
-
-## Monorepo Directory Structure
-
-```
-nicktagportal/
-  |
-  +-- package.json              # Root workspace config (Bun workspaces)
-  +-- bun.lock
-  +-- tsconfig.base.json        # Shared TS config, extended by apps/packages
-  |
-  +-- apps/
-  |   +-- shell/                # HOST application
-  |   |   +-- package.json      # deps: vue, vue-router, pinia, @ui/*, @types/*
-  |   |   +-- vite.config.ts    # federation({ name: 'shell', remotes: {...}, shared: {...} })
-  |   |   +-- tsconfig.json     # extends ../../tsconfig.base.json
-  |   |   +-- src/
-  |   |   |   +-- main.ts
-  |   |   |   +-- App.vue
-  |   |   |   +-- router/
-  |   |   |   |   +-- index.ts          # Route definitions including remote mount points
-  |   |   |   +-- stores/
-  |   |   |   |   +-- index.ts          # Pinia root store
-  |   |   |   +-- views/
-  |   |   |   |   +-- HomeView.vue
-  |   |   |   |   +-- PlaygroundView.vue  # Remote mount wrapper
-  |   |   |   +-- components/
-  |   |   |   |   +-- AppNav.vue
-  |   |   |   |   +-- AppFooter.vue
-  |   |   |   +-- federation/
-  |   |   |       +-- remotes.ts        # Env-aware remote URL resolver
-  |   |   |       +-- types.d.ts        # Module declarations for federated imports
-  |   |   +-- public/
-  |   |   |   +-- CNAME
-  |   |   |   +-- 404.html              # GitHub Pages SPA workaround
-  |   |   +-- index.html
-  |   |
-  |   +-- playground/           # REMOTE application (future)
-  |       +-- package.json
-  |       +-- vite.config.ts    # federation({ name: 'playground', exposes: {...}, shared: {...} })
-  |       +-- src/
-  |           +-- main.ts       # Standalone bootstrap (for independent dev)
-  |           +-- App.vue       # Exposed component
-  |           +-- bootstrap.ts  # Federation-aware bootstrap
-  |
-  +-- packages/
-  |   +-- ui/                   # Shared component library
-  |   |   +-- package.json      # { "name": "@nicktagportal/ui", "main": "src/index.ts" }
-  |   |   +-- src/
-  |   |       +-- index.ts      # Barrel export
-  |   |       +-- components/
-  |   |
-  |   +-- types/                # Shared TypeScript types
-  |       +-- package.json      # { "name": "@nicktagportal/types", "main": "src/index.ts" }
-  |       +-- src/
-  |           +-- index.ts
-  |           +-- federation.ts # Federation-specific type interfaces
-  |
-  +-- .github/
-      +-- workflows/
-          +-- deploy-shell.yml  # GitHub Pages deployment
+                    +---------------------------+
+                    |     GitHub Pages / AWS    |
+                    |   (Static Hosting)        |
+                    |                           |
+                    |  shell/dist/              |
+                    |  cli/dist/ (subpath or    |
+                    |   separate origin)        |
+                    +---------------------------+
+                                |
+                    +-----------v-----------+
+                    |     Shell App (Host)   |
+                    |   apps/shell           |
+                    |                        |
+                    |  + ThemeProvider (NEW)  |
+                    |  + useThemeStore (NEW)  |
+                    |  + SkillsView (NEW)    |
+                    |  + CliView (MODIFIED)   |
+                    |    -> mounts remote     |
+                    +---+--------+----------+
+                        |        |
+           +------------+        +------ (future remotes)
+           |
+  +--------v-----------+
+  | CLI Remote          |
+  | apps/cli (NEW)      |
+  |                     |
+  | - xterm.js terminal |
+  | - Virtual filesystem|
+  | - Resume data       |
+  | - localStorage      |
+  | Exposes: ./App      |
+  +--------+-----------+
+           |
+  +--------v-----------+      +-------------------+
+  | packages/types      |      | packages/ui       |
+  | (EXTENDED)          |      | (EXTENDED)        |
+  |                     |      |                   |
+  | + Theme types       |      | + ThemeToggle     |
+  | + CLI types         |      |   component (NEW) |
+  | + FileSystem types  |      |                   |
+  +--------------------+      +-------------------+
 ```
 
 ---
 
-## Patterns to Follow
+## Feature 1: CLI Remote (apps/cli)
 
-### Pattern 1: Env-Aware Remote URL Resolver
+### What Changes
 
-**What:** Centralized remote URL resolution that switches between local dev URLs and production URLs based on environment.
+This is the first real federated micro-frontend. The current `CliView.vue` in the shell imports `TerminalPanel` from `@ui` -- a simple text-based terminal. The v1.1 CLI replaces this with an xterm.js-powered terminal running as a federated remote in `apps/cli`.
 
-**When:** Always -- this is the backbone of how the shell finds remotes.
+### New: apps/cli Package
 
-**Example:**
-
-```typescript
-// apps/shell/src/federation/remotes.ts
-
-interface RemoteConfig {
-  name: string
-  devUrl: string
-  prodUrl: string
-  entry: string // typically "remoteEntry.js"
-}
-
-const remotes: Record<string, RemoteConfig> = {
-  playground: {
-    name: 'playground',
-    devUrl: 'http://localhost:5002',
-    prodUrl: 'https://playground.nicktag.tech',
-    entry: 'assets/remoteEntry.js',
-  },
-}
-
-export function getRemoteUrl(remoteName: string): string {
-  const config = remotes[remoteName]
-  if (!config) throw new Error(`Unknown remote: ${remoteName}`)
-
-  const baseUrl = import.meta.env.DEV ? config.devUrl : config.prodUrl
-  return `${baseUrl}/${config.entry}`
-}
+```
+apps/cli/
+  +-- package.json          # @nick-site/cli
+  +-- vite.config.ts        # federation remote config
+  +-- tsconfig.json
+  +-- src/
+      +-- main.ts           # bootstrap (standalone dev mode)
+      +-- App.vue           # root component exposed via federation
+      +-- components/
+      |   +-- XTerminal.vue        # xterm.js wrapper component
+      +-- filesystem/
+      |   +-- types.ts             # FileNode, Directory, File interfaces
+      |   +-- tree.ts              # Virtual filesystem tree builder
+      |   +-- defaultTree.ts       # Pre-populated resume data
+      |   +-- persistence.ts       # localStorage read/write
+      +-- commands/
+      |   +-- registry.ts          # Command registration + dispatch
+      |   +-- builtins/
+      |       +-- ls.ts
+      |       +-- cd.ts
+      |       +-- cat.ts
+      |       +-- pwd.ts
+      |       +-- mkdir.ts
+      |       +-- touch.ts
+      |       +-- rm.ts
+      |       +-- clear.ts
+      |       +-- help.ts
+      |       +-- whoami.ts
+      |       +-- tree.ts
+      |       +-- history.ts
+      |       +-- alias.ts
+      |       +-- echo.ts
+      |       +-- find.ts
+      +-- composables/
+      |   +-- useTerminal.ts       # xterm.js lifecycle + input handling
+      |   +-- useFileSystem.ts     # Reactive filesystem state
+      |   +-- useHistory.ts        # Command history with up/down
+      +-- data/
+          +-- resume/              # JSON data files
+              +-- companies.json
+              +-- skills.json
+              +-- projects.json
 ```
 
-**Note:** In @originjs/vite-plugin-federation, remote URLs are typically configured statically in `vite.config.ts`. The env-aware pattern means using Vite's env variables within the config to switch URLs at build time, or using the dynamic remote loading API if the plugin version supports it.
-
-### Pattern 2: Async Remote Component Wrapper
-
-**What:** Wrap federated remote imports in `defineAsyncComponent` with loading and error states for graceful degradation.
-
-**When:** Every remote mount point in the shell.
-
-**Example:**
+### CLI Remote vite.config.ts Pattern
 
 ```typescript
-// apps/shell/src/views/PlaygroundView.vue
-<script setup lang="ts">
-import { defineAsyncComponent } from 'vue';
-import RemoteLoading from '@/components/RemoteLoading.vue';
-import RemoteError from '@/components/RemoteError.vue';
-
-const PlaygroundApp = defineAsyncComponent({
-  loader: () => import('playground/App'),
-  loadingComponent: RemoteLoading,
-  errorComponent: RemoteError,
-  delay: 200,       // ms before showing loading state
-  timeout: 10000,   // ms before showing error state
-});
-</script>
-
-<template>
-  <Suspense>
-    <PlaygroundApp />
-  </Suspense>
-</template>
-```
-
-### Pattern 3: Federation Shared Singleton Configuration
-
-**What:** Declare shared dependencies as singletons to prevent duplicate Vue instances (which causes runtime errors).
-
-**When:** In every app's `vite.config.ts` federation config.
-
-**Example:**
-
-```typescript
-// vite.config.ts (both shell and remotes)
-import federation from '@nicktag/vite-plugin-federation'
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import federation from '@originjs/vite-plugin-federation'
+import { resolve } from 'path'
 
 export default defineConfig({
   plugins: [
     vue(),
     federation({
-      name: 'shell', // or remote name
-      // remotes: { ... } for host, exposes: { ... } for remotes
-      shared: {
-        vue: { singleton: true, requiredVersion: '^3.4' },
-        'vue-router': { singleton: true, requiredVersion: '^4.3' },
-        pinia: { singleton: true, requiredVersion: '^2.1' },
+      name: 'cliApp',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './App': './src/App.vue',
       },
+      shared: ['vue', 'vue-router', 'pinia'],
     }),
   ],
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src'),
+      '@types': resolve(__dirname, '../../packages/types/src'),
+    },
+  },
   build: {
-    target: 'esnext', // Required for Module Federation
-    minify: false, // Recommended during development for debugging
-    cssCodeSplit: false, // Avoids CSS loading issues with federation
+    target: 'esnext',
+    cssCodeSplit: false, // CRITICAL: prevents CSS loading issues in federation
+    minify: true,
+  },
+  server: {
+    port: 3001, // Each remote gets its own port
   },
 })
 ```
 
-### Pattern 4: Remote Bootstrap Dual-Mode
+### Shell Integration: Modified Files
 
-**What:** Each remote can run standalone (for independent development) OR be mounted by the shell (for production).
-
-**When:** Every remote app needs this for developer experience.
-
-**Example:**
+**1. `apps/shell/src/federation/remotes.ts` -- Add CLI remote**
 
 ```typescript
-// apps/playground/src/main.ts (standalone entry)
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import App from './App.vue'
+export type RemoteName = 'cliApp'
 
-const app = createApp(App)
-app.use(createPinia())
-app.mount('#app')
-
-// apps/playground/src/App.vue (exposed to federation)
-// This is the component exposed via federation -- it does NOT create its own app instance.
-// When loaded by the shell, it runs inside the shell's Vue app context.
-```
-
-### Pattern 5: Type-Safe Federation Module Declarations
-
-**What:** TypeScript module declarations for federated imports so the shell gets type checking on remote components.
-
-**When:** Always -- without this, `import('playground/App')` has type `any`.
-
-**Example:**
-
-```typescript
-// apps/shell/src/federation/types.d.ts
-declare module 'playground/App' {
-  import { DefineComponent } from 'vue'
-  const component: DefineComponent<{}, {}, any>
-  export default component
+const remotePortsDev: Record<string, number> = {
+  cliApp: 3001,
 }
 
-// Repeat for each remote and each exposed module
+const remotePathsProd: Record<string, string> = {
+  cliApp: '/remotes/cli',
+}
 ```
+
+**2. `apps/shell/vite.config.ts` -- Register CLI remote**
+
+```typescript
+federation({
+  name: 'shell',
+  remotes: {
+    cliApp: {
+      external: `Promise.resolve("${resolveRemoteUrl('cliApp')}")`,
+      from: 'vite',
+      format: 'esm',
+    },
+  },
+  shared: ['vue', 'vue-router', 'pinia'],
+}),
+```
+
+**Important constraint:** `resolveRemoteUrl` call cannot be used directly in vite.config.ts because it uses `import.meta.env.DEV` which is unavailable at config time. Two alternatives:
+
+- **Option A (Recommended):** Use `process.env.NODE_ENV` check in vite.config.ts directly to construct URLs. Reserve `remotes.ts` for runtime dynamic loading.
+- **Option B:** Use `import.meta.env.MODE` in vite.config.ts (available since Vite 5).
+
+**3. `apps/shell/src/views/CliView.vue` -- Mount remote**
+
+```vue
+<script setup lang="ts">
+import { defineAsyncComponent } from 'vue'
+
+const CliApp = defineAsyncComponent(() => import('cliApp/App'))
+</script>
+
+<template>
+  <section class="mx-auto max-w-4xl px-4 pt-8 pb-12">
+    <CliApp />
+  </section>
+</template>
+```
+
+**4. `apps/shell/src/federation/types.d.ts` -- NEW: Module declarations**
+
+```typescript
+declare module 'cliApp/App' {
+  import type { DefineComponent } from 'vue'
+  const component: DefineComponent<object, object, unknown>
+  export default component
+}
+```
+
+### xterm.js Architecture
+
+**Package:** `@xterm/xterm` (scoped package, NOT the deprecated `xterm`)
+**Version:** 5.x (current stable)
+**Required addons:**
+
+- `@xterm/addon-fit` -- auto-resize terminal to container
+- `@xterm/addon-webgl` -- GPU-accelerated rendering (optional, for performance)
+
+**Integration pattern with Vue 3:**
+
+```typescript
+// composables/useTerminal.ts
+import { Terminal } from '@xterm/xterm'
+import { FitAddon } from '@xterm/addon-fit'
+import { onMounted, onBeforeUnmount, type Ref } from 'vue'
+
+export function useTerminal(containerRef: Ref<HTMLElement | null>) {
+  let terminal: Terminal | null = null
+  let fitAddon: FitAddon | null = null
+
+  onMounted(() => {
+    if (!containerRef.value) return
+
+    terminal = new Terminal({
+      cursorBlink: true,
+      fontSize: 14,
+      fontFamily: 'JetBrains Mono, Fira Code, monospace',
+      theme: {
+        background: '#2a2139', // --color-surface
+        foreground: '#ffffff', // --color-text
+        cursor: '#fede5d', // --color-accent-yellow
+        cursorAccent: '#2a2139',
+        selectionBackground: '#495495',
+        black: '#2a2139',
+        red: '#f97e72', // --color-destructive
+        green: '#72f1b8', // --color-accent-cyan
+        yellow: '#fede5d', // --color-accent-yellow
+        blue: '#848bbd',
+        magenta: '#ff7edb', // --color-accent
+        cyan: '#72f1b8',
+        white: '#ffffff',
+      },
+    })
+
+    fitAddon = new FitAddon()
+    terminal.loadAddon(fitAddon)
+    terminal.open(containerRef.value)
+    fitAddon.fit()
+
+    // Resize observer for responsive fit
+    const observer = new ResizeObserver(() => fitAddon?.fit())
+    observer.observe(containerRef.value)
+  })
+
+  onBeforeUnmount(() => {
+    terminal?.dispose()
+  })
+
+  return { terminal }
+}
+```
+
+**Why NOT use a Vue wrapper library:** Existing libraries (`vue-term`, `@swzry/xterm-vue`) are poorly maintained, target Vue 2, or add unnecessary abstraction. Direct xterm.js integration via a composable is cleaner, gives full control over the ITheme mapping, and avoids dead dependency risk. [HIGH confidence]
+
+### Virtual Filesystem Architecture
+
+The CLI terminal does NOT connect to a real backend. It implements a client-side virtual filesystem.
+
+```typescript
+// filesystem/types.ts
+interface FileNode {
+  name: string
+  type: 'file' | 'directory'
+  content?: string // Only for files
+  children?: FileNode[] // Only for directories
+  readOnly: boolean // Resume data = true, user-created = false
+  createdAt: number
+}
+
+interface FileSystemState {
+  root: FileNode // Root directory tree
+  cwd: string[] // Current working directory path segments
+  aliases: Record<string, string>
+}
+```
+
+**Pre-populated tree (resume data):**
+
+```
+/
++-- about/
+|   +-- bio.txt              # Profile bio
+|   +-- contact.txt          # Links
++-- experience/
+|   +-- company-a/
+|   |   +-- role.txt
+|   |   +-- projects/
+|   |       +-- project-1.txt
+|   +-- company-b/
+|       +-- role.txt
++-- skills/
+|   +-- infrastructure.txt
+|   +-- security.txt
+|   +-- ci-cd.txt
++-- README.txt               # Welcome / help
+```
+
+**localStorage persistence:**
+
+- Key: `nicksite-cli-fs`
+- Stores: user-created files, aliases, command history
+- Resume data is NOT persisted (always rebuilt from JSON at mount)
+- Merge strategy: resume tree is rebuilt fresh, user modifications overlaid from localStorage
+
+### Data Flow: CLI Remote
+
+```
+User types command in xterm.js
+  |
+  v
+useTerminal.onData() captures keystrokes
+  |
+  v
+Line buffer assembles until Enter
+  |
+  v
+commands/registry.ts dispatches to builtin handler
+  |
+  v
+Handler receives (args, fileSystemState) and returns output string
+  |
+  v
+Output written to terminal via terminal.write()
+  |
+  v
+If filesystem mutated (mkdir, touch, rm):
+  -> useFileSystem updates reactive state
+  -> persistence.ts writes to localStorage
+```
+
+### Remote Development Constraint
+
+**The remote MUST be pre-built for federation to work.** `@originjs/vite-plugin-federation` does not support dev mode for remotes -- only the host can use Vite dev server. The remote must be built (`vite build`) and its `dist/assets/remoteEntry.js` served statically. [HIGH confidence -- from originjs docs]
+
+**Development workflow:**
+
+1. Build CLI remote: `cd apps/cli && bun run build`
+2. Serve CLI dist: `npx serve dist -p 3001 --cors` (or Vite preview)
+3. Run shell dev: `cd apps/shell && bun run dev`
+4. Shell fetches `http://localhost:3001/assets/remoteEntry.js`
+
+Add root scripts:
+
+```json
+{
+  "dev:cli": "bun run --filter './apps/cli' build && bun run --filter './apps/cli' preview",
+  "dev:all": "concurrently \"bun run dev:cli\" \"bun run dev\""
+}
+```
+
+---
+
+## Feature 2: Theme Interchangeability System
+
+### What Changes
+
+The current shell hardcodes SynthWave '84 colors as Tailwind `@theme` values in `main.css`. The theme system makes these colors dynamic via CSS custom properties, adds a theme store, and maps VSCode theme JSON files to the site's color tokens.
+
+### Architecture: CSS Custom Properties Layer
+
+**Current approach (hardcoded in `@theme`):**
+
+```css
+@theme {
+  --color-surface: #2a2139;
+  --color-accent: #ff7edb;
+  /* ... */
+}
+```
+
+**New approach -- two layers:**
+
+1. **CSS custom properties (runtime-swappable):** Set on `:root`, changed via JavaScript
+2. **Tailwind `@theme` references:** Point to the CSS custom properties
+
+```css
+/* Layer 1: Runtime theme tokens (on :root or body) */
+:root {
+  --theme-surface: #2a2139;
+  --theme-surface-raised: #34294f;
+  --theme-accent: #ff7edb;
+  --theme-accent-cyan: #72f1b8;
+  --theme-accent-yellow: #fede5d;
+  --theme-destructive: #f97e72;
+  --theme-text: #ffffff;
+  --theme-text-muted: #848bbd;
+  --theme-border: #495495;
+}
+
+/* Layer 2: Tailwind @theme maps to runtime tokens */
+@theme {
+  --color-surface: var(--theme-surface);
+  --color-surface-raised: var(--theme-surface-raised);
+  --color-accent: var(--theme-accent);
+  --color-accent-cyan: var(--theme-accent-cyan);
+  --color-accent-yellow: var(--theme-accent-yellow);
+  --color-destructive: var(--theme-destructive);
+  --color-text: var(--theme-text);
+  --color-text-muted: var(--theme-text-muted);
+  --color-border: var(--theme-border);
+}
+```
+
+**Why two layers:** Tailwind v4 `@theme` values are resolved at build time for utility class generation, but CSS `var()` references inside `@theme` ARE supported and resolve at runtime. This gives us Tailwind utility classes (`bg-surface`, `text-accent`) that respond to runtime theme changes without rebuilding. [MEDIUM confidence -- needs verification with Tailwind v4 `@theme` + `var()` behavior]
+
+**Fallback if `var()` in `@theme` doesn't work with Tailwind v4:** Skip the `@theme` layer entirely. Use CSS custom properties directly in components with `style` bindings, or use Tailwind's arbitrary value syntax (`bg-[var(--theme-surface)]`). This is less elegant but guaranteed to work.
+
+### VSCode Theme JSON Mapping
+
+VSCode themes use a JSON format with a `colors` object mapping token names to hex values. The site needs a mapper that extracts relevant colors and maps them to the site's `--theme-*` tokens.
+
+```typescript
+// types in packages/types
+interface VSCodeThemeColors {
+  'editor.background': string
+  'editor.foreground': string
+  'sideBar.background': string
+  'activityBar.background': string
+  'statusBar.background': string
+  focusBorder: string
+  'button.background': string
+  errorForeground: string
+  'textLink.foreground': string
+  'textLink.activeForeground': string
+  'list.activeSelectionBackground': string
+  [key: string]: string
+}
+
+interface SiteTheme {
+  id: string
+  name: string
+  surface: string
+  surfaceRaised: string
+  accent: string
+  accentCyan: string
+  accentYellow: string
+  destructive: string
+  text: string
+  textMuted: string
+  border: string
+}
+
+// Mapping function
+function mapVSCodeToSiteTheme(
+  name: string,
+  colors: VSCodeThemeColors,
+): SiteTheme {
+  return {
+    id: name.toLowerCase().replace(/\s+/g, '-'),
+    name,
+    surface: colors['editor.background'],
+    surfaceRaised: colors['sideBar.background'],
+    accent: colors['textLink.activeForeground'] || colors['focusBorder'],
+    accentCyan: colors['textLink.foreground'], // approximate
+    accentYellow: colors['list.activeSelectionBackground'], // approximate
+    destructive: colors['errorForeground'],
+    text: colors['editor.foreground'],
+    textMuted: colors['button.background'], // approximate
+    border: colors['focusBorder'],
+  }
+}
+```
+
+**Reality check:** VSCode themes do NOT have a 1:1 mapping to this site's color tokens. The site uses tokens like `accentCyan` and `accentYellow` that have no direct VSCode equivalent. The mapping will be approximate for secondary accent colors. **Recommendation:** Ship 3-5 hand-curated themes (SynthWave '84, Dracula, One Dark Pro, GitHub Dark, Monokai Pro) with manually tuned values, rather than depending on fully automated mapping. The VSCode JSON mapper is a nice-to-have stretch goal, not the core architecture.
+
+### Theme Store (Pinia)
+
+```typescript
+// apps/shell/src/stores/theme.ts
+import { defineStore } from 'pinia'
+import { ref, watch } from 'vue'
+import type { SiteTheme } from '@types'
+import { builtinThemes } from '@/data/themes'
+
+export const useThemeStore = defineStore('theme', () => {
+  const themes = ref<SiteTheme[]>(builtinThemes)
+  const activeThemeId = ref<string>(
+    localStorage.getItem('nicksite-theme') || 'synthwave-84',
+  )
+
+  const activeTheme = computed(
+    () =>
+      themes.value.find((t) => t.id === activeThemeId.value) || themes.value[0],
+  )
+
+  function setTheme(id: string) {
+    activeThemeId.value = id
+    applyThemeToDOM(activeTheme.value)
+    localStorage.setItem('nicksite-theme', id)
+  }
+
+  function applyThemeToDOM(theme: SiteTheme) {
+    const root = document.documentElement
+    root.style.setProperty('--theme-surface', theme.surface)
+    root.style.setProperty('--theme-surface-raised', theme.surfaceRaised)
+    root.style.setProperty('--theme-accent', theme.accent)
+    root.style.setProperty('--theme-accent-cyan', theme.accentCyan)
+    root.style.setProperty('--theme-accent-yellow', theme.accentYellow)
+    root.style.setProperty('--theme-destructive', theme.destructive)
+    root.style.setProperty('--theme-text', theme.text)
+    root.style.setProperty('--theme-text-muted', theme.textMuted)
+    root.style.setProperty('--theme-border', theme.border)
+  }
+
+  // Apply on store init
+  watch(activeTheme, applyThemeToDOM, { immediate: true })
+
+  return { themes, activeThemeId, activeTheme, setTheme }
+})
+```
+
+### Theme + CLI Remote Coordination
+
+When the theme changes in the shell, the CLI remote's xterm.js terminal must update its colors. Two approaches:
+
+**Approach A (Recommended): CSS custom property observation**
+The CLI remote reads `--theme-*` values from the DOM when initializing its xterm.js `ITheme`. It also sets up a `MutationObserver` on `document.documentElement` to detect `style` attribute changes (which is how `applyThemeToDOM` works). On change, it calls `terminal.options.theme = newTheme`.
+
+**Approach B: Shared Pinia store**
+Since Pinia is a shared singleton, the CLI remote can `import { useThemeStore } from 'shell'` -- but this creates a runtime dependency from remote to host which is an anti-pattern per boundary rule 5 from v1.0 architecture.
+
+**Approach A is better** because it uses the DOM as the communication channel (CSS custom properties), keeping the remote decoupled from the shell's store implementation.
+
+### New Components
+
+| Component             | Location                     | Purpose                                     |
+| --------------------- | ---------------------------- | ------------------------------------------- |
+| `ThemeToggle.vue`     | `packages/ui`                | Dropdown or palette button to switch themes |
+| Theme settings button | `TheHeader.vue` modification | Icon button in header to open theme picker  |
+
+### Modified Files
+
+| File                                         | Change                                                                |
+| -------------------------------------------- | --------------------------------------------------------------------- |
+| `apps/shell/src/assets/main.css`             | Add `:root` CSS custom property layer, update `@theme` to use `var()` |
+| `apps/shell/src/stores/theme.ts`             | NEW: Pinia theme store                                                |
+| `apps/shell/src/data/themes.ts`              | NEW: Built-in theme definitions                                       |
+| `packages/types/src/index.ts`                | Add `SiteTheme` interface                                             |
+| `packages/ui/src/components/TheHeader.vue`   | Add theme toggle button slot/component                                |
+| `packages/ui/src/components/ThemeToggle.vue` | NEW: Theme picker UI                                                  |
+| `apps/shell/src/main.ts`                     | Initialize theme store early (before mount to prevent flash)          |
+
+---
+
+## Feature 3: Skills Animated Diamond Wall
+
+### What Changes
+
+The current `HomeView.vue` has an inline skills section rendering pills in a CSS grid. The diamond wall replaces this with a dedicated `/skills` route showing animated diamond-shaped cards with tech icons.
+
+### New Route and View
+
+```typescript
+// router/index.ts -- add new route
+{
+  path: '/skills',
+  name: 'skills',
+  component: () => import('../views/SkillsView.vue'),
+},
+```
+
+**Header nav update:** Add "Skills" tab between "CLI" and "Playground" in `TheHeader.vue`.
+
+### Diamond Layout Technique
+
+**Recommended approach: CSS `transform: rotate(45deg)` with counter-rotation for content.**
+
+```
+Container (grid):
+  rotate(45deg) on the grid items
+  Each item is a square that appears as a diamond
+  Content inside counter-rotated (-45deg) to stay upright
+  Offset alternate rows by 50% to create tessellation
+```
+
+```vue
+<!-- SkillsView.vue structure -->
+<template>
+  <section class="mx-auto max-w-5xl px-4 pt-12 pb-16">
+    <h1 class="text-text mb-8 text-4xl font-bold">Skills</h1>
+    <div class="diamond-grid">
+      <div
+        v-for="(skill, index) in techSkills"
+        :key="skill.name"
+        class="diamond-item"
+        :style="{ animationDelay: `${index * 80}ms` }"
+      >
+        <div class="diamond-content">
+          <img :src="skill.iconPath" :alt="skill.displayName" />
+          <span>{{ skill.displayName }}</span>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
+```
+
+### Animation Strategy
+
+**Entry animation:** Staggered fade-in + scale-up on viewport entry using CSS `@keyframes` with `animation-delay` per item. No JS animation library needed.
+
+```css
+.diamond-item {
+  width: 120px;
+  height: 120px;
+  transform: rotate(45deg);
+  animation: diamond-enter 0.5s ease-out both;
+}
+
+.diamond-content {
+  transform: rotate(-45deg);
+  /* content stays upright */
+}
+
+@keyframes diamond-enter {
+  from {
+    opacity: 0;
+    transform: rotate(45deg) scale(0.5);
+  }
+  to {
+    opacity: 1;
+    transform: rotate(45deg) scale(1);
+  }
+}
+```
+
+**Hover animation:** Subtle glow effect using the theme accent color (`box-shadow` with theme token).
+
+**Intersection Observer (optional):** Trigger animation only when diamonds scroll into view. Use Vue's `useIntersectionObserver` from VueUse or a simple custom composable.
+
+### Data Flow
+
+Reuses existing `techSkills.json` data -- no new data source. The existing data already has `name`, `displayName`, `iconPath`, and `category` fields. The diamond wall uses `iconPath` (which the current pill layout ignores).
+
+**Icon requirement:** SVG icons must exist at the paths defined in `techSkills.json` (e.g., `/icons/skills/aws.svg`). These are static assets in `apps/shell/public/icons/skills/`.
+
+### New / Modified Files
+
+| File                                       | Change                                   |
+| ------------------------------------------ | ---------------------------------------- |
+| `apps/shell/src/views/SkillsView.vue`      | NEW: Diamond wall view                   |
+| `apps/shell/src/router/index.ts`           | Add `/skills` route                      |
+| `packages/ui/src/components/TheHeader.vue` | Add "Skills" nav link                    |
+| `apps/shell/public/icons/skills/*.svg`     | NEW: SVG icons for each skill (28 icons) |
+
+### Decision: Keep in Shell or Move to Remote?
+
+**Keep in shell.** The skills wall is a presentation-only view with no complex state, no filesystem, no external dependencies. It consumes the same `techSkills.json` already in the shell. Making it a remote adds federation overhead for zero architectural benefit. Move to a remote only if/when it grows into a complex interactive experience.
+
+---
+
+## Deployment Considerations
+
+### CLI Remote Deployment on GitHub Pages
+
+GitHub Pages serves a single directory from a single branch. Hosting multiple independently-built apps requires one of:
+
+**Option A (Recommended for now): Build all apps into shell's dist**
+
+```
+dist/
+  index.html            # shell
+  assets/
+    ...shell assets...
+  remotes/
+    cli/
+      assets/
+        remoteEntry.js
+        ...cli chunks...
+```
+
+The deploy workflow builds both apps and copies CLI's dist into shell's dist under `/remotes/cli/`. This matches `remotePathsProd.cliApp = '/remotes/cli'` in `remotes.ts`.
+
+**Modified deploy.yml:**
+
+```yaml
+- name: Build shell app
+  working-directory: apps/shell
+  run: bun run build
+
+- name: Build CLI remote
+  working-directory: apps/cli
+  run: bun run build
+
+- name: Copy CLI remote into shell dist
+  run: |
+    mkdir -p apps/shell/dist/remotes/cli
+    cp -r apps/cli/dist/* apps/shell/dist/remotes/cli/
+```
+
+**Option B (Future -- AWS):** Each remote gets its own S3 bucket + CloudFront distribution + subdomain (e.g., `cli.nicktag.tech`). This is the proper approach for independent deployability but requires AWS migration.
+
+### GitHub Actions Node.js 24 Migration
+
+**Deadline:** June 2, 2026 -- runners default to Node 24. Node 20 removal later in fall 2026.
+
+**Current workflows affected:**
+
+- `deploy.yml` -- uses `actions/checkout@v4`, `actions/upload-pages-artifact@v3`, `actions/deploy-pages@v4`
+- `rollback.yml` -- uses `actions/download-artifact@v4`, `actions/deploy-pages@v4`
+
+**Required changes:**
+
+1. All `actions/*` dependencies should be on versions that support Node 24 internally (v4+ of checkout, upload-pages-artifact, deploy-pages already do -- they run on the runner's Node)
+2. The workflows do NOT use `actions/setup-node` because the build tool is Bun, not Node. The Node 24 migration primarily affects the **runner's internal Node version** used to execute action JavaScript code, not the project's build runtime.
+3. **Test with `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true`** environment variable to validate before the deadline.
+4. No code changes expected -- this is a workflow validation task, not a migration task.
+
+### Tree Shaking Considerations
+
+**CLI remote xterm.js:** xterm.js is a large dependency (~300KB minified). Since it only loads in the CLI remote (which is lazy-loaded via federation), it does NOT impact the shell's initial bundle. This is an inherent benefit of the federation architecture.
+
+**Shared singletons:** `vue`, `vue-router`, `pinia` are loaded once by the shell. The CLI remote reuses them via federation, adding zero duplicate weight.
+
+**Potential issue:** `cssCodeSplit: false` in the CLI remote's vite config means ALL CSS is bundled into JS. For a terminal app this is fine (minimal CSS), but monitor if it grows.
+
+---
+
+## Component Boundaries Summary
+
+### New Components
+
+| Component         | Package       | Responsibility                                          |
+| ----------------- | ------------- | ------------------------------------------------------- |
+| `XTerminal.vue`   | `apps/cli`    | xterm.js lifecycle, keyboard input, output rendering    |
+| `App.vue` (cli)   | `apps/cli`    | Root component exposed via federation, mounts XTerminal |
+| `SkillsView.vue`  | `apps/shell`  | Diamond grid layout + animations                        |
+| `ThemeToggle.vue` | `packages/ui` | Theme picker dropdown/palette                           |
+
+### New Stores
+
+| Store                    | Location                         | Responsibility                                          |
+| ------------------------ | -------------------------------- | ------------------------------------------------------- |
+| `useThemeStore`          | `apps/shell/src/stores/theme.ts` | Active theme, theme list, DOM application, localStorage |
+| `useCliStore` (optional) | `apps/cli/src/stores/cli.ts`     | CLI session state if needed beyond composables          |
+
+### New Types (packages/types)
+
+| Type              | Purpose                                     |
+| ----------------- | ------------------------------------------- |
+| `SiteTheme`       | Theme color token definition                |
+| `FileNode`        | Virtual filesystem node (file or directory) |
+| `FileSystemState` | CLI filesystem state (root, cwd, aliases)   |
+| `CommandResult`   | Command execution output                    |
+
+### Modified Components
+
+| Component               | What Changes                                           |
+| ----------------------- | ------------------------------------------------------ |
+| `TheHeader.vue`         | Add "Skills" nav link, add theme toggle button         |
+| `CliView.vue`           | Replace TerminalPanel with federated CLI remote import |
+| `AppLayout.vue`         | Possibly add theme provider initialization             |
+| `main.css`              | CSS custom property layer for theming                  |
+| `router/index.ts`       | Add `/skills` route                                    |
+| `federation/remotes.ts` | Add `cliApp` remote config                             |
+| Shell `vite.config.ts`  | Add `cliApp` to federation remotes                     |
+
+---
+
+## Suggested Build Order
+
+Dependencies flow downward -- each phase depends on the one before it.
+
+### Phase 1: Theme System Foundation
+
+**Why first:** The theme system touches `main.css`, the Tailwind config layer, and `packages/types`. Building it first establishes the CSS custom property infrastructure that both the shell and the CLI remote will consume. Building CLI first and then retrofitting theme support creates rework.
+
+**Deliverables:**
+
+- `:root` CSS custom property layer in `main.css`
+- `SiteTheme` type in `packages/types`
+- `useThemeStore` Pinia store
+- Built-in theme definitions (3-5 themes)
+- `ThemeToggle` component in `packages/ui`
+- Header integration
+- localStorage persistence
+
+### Phase 2: Skills Diamond Wall
+
+**Why second:** Self-contained feature with no cross-cutting concerns. Quick win that proves the theme system works (diamonds should render correctly in all themes). Also exercises the `techSkills.json` data and SVG icon pipeline that already exists.
+
+**Deliverables:**
+
+- `SkillsView.vue` with diamond grid
+- SVG icons in `public/icons/skills/`
+- Staggered entry animations
+- `/skills` route + header nav link
+
+### Phase 3: CLI Remote (apps/cli)
+
+**Why third:** Largest feature. Depends on theme system being stable (xterm.js ITheme maps to CSS custom properties). This is the first federation proof-point -- it validates the entire remote build/deploy/load pipeline.
+
+**Sub-phases:**
+
+1. Scaffold `apps/cli` with Vite federation config
+2. xterm.js integration (composable + XTerminal component)
+3. Virtual filesystem (types, tree builder, default resume data)
+4. Command registry + builtins (ls, cd, cat, pwd, help, clear, etc.)
+5. localStorage persistence (aliases, user files, history)
+6. Shell integration (modify CliView, update router, federation types)
+7. Dev workflow (build + preview scripts)
+
+### Phase 4: Deployment & Infrastructure
+
+**Why last:** Cannot deploy the CLI remote until it exists. This phase updates the GitHub Actions workflow, validates Node.js 24 compatibility, performs tree shaking audit, and tests rollback.
+
+**Deliverables:**
+
+- Modified `deploy.yml` to build both shell + CLI
+- CLI remote dist copied into shell dist under `/remotes/cli/`
+- Node.js 24 compatibility validation (`FORCE_JAVASCRIPT_ACTIONS_TO_NODE24`)
+- Bundle size audit (vite-bundle-visualizer or rollup-plugin-visualizer)
+- Rollback workflow end-to-end test
 
 ---
 
 ## Anti-Patterns to Avoid
 
-### Anti-Pattern 1: Shared Vue Instances Without Singleton Config
+### Anti-Pattern 1: Remote Importing from Host Store
 
-**What:** Forgetting `singleton: true` in the federation shared config.
+**What:** CLI remote directly imports `useThemeStore` from the shell.
+**Why bad:** Creates tight coupling. Remote cannot run standalone. Breaks boundary rule 5.
+**Instead:** Read CSS custom properties from the DOM. The theme store sets them, the remote reads them.
 
-**Why bad:** Two Vue instances load at runtime. This causes cryptic errors: reactivity breaks, provide/inject fails across boundaries, Pinia stores are not shared, and the app appears to work in dev but breaks in production.
+### Anti-Pattern 2: Scoped CSS in Remote Components
 
-**Instead:** Always configure `shared: { vue: { singleton: true } }` in every app's federation config. This is the single most critical configuration for Vue micro-frontends.
+**What:** Using `<style scoped>` in CLI remote components.
+**Why bad:** Known issue with `@originjs/vite-plugin-federation` -- scoped styles may not load in the host. [MEDIUM confidence -- from GitHub issue #361]
+**Instead:** Use `<style>` (unscoped) with component-specific class prefixes, or CSS modules.
 
-### Anti-Pattern 2: Tight Coupling Between Remotes
+### Anti-Pattern 3: Running Remote in Vite Dev Mode
 
-**What:** Remote A imports directly from Remote B, or they share state through anything other than the shell's Pinia store.
+**What:** Trying to use `vite dev` for the CLI remote while developing.
+**Why bad:** Federation plugin only works in build mode for remotes. Dev mode remotes produce no `remoteEntry.js`.
+**Instead:** `vite build && vite preview` for the remote; `vite dev` for the host only.
 
-**Why bad:** Creates deployment dependencies (A can't deploy without B), circular dependency risks, and makes the "independently deployable" promise of micro-frontends hollow.
+### Anti-Pattern 4: Duplicating Shared Dependencies
 
-**Instead:** All inter-remote communication flows through the shell's Pinia store or a shared event system in packages/types.
+**What:** Not marking `vue`, `vue-router`, `pinia` as shared in CLI remote config.
+**Why bad:** Two Vue runtimes loaded, reactive system breaks, components don't communicate.
+**Instead:** Always include in `shared` config with matching version ranges.
 
-### Anti-Pattern 3: Federating Shared Packages
+### Anti-Pattern 5: Hardcoding Theme Colors in CLI Remote
 
-**What:** Exposing packages/ui or packages/types through Module Federation instead of normal workspace imports.
-
-**Why bad:** Adds runtime overhead, introduces version negotiation complexity, and creates failure modes (what if the federated package server is down?). These packages change rarely and are small -- bundle them into each app.
-
-**Instead:** Keep packages/\* as normal monorepo workspace dependencies. Each app bundles its own copy at build time. The slight duplication is negligible compared to the reliability gain.
-
-### Anti-Pattern 4: Remote-Owned Top-Level Navigation
-
-**What:** Letting a remote app control the shell's navigation bar or global layout.
-
-**Why bad:** Layout shifts when remotes load, broken navigation if a remote fails to load, and confusing UX when different remotes render different nav structures.
-
-**Instead:** Shell owns all top-level layout (nav, footer, sidebar). Remotes render only within their designated content area.
-
-### Anti-Pattern 5: Hash Mode Router for "Simplicity"
-
-**What:** Using hash mode (`/#/playground`) to avoid server-side routing config.
-
-**Why bad:** Ugly URLs for a professional portfolio. Module Federation remote loading can also have issues with hash-based routing when remotes have their own sub-routes.
-
-**Instead:** HTML5 history mode with the 404.html workaround for GitHub Pages (already planned). Clean URLs are worth the workaround, especially since the project will migrate to AWS where server-side routing is trivial.
+**What:** Baking hex values into xterm.js ITheme config.
+**Why bad:** Theme changes in shell won't propagate to terminal.
+**Instead:** Read from `--theme-*` CSS custom properties, observe for changes.
 
 ---
 
 ## Scalability Considerations
 
-| Concern                 | 1 App (Shell Only)         | 3-5 Remotes                                          | 10+ Remotes                                               |
-| ----------------------- | -------------------------- | ---------------------------------------------------- | --------------------------------------------------------- |
-| **Build time**          | Fast (single Vite build)   | Moderate (parallel builds per app)                   | Need build orchestration (Turborepo or Bun scripts)       |
-| **Dev experience**      | `bun dev` in shell         | Run shell + 1-2 remotes locally, others mocked       | Service mesh dev tooling, mock remotes for unrelated work |
-| **Deployment**          | Single GitHub Pages deploy | Per-app deploys to separate origins (AWS S3 buckets) | CI/CD matrix builds, canary deploys per remote            |
-| **Shared dep versions** | Trivial                    | Pin versions in root package.json                    | Automated dependency sync tooling                         |
-| **CSS conflicts**       | None                       | TailwindCSS shared config in packages/ui             | CSS Module scoping or Shadow DOM isolation                |
-| **Type safety**         | Full monorepo TS           | Shared types package covers interfaces               | Contract testing for remote APIs                          |
-
----
-
-## Suggested Build Order (Dependencies)
-
-The build order reflects which components others depend on. Build foundational pieces first.
-
-```
-Phase 1: Foundation (no federation needed)
-  1. packages/types    -- Zero dependencies. Shared interfaces.
-  2. packages/ui       -- Depends on: packages/types, vue, tailwindcss
-  3. apps/shell        -- Depends on: packages/types, packages/ui
-     (Federation config present but remotes: {} is empty)
-
-Phase 2: Federation Plumbing (ready but no remotes)
-  4. Shell federation config with empty remotes map
-  5. Remote URL resolver (federation/remotes.ts) pointing to placeholder URLs
-  6. PlaygroundView.vue with async component wrapper (shows "coming soon" fallback)
-  7. Federation type declarations (types.d.ts with declared modules)
-
-Phase 3: First Remote (validates the architecture)
-  8. apps/playground   -- First remote app
-     - Own vite.config.ts with federation exposes + shared singletons
-     - Dual-mode bootstrap (standalone + federated)
-     - Shell's remotes config updated to point to playground
-
-Phase 4+: Additional Remotes (repeat the pattern)
-  9. apps/<next-remote> -- Each follows the playground template
-```
-
-**Build order rationale:**
-
-- packages/types first because everything depends on shared types.
-- packages/ui second because it establishes the design system before any app uses it.
-- Shell third because it is the deployable product from day one (per project requirements).
-- Federation plumbing fourth because it must not block the shell's core experience.
-- First remote last because it validates the entire federation architecture end-to-end.
-
-**Critical dependency chain:**
-
-```
-packages/types --> packages/ui --> apps/shell --> federation config --> apps/playground
-       ^                                  |
-       |                                  |
-       +----------------------------------+
-       (shell also directly imports types)
-```
-
----
-
-## GitHub Pages vs AWS Architecture Implications
-
-### Current: GitHub Pages (Shell Only)
-
-```
-nicktag.tech --> GitHub Pages --> apps/shell/dist/
-                                   +-- index.html
-                                   +-- 404.html (SPA redirect workaround)
-                                   +-- CNAME
-                                   +-- assets/
-```
-
-- Single origin, single deployment
-- No federation at runtime (no remotes hosted yet)
-- 404.html redirects all routes to index.html for SPA routing
-
-### Future: AWS (Shell + Remotes)
-
-```
-nicktag.tech ---------> CloudFront --> S3 (shell)
-                            |
-playground.nicktag.tech --> CloudFront --> S3 (playground remote)
-blog.nicktag.tech -------> CloudFront --> S3 (blog remote)
-```
-
-- Each remote gets its own subdomain and S3 bucket
-- CloudFront handles SPA routing (custom error pages returning index.html)
-- Shell fetches remoteEntry.js from remote subdomains at runtime
-- CORS headers required on remote S3 buckets (shell origin must be allowed)
-
-**Migration path:** The env-aware remote URL resolver (Pattern 1) makes this migration smooth. Switch from GitHub Pages URLs to AWS CloudFront URLs in environment variables. No code changes needed.
+| Concern      | Current (v1.1)                 | At 5 Remotes                | At 10+ Remotes                   |
+| ------------ | ------------------------------ | --------------------------- | -------------------------------- |
+| Build time   | Shell + 1 remote, sequential   | Parallel builds needed      | CI matrix builds                 |
+| Bundle size  | xterm.js in CLI only           | Monitor shared dep versions | Federation shared scope analysis |
+| Theme tokens | 9 color tokens                 | May need semantic aliases   | Token taxonomy / design system   |
+| Deployment   | Single GitHub Pages dist       | AWS S3 per remote           | CDN + service discovery          |
+| Dev workflow | `build + preview` for 1 remote | `concurrently` for all      | Turborepo or Nx for caching      |
 
 ---
 
 ## Sources
 
-- Training data on @originjs/vite-plugin-federation architecture patterns (MEDIUM confidence -- may have API changes since training cutoff)
-- Training data on Vue 3 Composition API, Vue Router 4, Pinia patterns (HIGH confidence -- stable APIs)
-- Training data on Vite build configuration (HIGH confidence -- well-established)
-- Training data on Module Federation concepts from webpack 5 applied to Vite (MEDIUM confidence -- Vite federation is less mature than webpack's)
-
-**Verification needed:**
-
-- @originjs/vite-plugin-federation current API surface and version compatibility with Vite 6+
-- Whether dynamic remote loading is supported (vs. build-time static remotes only)
-- TailwindCSS v4 CSS-first config interaction with federation CSS code splitting
-- Bun workspace resolution behavior with federation plugin's module resolution
+- xterm.js official docs: [https://xtermjs.org/docs/](https://xtermjs.org/docs/)
+- xterm.js ITheme interface: [https://xtermjs.org/docs/api/terminal/interfaces/itheme/](https://xtermjs.org/docs/api/terminal/interfaces/itheme/)
+- @originjs/vite-plugin-federation: [https://github.com/originjs/vite-plugin-federation](https://github.com/originjs/vite-plugin-federation)
+- Federation CSS loading issue: [https://github.com/originjs/vite-plugin-federation/issues/361](https://github.com/originjs/vite-plugin-federation/issues/361)
+- SynthWave '84 theme: [https://github.com/robb0wen/synthwave-vscode](https://github.com/robb0wen/synthwave-vscode)
+- VSCode Theme Color reference: [https://code.visualstudio.com/api/references/theme-color](https://code.visualstudio.com/api/references/theme-color)
+- VSCode Color Theme guide: [https://code.visualstudio.com/api/extension-guides/color-theme](https://code.visualstudio.com/api/extension-guides/color-theme)
+- CSS diamond grid technique: [https://medium.com/@supryan/who-needs-squares-and-rectangles-how-to-create-a-diamond-grid-layout-with-css-da5712d6df8b](https://medium.com/@supryan/who-needs-squares-and-rectangles-how-to-create-a-diamond-grid-layout-with-css-da5712d6df8b)
+- GitHub Actions Node.js deprecation: [https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/](https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/)
+- Federation CSS injection fix: [https://medium.com/@krishan101090/how-i-finally-got-my-vite-module-federation-styles-to-load-in-production-and-how-you-can-too-23ab3aab3f27](https://medium.com/@krishan101090/how-i-finally-got-my-vite-module-federation-styles-to-load-in-production-and-how-you-can-too-23ab3aab3f27)

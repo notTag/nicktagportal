@@ -1,232 +1,219 @@
 # Technology Stack
 
-**Project:** nick-site (Vue 3 Monorepo Micro-Frontend Portal)
-**Researched:** 2026-03-21
-**Verification note:** Versions based on training data through mid-2025. Exact patch versions should be verified at install time with `bun add <package>@latest`. Core version ranges are HIGH confidence.
+**Project:** nick-site v1.1 -- CLI Remote & Site Polish
+**Researched:** 2026-03-27
+**Scope:** NEW dependencies only. Existing stack (Vue 3, Vite 6, TailwindCSS v4, Pinia, Vue Router 4, Bun, Module Federation) validated in v1.0 and not re-researched.
 
-## Recommended Stack
+---
 
-### Core Framework
+## New Stack Additions
 
-| Technology | Version | Purpose                   | Why                                                                                                                                                                   | Confidence |
-| ---------- | ------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| Vue 3      | ^3.5    | UI framework              | Project requirement. Composition API + `<script setup>` is the standard Vue 3 authoring model. Vapor mode not yet stable enough for production.                       | HIGH       |
-| Vite       | ^6.0    | Build tool                | Vite 6 is the current stable line (released late 2024). Native ESM dev server, fast HMR, and the only practical build tool for Vue 3 + Module Federation via plugins. | HIGH       |
-| TypeScript | ^5.7    | Type safety               | Project requirement (strict mode). TS 5.7+ has improved decorator support and satisfies. Pin to 5.x range for vue-tsc compatibility.                                  | HIGH       |
-| Bun        | ^1.1    | Runtime + package manager | Project requirement. Bun workspaces work like npm/yarn workspaces via `workspaces` field in root package.json. Faster installs, native TS execution for scripts.      | HIGH       |
+### CLI Remote: Terminal Emulation
 
-### Module Federation
+| Technology             | Version | Purpose              | Why                                                                                                                                                                                                                                                                                                          | Confidence |
+| ---------------------- | ------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- |
+| @xterm/xterm           | ^5.5.0  | Terminal emulator    | The standard browser terminal emulator. v5.5.0 is the latest stable 5.x release (April 2025). Use the `@xterm/` scoped packages -- the old `xterm` package is deprecated. v6.0.0 exists but removes the canvas renderer addon and introduces breaking changes; v5.5.0 is lower-risk for a first integration. | HIGH       |
+| @xterm/addon-fit       | ^0.10.0 | Auto-resize terminal | Resizes terminal dimensions to fit the containing element. Essential for responsive layouts. Ships with v5.5.0 release.                                                                                                                                                                                      | HIGH       |
+| @xterm/addon-web-links | ^0.11.0 | Clickable URLs       | Automatically detects and linkifies URLs in terminal output. Nice-to-have for resume links (GitHub, LinkedIn). Ships with v5.5.0 release.                                                                                                                                                                    | HIGH       |
 
-| Technology                       | Version | Purpose                | Why                                                                                                                                                                                                                             | Confidence |
-| -------------------------------- | ------- | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| @originjs/vite-plugin-federation | ^1.3    | Vite Module Federation | Project requirement. The only mature Vite-native Module Federation plugin. Implements Module Federation 1.0 semantics (shared singletons, remote containers). Last publish was ~mid 2023, but it works with Vite 5/6 and Vue 3. | MEDIUM     |
+**Why NOT @xterm/xterm v6.0.0:** v6 removes the canvas renderer addon (breaking change) and is only 3 months old. The canvas fallback is valuable for older browsers. v5.5.0 is mature and well-documented. Upgrade to v6 after the CLI remote is stable.
 
-**Critical note on @originjs/vite-plugin-federation:** This plugin's maintenance has slowed significantly. The official `@module-federation/vite` package (from Zack Jackson's team) exists but was experimental through 2024-2025 and targets Module Federation 2.0 / "enhanced" semantics that are more complex. For this project's scope (shell + empty remotes, scaffolding only), @originjs is the pragmatic choice because:
+**Why NOT @xterm/addon-webgl:** WebGL rendering is overkill for a text-only resume terminal. The DOM renderer (default in xterm.js) is performant enough for this use case and avoids WebGL context limits. Add only if performance profiling shows DOM rendering is a bottleneck.
 
-1. Simpler API -- just `exposes`, `remotes`, `shared` config
-2. Well-documented for Vue 3 + Vite specifically
-3. The project will only scaffold federation plumbing, not run production remotes yet
-4. When remotes are added later (with AWS migration), re-evaluating the federation plugin is already planned
+**Why NOT @xterm/addon-canvas:** The DOM renderer is the default and sufficient. Canvas is a middle ground between DOM and WebGL that adds complexity without meaningful benefit for a simple terminal.
 
-**Alternative considered:** `@module-federation/vite` -- Use this instead IF at install time it has reached stable 1.0+ and has clear Vue 3 docs. Check npm and GitHub before installing.
+**Why NOT vue-xterm wrappers (@swzry/xterm-vue, vue-term):** All community Vue wrappers are abandoned (last publish 3-5 years ago). Direct xterm.js integration via Composition API `onMounted`/`onUnmounted` is straightforward and avoids dead dependency risk.
 
-### Routing & State
+### CLI Remote: Virtual Filesystem (No External Dependencies)
 
-| Technology | Version | Purpose          | Why                                                                                                                                            | Confidence |
-| ---------- | ------- | ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| Vue Router | ^4.5    | Client routing   | The official Vue 3 router. HTML5 history mode with lazy-loaded routes. Only option for Vue 3 SPA routing.                                      | HIGH       |
-| Pinia      | ^2.3    | State management | Official Vue 3 state management. Replaces Vuex. TypeScript-first, Composition API native, devtools support. No alternatives worth considering. | HIGH       |
+No library needed. The virtual filesystem is a custom in-memory tree structure backed by localStorage.
 
-### Styling
+**Rationale:** The filesystem is a read-only tree of resume data (companies, teams, projects, roles, skills) with limited write capability (user aliases, user-created files). This is ~200 lines of TypeScript, not a real filesystem. Libraries like `browserfs` or `isomorphic-git` are massively over-scoped.
 
-| Technology        | Version | Purpose               | Why                                                                                                                                  | Confidence |
-| ----------------- | ------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ---------- |
-| TailwindCSS       | ^4.0    | Utility CSS framework | Project requirement. v4 uses CSS-first config (`@theme` directives in CSS, no tailwind.config.js). Major paradigm shift from v3.     | HIGH       |
-| @tailwindcss/vite | ^4.0    | Vite integration      | v4's official Vite plugin. Replaces the old PostCSS-based setup. Import in vite.config.ts as a Vite plugin, not as a PostCSS plugin. | HIGH       |
+**Implementation pattern:**
 
-### Build & Dev Tooling
+- In-memory tree: `Record<string, FileNode>` where `FileNode = { type: 'file' | 'dir', content?: string, children?: Record<string, FileNode> }`
+- Pre-populated from static JSON (resume data)
+- User modifications serialized to `localStorage` as JSON
+- Shell commands (`ls`, `cd`, `cat`, `pwd`, `mkdir`, `touch`, `rm`, `echo`, `clear`, `help`, `whoami`, `date`, `tree`, `history`, `alias`) operate on the in-memory tree
 
-| Technology               | Version | Purpose                 | Why                                                                                                                            | Confidence |
-| ------------------------ | ------- | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------ | ---------- |
-| @vitejs/plugin-vue       | ^5.2    | Vue SFC compilation     | Official Vite plugin for .vue files. Required for `<script setup>`, template compilation, and style scoping.                   | HIGH       |
-| vue-tsc                  | ^2.2    | Vue TypeScript checking | Type-checks .vue files. Used in build step and CI. Replaces raw `tsc` which cannot understand SFCs.                            | HIGH       |
-| vite-plugin-vue-devtools | ^7.0    | Dev experience          | In-app devtools overlay for development. Component inspector, route visualization, Pinia state. Remove from production builds. | MEDIUM     |
+### Theme Interchangeability (No External Dependencies)
 
-### Linting & Formatting (Recommended)
+No library needed. The theme system maps VSCode theme JSON color tokens to CSS custom properties and xterm.js ITheme.
 
-| Technology                    | Version | Purpose                | Why                                                                                                     | Confidence |
-| ----------------------------- | ------- | ---------------------- | ------------------------------------------------------------------------------------------------------- | ---------- |
-| ESLint                        | ^9.0    | Linting                | Flat config format (eslint.config.js). Vue 3 + TypeScript rules via @vue/eslint-config-typescript.      | HIGH       |
-| @vue/eslint-config-typescript | ^14.0   | Vue TS lint rules      | Official Vue ESLint config for TypeScript projects. Bundles typescript-eslint rules tuned for Vue SFCs. | MEDIUM     |
-| Prettier                      | ^3.4    | Formatting             | Opinionated formatter. Use prettier-plugin-tailwindcss for class sorting.                               | HIGH       |
-| prettier-plugin-tailwindcss   | ^0.6    | Tailwind class sorting | Auto-sorts Tailwind utility classes in templates. Reduces bikeshedding on class order.                  | MEDIUM     |
+**Rationale:** VSCode themes are JSON files with a `colors` object (editor colors) and `tokenColors` array (syntax highlighting). The site only needs the `colors` object -- roughly 15-20 color values that map to CSS custom properties already defined in `main.css` (`--color-surface`, `--color-accent`, etc.).
 
-### Deployment
+**Implementation pattern:**
 
-| Technology     | Version | Purpose        | Why                                                                                                                                 | Confidence |
-| -------------- | ------- | -------------- | ----------------------------------------------------------------------------------------------------------------------------------- | ---------- |
-| GitHub Actions | N/A     | CI/CD          | Deploy to GitHub Pages on push to main. Standard for GitHub-hosted projects. Simple YAML workflow.                                  | HIGH       |
-| GitHub Pages   | N/A     | Static hosting | Project requirement for initial deployment. Custom domain (nicktag.tech) via CNAME file. SPA requires 404.html redirect workaround. | HIGH       |
+- Theme definition: TypeScript interface mapping VSCode color keys to site CSS custom properties
+- Theme files: Static JSON objects (not full VSCode theme files -- just the relevant color subset)
+- Runtime swap: `document.documentElement.style.setProperty('--color-surface', theme.editorBackground)`
+- xterm.js theme: Map the same colors to xterm's `ITheme` interface (`background`, `foreground`, `cursor`, ANSI colors)
+- Persistence: `localStorage.setItem('theme', themeName)`
+- Pinia store: `useThemeStore()` for reactive theme state across shell + remotes
 
-## What NOT to Use
+**VSCode theme color mapping (SynthWave '84 reference from [robb0wen/synthwave-vscode](https://github.com/robb0wen/synthwave-vscode)):**
 
-| Technology                  | Why Not                                                                                                                                                                                          |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Webpack                     | Vite is the standard Vue 3 build tool. Webpack adds massive complexity for zero benefit here.                                                                                                    |
-| Nuxt                        | This is a client-side SPA with Module Federation. Nuxt's SSR/SSG opinions conflict with federation architecture. Nuxt also controls the build pipeline, making custom federation config painful. |
-| Vuex                        | Deprecated in favor of Pinia. Pinia is the official Vue 3 state management.                                                                                                                      |
-| tailwind.config.js          | TailwindCSS v4 uses CSS-first config. Creating a JS config file is the v3 pattern and will not work correctly with v4.                                                                           |
-| PostCSS for Tailwind        | v4 ships its own Vite plugin (@tailwindcss/vite). Do not configure Tailwind as a PostCSS plugin -- that is the v3 approach.                                                                      |
-| @module-federation/enhanced | Webpack-specific Module Federation 2.0 runtime. Incompatible with Vite builds.                                                                                                                   |
-| npm / pnpm / yarn           | Project uses Bun. Mixing package managers in a monorepo creates lockfile conflicts and workspace resolution bugs.                                                                                |
-| unplugin-vue-router         | File-based routing adds magic. Explicit route definitions are better for a small site and for Module Federation where routes need careful control per remote.                                    |
-| UnoCSS                      | Tailwind v4 is the project requirement. UnoCSS is an alternative atomic CSS engine but adds nothing here and fragments the ecosystem if Tailwind is already chosen.                              |
-| Vitest (for now)            | Testing is explicitly out of scope. Add when CI testing pipeline is in scope.                                                                                                                    |
+| VSCode Color Key            | CSS Custom Property    | Current SynthWave Value |
+| --------------------------- | ---------------------- | ----------------------- |
+| editor.background           | --color-surface        | #2a2139                 |
+| editor.foreground           | --color-text           | #ffffff                 |
+| editorLineNumber.foreground | --color-text-muted     | #848bbd                 |
+| focusBorder                 | --color-border         | #495495                 |
+| button.background           | --color-accent         | #ff7edb                 |
+| terminal.ansiGreen          | --color-accent-cyan    | #72f1b8                 |
+| terminal.ansiYellow         | --color-accent-yellow  | #fede5d                 |
+| errorForeground             | --color-destructive    | #f97e72                 |
+| editor.selectionBackground  | --color-surface-raised | #34294f                 |
 
-## Monorepo Structure
+### Skills Animated Diamond Wall (No External Dependencies)
 
-```
-nicktagportal/
-  package.json          # Root: Bun workspaces config
-  bun.lock              # Single lockfile
-  tsconfig.json         # Base TS config, extended by each workspace
-  apps/
-    shell/              # Vue 3 shell app (the main site)
-      package.json
-      vite.config.ts
-      tsconfig.json     # extends ../../tsconfig.json
-      src/
-  packages/
-    ui/                 # Shared UI components (scaffolded, empty)
-      package.json
-      index.ts
-    types/              # Shared TypeScript types
-      package.json
-      index.ts
-```
+No animation library needed. Pure CSS with `clip-path` and CSS transitions/animations.
 
-### Workspace Configuration (root package.json)
+**Rationale:** The diamond wall is a grid of skill icons rotated 45 degrees. This is a CSS layout problem, not an animation library problem. GSAP, Framer Motion, or anime.js would add 15-40KB gzipped for something CSS handles natively.
 
-```json
-{
-  "name": "nicktagportal",
-  "private": true,
-  "workspaces": ["apps/*", "packages/*"]
-}
-```
+**Implementation pattern:**
 
-Bun reads the `workspaces` field identically to npm/yarn. All packages are hoisted to root `node_modules` by default.
+- Diamond shape: `clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)` on each grid item
+- Grid layout: CSS Grid with calculated offsets for staggered rows (every other row offset by half a diamond width)
+- Entry animation: CSS `@keyframes` with `animation-delay` computed per item for staggered reveal
+- Hover effect: `transform: scale(1.1)` with `transition: transform 0.2s ease`
+- Performance: Use `will-change: transform` on animated items, `contain: layout` on the grid container
 
-### Path Aliases
+**Why NOT GSAP:** 43KB minified. Overkill for staggered CSS animations. The `animation-delay` property handles staggering natively.
 
-Configure in `tsconfig.json` (base) and mirror in each `vite.config.ts`:
+**Why NOT anime.js:** 17KB minified. Same reasoning -- CSS handles this without JS orchestration.
+
+**Why NOT @vueuse/motion:** Adds a dependency for something achievable with CSS `@keyframes` and `v-for` index-based `animation-delay`. The diamonds don't need physics, spring animations, or gesture-driven motion.
+
+### Tree Shaking Audit Tools
+
+| Technology           | Version | Purpose              | Why                                                                                                                                                                                                               | Confidence |
+| -------------------- | ------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| vite-bundle-analyzer | ^1.3.6  | Bundle visualization | Interactive treemap showing module sizes. Actively maintained (last publish Jan 2026). Vite-native -- works as a Vite plugin, not a separate CLI step. Better DX than rollup-plugin-visualizer for Vite projects. | MEDIUM     |
+
+**Usage:** Dev dependency only. Add to vite.config.ts conditionally:
 
 ```typescript
-// vite.config.ts
-resolve: {
-  alias: {
-    '@': fileURLToPath(new URL('./src', import.meta.url)),
-    '@ui': fileURLToPath(new URL('../../packages/ui', import.meta.url)),
-    '@types': fileURLToPath(new URL('../../packages/types', import.meta.url)),
-  }
-}
+// Only when ANALYZE=true
+import { analyzer } from 'vite-bundle-analyzer'
+
+plugins: [...(process.env.ANALYZE ? [analyzer()] : [])]
 ```
 
-## Module Federation Configuration Pattern
+**Why NOT rollup-plugin-visualizer:** Works but designed for Rollup, not Vite specifically. vite-bundle-analyzer has better Vite integration and an actively maintained API.
 
-```typescript
-// apps/shell/vite.config.ts
-import federation from '@originjs/vite-plugin-federation'
+**Why NOT vite-bundle-visualizer:** Less actively maintained than vite-bundle-analyzer. Fewer features.
 
-export default defineConfig({
-  plugins: [
-    vue(),
-    tailwindcss(),
-    federation({
-      name: 'shell',
-      remotes: {
-        // Empty for now -- remotes added here when built
-        // playground: 'http://localhost:5001/assets/remoteEntry.js',
-      },
-      shared: ['vue', 'vue-router', 'pinia'],
-    }),
-  ],
-  build: {
-    target: 'esnext', // Required for Module Federation
-    minify: false, // Recommended during federation development
-    cssCodeSplit: false, // Avoids CSS loading issues with federation
-  },
-})
-```
+**Why NOT source-map-explorer:** Requires source maps in production builds. vite-bundle-analyzer works without them.
 
-**Key federation constraints:**
+### GitHub Actions Node.js 24 Migration
 
-- `build.target` MUST be `esnext` -- federation uses dynamic imports and top-level await
-- Shared dependencies (vue, vue-router, pinia) are loaded as singletons to prevent duplicate Vue instances
-- `cssCodeSplit: false` prevents CSS extraction issues when loading remote modules
+No new npm dependencies. Workflow YAML changes only.
 
-## TailwindCSS v4 Configuration Pattern
+| Change             | From                          | To               | Why                                                                                                                                                                                                                                             | Confidence |
+| ------------------ | ----------------------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- |
+| actions/setup-node | Not currently used (Bun only) | Not needed       | The deploy workflow uses `oven-sh/setup-bun@v2` and does not use Node.js directly. Bun handles all build/install steps.                                                                                                                         | HIGH       |
+| Runner Node.js     | Node 20 (default)             | Node 24 (forced) | GitHub runners switch to Node 24 by default on June 2, 2026. Actions like `actions/checkout@v4`, `actions/upload-pages-artifact@v3`, and `actions/deploy-pages@v4` run on the runner's Node.js version. Test compatibility before the deadline. | HIGH       |
 
-No `tailwind.config.js`. Configuration lives in CSS:
+**Migration steps:**
 
-```css
-/* src/app.css */
-@import 'tailwindcss';
+1. Add `FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true` as env in workflow to test early
+2. Verify all GitHub Actions used (`actions/checkout@v4`, `actions/upload-pages-artifact@v3`, `actions/deploy-pages@v4`, `oven-sh/setup-bun@v2`) are compatible with Node 24
+3. After verification, remove the env flag (it becomes default June 2, 2026)
 
-@theme {
-  --color-primary: #your-brand-color;
-  --font-sans: 'Inter', sans-serif;
-}
-```
+**Opt-out escape hatch:** If an action breaks, `ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true` forces Node 20 temporarily. This stops working fall 2026 when GitHub removes Node 20 from runners entirely.
 
-```typescript
-// vite.config.ts
-import tailwindcss from '@tailwindcss/vite'
+**Note:** `actions/checkout`, `actions/upload-pages-artifact`, and `actions/deploy-pages` are all maintained by GitHub and will have Node 24-compatible versions before the deadline. The risk is `oven-sh/setup-bun@v2` -- check their releases for Node 24 runner compatibility.
 
-export default defineConfig({
-  plugins: [
-    vue(),
-    tailwindcss(),
-    // ... federation
-  ],
-})
-```
+---
 
-## Installation
+## What NOT to Add for v1.1
+
+| Technology                                  | Why Not                                                                                                                            |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| browserfs / memfs                           | Over-engineered for a virtual resume filesystem. Custom ~200-line TypeScript solution is simpler and has zero dependency risk.     |
+| GSAP / anime.js / @vueuse/motion            | Diamond wall animations are CSS-native. Adding a JS animation library for staggered reveals is unnecessary weight.                 |
+| xterm Vue wrappers                          | All abandoned. Direct integration via Composition API is 30 lines of code.                                                         |
+| @xterm/addon-webgl                          | DOM renderer is sufficient for text-only terminal. WebGL adds complexity and potential GPU context issues.                         |
+| @xterm/addon-canvas                         | Removed in xterm v6; DOM renderer is the recommended path forward.                                                                 |
+| monaco-editor / codemirror                  | The CLI is a terminal, not a code editor. xterm.js is purpose-built for terminal emulation.                                        |
+| theme library (theme-ui, styled-components) | CSS custom properties + Pinia store handles theme switching without a library. TailwindCSS v4 already uses `@theme` CSS variables. |
+| node-pty / node-ssh                         | No backend. The CLI is a client-side virtual terminal with no real shell process.                                                  |
+
+---
+
+## Installation Commands
 
 ```bash
-# Initialize monorepo (from root)
-bun init
+# CLI Remote dependencies (in apps/cli workspace)
+bun add @xterm/xterm@^5.5.0
+bun add @xterm/addon-fit@^0.10.0
+bun add @xterm/addon-web-links@^0.11.0
 
-# Core dependencies (in apps/shell)
-bun add vue vue-router pinia
+# Tree shaking audit (root dev dependency)
+bun add -D vite-bundle-analyzer@^1.3.6
 
-# Dev dependencies (in apps/shell)
-bun add -D vite @vitejs/plugin-vue typescript vue-tsc
-bun add -D tailwindcss @tailwindcss/vite
-bun add -D @originjs/vite-plugin-federation
-
-# Linting (root level)
-bun add -D eslint @vue/eslint-config-typescript
-bun add -D prettier prettier-plugin-tailwindcss
-
-# Type support
-bun add -D @types/node
+# No new deps for: theme system, diamond wall, GitHub Actions Node 24
 ```
 
-## Version Pinning Strategy
+---
 
-Use caret ranges (`^`) for all dependencies. Bun's lockfile (`bun.lock`) pins exact versions. This gives you reproducible installs while allowing patch updates on `bun install`.
+## Integration Points with Existing Stack
 
-**Exception:** Pin `@originjs/vite-plugin-federation` to the exact version that works after initial setup. This package has infrequent releases and breaking changes between versions.
+### xterm.js + Module Federation
+
+- The CLI remote (`apps/cli`) exposes a Vue component wrapping xterm.js
+- xterm.js is NOT shared via federation -- it's private to the CLI remote
+- Only `vue`, `vue-router`, and `pinia` remain shared singletons
+- The shell loads the CLI remote's `remoteEntry.js` and mounts it at `/cli`
+
+### xterm.js + TailwindCSS v4
+
+- xterm.js renders inside a canvas/DOM element, not affected by Tailwind utility classes
+- The terminal container (border, padding, glow) uses Tailwind classes
+- xterm.js theme colors should be derived from the same CSS custom properties Tailwind uses (`--color-surface`, `--color-accent`, etc.)
+
+### Theme System + Pinia
+
+- `useThemeStore()` in Pinia manages active theme name and color values
+- Shared via federation so shell and all remotes react to theme changes
+- Theme store updates CSS custom properties on `document.documentElement`
+- Theme store also updates xterm.js terminal instance theme via `terminal.options.theme`
+
+### vite-bundle-analyzer + Monorepo
+
+- Add to each workspace's `vite.config.ts` individually (shell, cli)
+- Run with `ANALYZE=true bun run build` to generate treemap
+- Focus areas: xterm.js size (~300KB unminified, ~90KB gzipped), federation overhead, Tailwind purging
+
+---
+
+## Version Pinning Notes
+
+| Package                | Pin Strategy      | Reason                                                           |
+| ---------------------- | ----------------- | ---------------------------------------------------------------- |
+| @xterm/xterm           | `^5.5.0` (caret)  | Stay on 5.x line. Do not auto-upgrade to 6.x (breaking changes). |
+| @xterm/addon-fit       | `^0.10.0` (caret) | Must match xterm 5.5.x addon release matrix.                     |
+| @xterm/addon-web-links | `^0.11.0` (caret) | Must match xterm 5.5.x addon release matrix.                     |
+| vite-bundle-analyzer   | `^1.3.6` (caret)  | Dev tool, lower risk from minor updates.                         |
+
+---
 
 ## Sources
 
-- Vue 3 official docs: https://vuejs.org/
-- Vite official docs: https://vite.dev/
-- TailwindCSS v4 docs: https://tailwindcss.com/docs
-- @originjs/vite-plugin-federation: https://github.com/nicktag/vite-plugin-federation (originjs org)
-- Pinia docs: https://pinia.vuejs.org/
-- Bun workspaces: https://bun.sh/docs/install/workspaces
+- xterm.js releases: https://github.com/xtermjs/xterm.js/releases
+- xterm.js 5.5.0 release (addon matrix): https://github.com/xtermjs/xterm.js/releases/tag/5.5.0
+- @xterm/xterm npm: https://www.npmjs.com/package/@xterm/xterm
+- @xterm/addon-fit npm: https://www.npmjs.com/package/@xterm/addon-fit
+- @xterm/addon-web-links npm: https://www.npmjs.com/package/@xterm/addon-web-links
+- xterm.js ITheme API: https://xtermjs.org/docs/api/terminal/interfaces/itheme/
+- SynthWave '84 VSCode theme: https://github.com/robb0wen/synthwave-vscode
+- VSCode theme color reference: https://code.visualstudio.com/api/references/theme-color
+- vite-bundle-analyzer: https://github.com/nonzzz/vite-bundle-analyzer
+- GitHub Actions Node 20 deprecation: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
+- actions/setup-node v6: https://github.com/actions/setup-node
+- CSS clip-path diamond: https://codepen.io/imohkay/pen/KpdBrw/
+- Diamond grid layout technique: https://medium.com/@supryan/who-needs-squares-and-rectangles-how-to-create-a-diamond-grid-layout-with-css-da5712d6df8b
 
-**Confidence note:** All version numbers are based on training data through mid-2025. The major version lines (Vue 3.5+, Vite 6, Tailwind 4, TS 5.7+) are HIGH confidence. Exact patch versions should be resolved at install time with `@latest`.
+**Confidence note:** xterm.js versions verified via npm and GitHub releases (HIGH). v6.0.0 existence confirmed but breaking changes make v5.5.0 the safer pick. vite-bundle-analyzer version from npm (MEDIUM -- verify at install time). GitHub Actions Node 24 timeline from official GitHub changelog (HIGH).
