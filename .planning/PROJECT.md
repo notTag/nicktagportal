@@ -40,16 +40,43 @@ The shell app works as a polished, deployable personal site from day one — fed
 
 ### Active
 
-(None — v1.0 shipped. Next requirements defined in v1.1 milestone.)
+**Workstream A: CLI Remote**
+
+- [ ] First federated micro-frontend remote (apps/cli) replacing current /cli route
+- [ ] xterm.js-powered terminal with top 10-15 shell commands
+- [ ] Pre-populated resume filesystem (companies, teams, projects, roles, skills)
+- [ ] localStorage for session persistence (aliases, user-created files)
+
+**Workstream B: Polish & Infrastructure**
+
+- [ ] Theme interchangeability system with VSCode theme mapping
+- [ ] Skills animated diamond wall on /skills route
+- [ ] Rollback workflow testing end-to-end
+- [ ] Tree shaking audit and bundle optimization
+- [ ] GitHub Actions Node.js 24 migration
 
 ### Out of Scope
 
-- Building actual micro-frontend remotes — scaffolding only, no remote apps yet
 - AWS deployment — future migration, GitHub Pages for now
 - Shared UI component library implementation — empty package scaffolded only
 - Backend or API integration — static site for now
 - Authentication or user accounts — public portfolio
 - CI testing pipeline — deploy workflow only for now
+
+## Current Milestone: v1.1 CLI Remote & Site Polish
+
+**Goal:** Ship the first real micro-frontend remote — an interactive terminal portfolio experience — while hardening infrastructure and adding visual polish.
+
+**Target features:**
+
+- CLI Remote (apps/cli) — xterm.js terminal with resume filesystem, first federation proof-point
+- Theme Interchangeability — VSCode theme mapping, settings button, localStorage
+- Skills Animated Diamond Wall — /skills route with animated tech icon diamonds
+- Rollback Workflow Testing — Verify rollback deployment end-to-end
+- Tree Shaking — Bundle optimization across monorepo
+- GitHub Actions Node.js 24 Migration — Before June 2, 2026 deadline
+
+**Workstreams:** A (CLI Remote) and B (Polish & Infrastructure) run in parallel.
 
 ## Current State
 
@@ -114,4 +141,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-03-24 after v1.0 milestone_
+_Last updated: 2026-03-27 after v1.1 milestone started_
