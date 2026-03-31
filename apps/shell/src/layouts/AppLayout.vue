@@ -8,7 +8,7 @@ type Orientation = 'left' | 'right' | 'center' | 'none'
 
 <template>
   <div class="bg-surface text-text flex h-screen flex-col">
-    <TheHeader />
+    <TheHeader :show-theme-picker="features.showThemePicker" />
     <main class="flex-1 overflow-y-auto">
       <RouterView />
     </main>
