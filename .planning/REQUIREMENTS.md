@@ -47,7 +47,7 @@ Requirements for milestone v1.1: CLI Remote & Site Polish. Each maps to roadmap 
 
 ### Theme System
 
-- [ ] **THM-01**: User can switch themes via a button/dropdown in the header
+- [x] **THM-01**: User can switch themes via a button/dropdown in the header
 - [x] **THM-02**: Theme change swaps all site colors instantly via CSS custom properties (no reload)
 - [x] **THM-03**: SynthWave '84 remains the default theme
 - [x] **THM-04**: Site ships with 3-5 curated VSCode themes (e.g., Dracula, Nord, One Dark Pro)
@@ -101,7 +101,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status  |
 | ----------- | ----- | ------- |
-| THM-01      | 5     | Pending |
+| THM-01      | 5     | Complete |
 | THM-02      | 5     | Complete |
 | THM-03      | 5     | Complete |
 | THM-04      | 5     | Complete |

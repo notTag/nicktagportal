@@ -53,7 +53,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 Plans:
 
 - [x] 05-01-PLAN.md -- Theme data layer, CSS infrastructure, and FOUC prevention
-- [ ] 05-02-PLAN.md -- ThemeDropdown WAI-ARIA listbox and TheHeader responsive layout
+- [x] 05-02-PLAN.md -- ThemeDropdown WAI-ARIA listbox and TheHeader responsive layout
 - [ ] 05-03-PLAN.md -- MobileMenu overlay, AppLayout wiring, and visual verification
 
 ### Phase 6: Skills Diamond Wall
