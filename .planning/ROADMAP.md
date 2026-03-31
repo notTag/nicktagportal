@@ -69,3 +69,13 @@ Plans:
 Plans:
 
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.7: VSCode Theme JSON Import Engine (BACKLOG)
+
+**Goal:** Allow users to paste raw VSCode theme JSON and have the site automatically extract ~15-20 relevant color keys, mapping them to site CSS custom properties and xterm.js ITheme. Power-user feature for theme customization beyond curated presets.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
