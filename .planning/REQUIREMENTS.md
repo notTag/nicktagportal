@@ -1,0 +1,160 @@
+# Requirements: nick-site
+
+**Defined:** 2026-03-31
+**Core Value:** The shell app works as a polished, deployable personal site from day one — federation infrastructure is ready but never blocks the core experience.
+
+## v1.1 Requirements
+
+Requirements for milestone v1.1: CLI Remote & Site Polish. Each maps to roadmap phases.
+
+### CLI Terminal
+
+- [ ] **CLI-01**: User sees an xterm.js-powered terminal with responsive fit at /cli route
+- [ ] **CLI-02**: User sees a colored prompt displaying current working directory (nick@nicktag.tech:~/path $)
+- [ ] **CLI-03**: User can navigate directories with `cd` (supports `.`, `..`, `~`, relative and absolute paths)
+- [ ] **CLI-04**: User can list directory contents with `ls`
+- [ ] **CLI-05**: User can read file contents with `cat`
+- [ ] **CLI-06**: User can see current directory with `pwd`
+- [ ] **CLI-07**: User can identify themselves with `whoami`
+- [ ] **CLI-08**: User can see available commands with `help`
+- [ ] **CLI-09**: User can reset terminal with `clear`
+- [ ] **CLI-10**: User can output text with `echo`
+- [ ] **CLI-11**: User can view directory structure with `tree`
+- [ ] **CLI-12**: User can recall previous commands with `history` and up/down arrows
+- [ ] **CLI-13**: User can tab-complete commands and file paths
+- [ ] **CLI-14**: User sees red error text for unknown commands
+- [ ] **CLI-15**: User can create directories with `mkdir` (persisted to localStorage)
+- [ ] **CLI-16**: User can create files with `touch` (persisted to localStorage)
+- [ ] **CLI-17**: User can set aliases with `alias` (persisted to localStorage)
+- [ ] **CLI-18**: User sees an ASCII art welcome banner on terminal load
+- [ ] **CLI-19**: User can view a formatted resume summary with `resume` command
+- [ ] **CLI-20**: User can trigger an `ssh` Easter egg command
+
+### Virtual Filesystem
+
+- [ ] **VFS-01**: Terminal loads a pre-populated resume filesystem with companies, teams, projects, roles, and skills directories
+- [ ] **VFS-02**: File contents display resume information when read with `cat`
+- [ ] **VFS-03**: User-created files and directories persist across sessions via localStorage
+
+### Federation
+
+- [ ] **FED-01**: CLI exists as a separate Vite app (apps/cli) in the monorepo
+- [ ] **FED-02**: CLI remote generates remoteEntry.js via Module Federation plugin
+- [ ] **FED-03**: Shell loads CLI remote dynamically via defineAsyncComponent at /cli route
+- [ ] **FED-04**: Shell displays fallback error component when CLI remote is unavailable
+- [ ] **FED-05**: Vue, Vue Router, and Pinia load as shared singletons (no duplication)
+- [ ] **FED-06**: Dev workflow scripts orchestrate remote build before shell dev server
+
+### Theme System
+
+- [ ] **THM-01**: User can switch themes via a button/dropdown in the header
+- [ ] **THM-02**: Theme change swaps all site colors instantly via CSS custom properties (no reload)
+- [ ] **THM-03**: SynthWave '84 remains the default theme
+- [ ] **THM-04**: Site ships with 3-5 curated VSCode themes (e.g., Dracula, Nord, One Dark Pro)
+- [ ] **THM-05**: xterm.js terminal colors update when theme changes
+- [ ] **THM-06**: Theme preference persists across sessions via localStorage (no flash on reload)
+
+### Skills Diamond Wall
+
+- [ ] **SKL-01**: User can navigate to a dedicated /skills route
+- [ ] **SKL-02**: Skills display as a diamond/rotated grid layout with technology icons (Devicon SVGs)
+- [ ] **SKL-03**: Diamonds animate in with staggered entrance animation
+- [ ] **SKL-04**: Diamonds respond to hover with scale/glow effects
+- [ ] **SKL-05**: Diamond wall is responsive across screen sizes
+- [ ] **SKL-06**: Diamonds show skill proficiency level via visual indicator (fill, opacity, or glow intensity)
+- [ ] **SKL-07**: User can filter/search diamonds by category or name
+- [ ] **SKL-08**: Animations trigger on scroll into view (IntersectionObserver)
+
+### Infrastructure
+
+- [ ] **INF-01**: GitHub Actions workflows updated to support Node.js 24 (before June 2, 2026 deadline)
+- [ ] **INF-02**: Production bundle audited for tree shaking effectiveness
+- [ ] **INF-03**: Rollback deployment workflow tested end-to-end in production
+
+## Future Requirements
+
+Deferred to future milestones. Tracked but not in current roadmap.
+
+### Theme System
+
+- **THM-07**: User can paste VSCode theme JSON to generate a custom theme (backlog 999.7)
+
+## Out of Scope
+
+Explicitly excluded. Documented to prevent scope creep.
+
+| Feature                                           | Reason                                               |
+| ------------------------------------------------- | ---------------------------------------------------- |
+| Real backend / WebSocket terminal                 | Security risk, destroys static hosting model         |
+| Full bash compatibility (pipes, redirects, globs) | Building a portfolio, not a shell                    |
+| memfs / BrowserFS                                 | Overkill for ~50 read-only resume files              |
+| WebGL renderer for xterm.js                       | Zero benefit for low-output resume terminal          |
+| Multiple terminal sessions / tabs                 | Scope creep                                          |
+| Theme editor / color picker UI                    | Separate project                                     |
+| GSAP or animation libraries                       | CSS handles everything needed                        |
+| Auto OS theme detection                           | Site is dark-themed by design                        |
+| HomeView skills section refactor                  | Keep as-is; diamond wall is a separate /skills route |
+
+## Traceability
+
+Which phases cover which requirements. Updated during roadmap creation.
+
+| Requirement | Phase | Status  |
+| ----------- | ----- | ------- |
+| CLI-01      | TBD   | Pending |
+| CLI-02      | TBD   | Pending |
+| CLI-03      | TBD   | Pending |
+| CLI-04      | TBD   | Pending |
+| CLI-05      | TBD   | Pending |
+| CLI-06      | TBD   | Pending |
+| CLI-07      | TBD   | Pending |
+| CLI-08      | TBD   | Pending |
+| CLI-09      | TBD   | Pending |
+| CLI-10      | TBD   | Pending |
+| CLI-11      | TBD   | Pending |
+| CLI-12      | TBD   | Pending |
+| CLI-13      | TBD   | Pending |
+| CLI-14      | TBD   | Pending |
+| CLI-15      | TBD   | Pending |
+| CLI-16      | TBD   | Pending |
+| CLI-17      | TBD   | Pending |
+| CLI-18      | TBD   | Pending |
+| CLI-19      | TBD   | Pending |
+| CLI-20      | TBD   | Pending |
+| VFS-01      | TBD   | Pending |
+| VFS-02      | TBD   | Pending |
+| VFS-03      | TBD   | Pending |
+| FED-01      | TBD   | Pending |
+| FED-02      | TBD   | Pending |
+| FED-03      | TBD   | Pending |
+| FED-04      | TBD   | Pending |
+| FED-05      | TBD   | Pending |
+| FED-06      | TBD   | Pending |
+| THM-01      | TBD   | Pending |
+| THM-02      | TBD   | Pending |
+| THM-03      | TBD   | Pending |
+| THM-04      | TBD   | Pending |
+| THM-05      | TBD   | Pending |
+| THM-06      | TBD   | Pending |
+| SKL-01      | TBD   | Pending |
+| SKL-02      | TBD   | Pending |
+| SKL-03      | TBD   | Pending |
+| SKL-04      | TBD   | Pending |
+| SKL-05      | TBD   | Pending |
+| SKL-06      | TBD   | Pending |
+| SKL-07      | TBD   | Pending |
+| SKL-08      | TBD   | Pending |
+| INF-01      | TBD   | Pending |
+| INF-02      | TBD   | Pending |
+| INF-03      | TBD   | Pending |
+
+**Coverage:**
+
+- v1.1 requirements: 42 total
+- Mapped to phases: 0
+- Unmapped: 42 ⚠️
+
+---
+
+_Requirements defined: 2026-03-31_
+_Last updated: 2026-03-31 after initial definition_
