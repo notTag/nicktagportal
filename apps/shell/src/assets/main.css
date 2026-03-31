@@ -1,16 +1,51 @@
 @import 'tailwindcss';
 
-@source "../../../../packages/ui/src/**/*.vue";
+@source '../../../../packages/ui/src/**/*.vue';
 
 @theme {
   --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --color-surface: #2a2139;
-  --color-surface-raised: #34294f;
+
+  /* Surface colors */
+  --color-surface: #262335;
+  --color-surface-raised: #241b2f;
+  --color-surface-overlay: #171520;
+
+  /* Text colors */
+  --color-text: #ffffff;
+  --color-text-muted: #848bbd;
+  --color-text-on-accent: #ffffff;
+
+  /* Accent colors */
   --color-accent: #ff7edb;
   --color-accent-cyan: #72f1b8;
   --color-accent-yellow: #fede5d;
-  --color-destructive: #f97e72;
-  --color-text: #ffffff;
-  --color-text-muted: #848bbd;
+
+  /* Semantic colors */
+  --color-destructive: #fe4450;
+  --color-link: #f97e72;
+  --color-link-hover: #ff7edb;
+
+  /* UI chrome */
   --color-border: #495495;
+  --color-header-bg: #241b2f;
+  --color-selection: #ffffff20;
+  --color-hover: #37294d99;
+}
+
+/* Theme transition for smooth color switching (D-12: 250ms ease-in-out) */
+*,
+*::before,
+*::after {
+  transition:
+    color 250ms ease-in-out,
+    background-color 250ms ease-in-out,
+    border-color 250ms ease-in-out;
+}
+
+/* Suppress transitions on page load to prevent initial color animation */
+.no-transition,
+.no-transition *,
+.no-transition *::before,
+.no-transition *::after {
+  transition: none !important;
 }

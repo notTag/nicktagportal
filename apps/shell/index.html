@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="no-transition">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -9,6 +9,186 @@
       rel="stylesheet"
     />
     <title>nick-site</title>
+    <script>
+      ;(function () {
+        var K = 'nicksite-theme'
+        var D = 'synthwave-84'
+        var T = {
+          'synthwave-84': {
+            '--color-surface': '#262335',
+            '--color-surface-raised': '#241b2f',
+            '--color-surface-overlay': '#171520',
+            '--color-text': '#ffffff',
+            '--color-text-muted': '#848bbd',
+            '--color-text-on-accent': '#ffffff',
+            '--color-accent': '#ff7edb',
+            '--color-accent-cyan': '#72f1b8',
+            '--color-accent-yellow': '#fede5d',
+            '--color-destructive': '#fe4450',
+            '--color-link': '#f97e72',
+            '--color-link-hover': '#ff7edb',
+            '--color-border': '#495495',
+            '--color-header-bg': '#241b2f',
+            '--color-selection': '#ffffff20',
+            '--color-hover': '#37294d99',
+          },
+          'dark-modern': {
+            '--color-surface': '#1F1F1F',
+            '--color-surface-raised': '#181818',
+            '--color-surface-overlay': '#202020',
+            '--color-text': '#CCCCCC',
+            '--color-text-muted': '#9D9D9D',
+            '--color-text-on-accent': '#FFFFFF',
+            '--color-accent': '#0078D4',
+            '--color-accent-cyan': '#4daafc',
+            '--color-accent-yellow': '#CCA700',
+            '--color-destructive': '#F85149',
+            '--color-link': '#4daafc',
+            '--color-link-hover': '#73c0ff',
+            '--color-border': '#2B2B2B',
+            '--color-header-bg': '#181818',
+            '--color-selection': '#04395e',
+            '--color-hover': '#2a2d2e80',
+          },
+          'dark-plus': {
+            '--color-surface': '#1E1E1E',
+            '--color-surface-raised': '#252526',
+            '--color-surface-overlay': '#1E1E1E',
+            '--color-text': '#D4D4D4',
+            '--color-text-muted': '#858585',
+            '--color-text-on-accent': '#FFFFFF',
+            '--color-accent': '#0078D4',
+            '--color-accent-cyan': '#4EC9B0',
+            '--color-accent-yellow': '#DCDCAA',
+            '--color-destructive': '#F44747',
+            '--color-link': '#4EC9B0',
+            '--color-link-hover': '#6fe0cb',
+            '--color-border': '#303030',
+            '--color-header-bg': '#252526',
+            '--color-selection': '#094771',
+            '--color-hover': '#2a2d2e80',
+          },
+          'monokai-dimmed': {
+            '--color-surface': '#1e1e1e',
+            '--color-surface-raised': '#272727',
+            '--color-surface-overlay': '#353535',
+            '--color-text': '#c5c8c6',
+            '--color-text-muted': '#8b8b8b',
+            '--color-text-on-accent': '#FFFFFF',
+            '--color-accent': '#3655b5',
+            '--color-accent-cyan': '#00b0b5',
+            '--color-accent-yellow': '#b5a642',
+            '--color-destructive': '#f44747',
+            '--color-link': '#6796e6',
+            '--color-link-hover': '#87b3f0',
+            '--color-border': '#3e3e3e',
+            '--color-header-bg': '#505050',
+            '--color-selection': '#3655b580',
+            '--color-hover': '#2a2d2e80',
+          },
+          red: {
+            '--color-surface': '#390000',
+            '--color-surface-raised': '#330000',
+            '--color-surface-overlay': '#580000',
+            '--color-text': '#F8F8F8',
+            '--color-text-muted': '#b89e9e',
+            '--color-text-on-accent': '#FFFFFF',
+            '--color-accent': '#ff6666',
+            '--color-accent-cyan': '#ff9999',
+            '--color-accent-yellow': '#ffcc66',
+            '--color-destructive': '#ffeaea',
+            '--color-link': '#ff6666',
+            '--color-link-hover': '#ff9999',
+            '--color-border': '#5e2020',
+            '--color-header-bg': '#770000',
+            '--color-selection': '#ff666640',
+            '--color-hover': '#5e202080',
+          },
+          'solarized-dark': {
+            '--color-surface': '#002B36',
+            '--color-surface-raised': '#00212B',
+            '--color-surface-overlay': '#003847',
+            '--color-text': '#839496',
+            '--color-text-muted': '#657B83',
+            '--color-text-on-accent': '#FFFFFF',
+            '--color-accent': '#2AA198',
+            '--color-accent-cyan': '#2AA198',
+            '--color-accent-yellow': '#B58900',
+            '--color-destructive': '#DC322F',
+            '--color-link': '#268BD2',
+            '--color-link-hover': '#4DA3E0',
+            '--color-border': '#2b3c41',
+            '--color-header-bg': '#002C39',
+            '--color-selection': '#073642',
+            '--color-hover': '#073642cc',
+          },
+          'solarized-light': {
+            '--color-surface': '#FDF6E3',
+            '--color-surface-raised': '#EEE8D5',
+            '--color-surface-overlay': '#DDD6C1',
+            '--color-text': '#657B83',
+            '--color-text-muted': '#93A1A1',
+            '--color-text-on-accent': '#FFFFFF',
+            '--color-accent': '#AC9D57',
+            '--color-accent-cyan': '#2AA198',
+            '--color-accent-yellow': '#B58900',
+            '--color-destructive': '#DC322F',
+            '--color-link': '#268BD2',
+            '--color-link-hover': '#1a6da0',
+            '--color-border': '#DDD6C1',
+            '--color-header-bg': '#EEE8D5',
+            '--color-selection': '#268BD230',
+            '--color-hover': '#D3CBB880',
+          },
+          'hc-dark': {
+            '--color-surface': '#000000',
+            '--color-surface-raised': '#0a0a0a',
+            '--color-surface-overlay': '#0a0a0a',
+            '--color-text': '#FFFFFF',
+            '--color-text-muted': '#CCCCCC',
+            '--color-text-on-accent': '#FFFFFF',
+            '--color-accent': '#FFA500',
+            '--color-accent-cyan': '#00FFFF',
+            '--color-accent-yellow': '#FFD700',
+            '--color-destructive': '#FF0000',
+            '--color-link': '#3794FF',
+            '--color-link-hover': '#5ab0ff',
+            '--color-border': '#6FC3DF',
+            '--color-header-bg': '#0a0a0a',
+            '--color-selection': '#008000',
+            '--color-hover': '#264F7880',
+          },
+          'hc-light': {
+            '--color-surface': '#FFFFFF',
+            '--color-surface-raised': '#F5F5F5',
+            '--color-surface-overlay': '#E8E8E8',
+            '--color-text': '#292929',
+            '--color-text-muted': '#666666',
+            '--color-text-on-accent': '#FFFFFF',
+            '--color-accent': '#0F4A85',
+            '--color-accent-cyan': '#0F4A85',
+            '--color-accent-yellow': '#B5200D',
+            '--color-destructive': '#B5200D',
+            '--color-link': '#0F4A85',
+            '--color-link-hover': '#264F78',
+            '--color-border': '#292929',
+            '--color-header-bg': '#F5F5F5',
+            '--color-selection': '#0F4A8530',
+            '--color-hover': '#CCCCCC80',
+          },
+        }
+        var id = localStorage.getItem(K) || D
+        var t = T[id] || T[D]
+        var s = document.documentElement.style
+        for (var k in t) s.setProperty(k, t[k])
+        // Remove no-transition class after first paint to enable smooth switching
+        requestAnimationFrame(function () {
+          requestAnimationFrame(function () {
+            document.documentElement.classList.remove('no-transition')
+          })
+        })
+      })()
+    </script>
   </head>
   <body>
     <div id="app"></div>
