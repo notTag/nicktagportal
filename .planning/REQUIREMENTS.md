@@ -48,11 +48,11 @@ Requirements for milestone v1.1: CLI Remote & Site Polish. Each maps to roadmap 
 ### Theme System
 
 - [ ] **THM-01**: User can switch themes via a button/dropdown in the header
-- [ ] **THM-02**: Theme change swaps all site colors instantly via CSS custom properties (no reload)
-- [ ] **THM-03**: SynthWave '84 remains the default theme
-- [ ] **THM-04**: Site ships with 3-5 curated VSCode themes (e.g., Dracula, Nord, One Dark Pro)
+- [x] **THM-02**: Theme change swaps all site colors instantly via CSS custom properties (no reload)
+- [x] **THM-03**: SynthWave '84 remains the default theme
+- [x] **THM-04**: Site ships with 3-5 curated VSCode themes (e.g., Dracula, Nord, One Dark Pro)
 - [ ] **THM-05**: xterm.js terminal colors update when theme changes
-- [ ] **THM-06**: Theme preference persists across sessions via localStorage (no flash on reload)
+- [x] **THM-06**: Theme preference persists across sessions via localStorage (no flash on reload)
 
 ### Skills Diamond Wall
 
@@ -102,11 +102,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status  |
 | ----------- | ----- | ------- |
 | THM-01      | 5     | Pending |
-| THM-02      | 5     | Pending |
-| THM-03      | 5     | Pending |
-| THM-04      | 5     | Pending |
+| THM-02      | 5     | Complete |
+| THM-03      | 5     | Complete |
+| THM-04      | 5     | Complete |
 | THM-05      | 8     | Pending |
-| THM-06      | 5     | Pending |
+| THM-06      | 5     | Complete |
 | SKL-01      | 6     | Pending |
 | SKL-02      | 6     | Pending |
 | SKL-03      | 6     | Pending |

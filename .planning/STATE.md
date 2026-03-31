@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
-status: planning
-stopped_at: Phase 5 context gathered
-last_updated: '2026-03-31T05:37:10.508Z'
-last_activity: 2026-03-31 -- Roadmap created for v1.1 (5 phases, 46 requirements mapped)
+status: executing
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-03-31T14:46:43.742Z"
+last_activity: 2026-03-31
 progress:
   total_phases: 11
   completed_phases: 0
-  total_plans: 0
-  completed_plans: 0
+  total_plans: 3
+  completed_plans: 1
   percent: 0
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-27)
 
 **Core value:** The shell app works as a polished, deployable personal site from day one -- federation infrastructure is ready but never blocks the core experience.
-**Current focus:** v1.1 Phase 5 -- Theme System
+**Current focus:** Phase 05 — theme-system
 
 ## Current Position
 
-Phase: 5 of 9 (Theme System) -- first phase of v1.1
-Plan: --
-Status: Ready to plan
-Last activity: 2026-03-31 -- Roadmap created for v1.1 (5 phases, 46 requirements mapped)
+Phase: 05 (theme-system) — EXECUTING
+Plan: 2 of 3
+Status: Ready to execute
+Last activity: 2026-03-31
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -49,6 +49,9 @@ _Updated after each plan completion_
 Decisions are logged in PROJECT.md Key Decisions table.
 All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 
+- [Phase 05]: Corrected SynthWave surface colors to actual VSCode JSON values (#262335)
+- [Phase 05]: FOUC script embeds all 9 theme maps inline for zero-dependency pre-paint application
+
 ### Pending Todos
 
 None.
@@ -60,6 +63,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-31T05:37:10.503Z
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-theme-system/05-CONTEXT.md
+Last session: 2026-03-31T14:46:43.740Z
+Stopped at: Completed 05-01-PLAN.md
+Resume file: None
