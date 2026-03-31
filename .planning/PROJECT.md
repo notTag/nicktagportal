@@ -88,6 +88,14 @@ The shell app works as a polished, deployable personal site from day one — fed
 - SynthWave '84 themed dark UI with interactive terminal, skills grid, and federation scaffolding
 - CI/CD: GitHub Actions → GitHub Pages with production approval gate and rollback workflow
 
+**Phase 5 complete 2026-03-31** — Theme System
+
+- 9 curated VSCode themes switchable via desktop dropdown and mobile hamburger menu
+- WAI-ARIA listbox with arrow-key live preview, Enter/Escape/click-outside handling
+- Pinia store + useTheme composable for reactive CSS custom property switching
+- FOUC prevention via inline script in index.html
+- localStorage persistence across sessions
+
 ## Context
 
 Nick is a Technical Lead targeting Director of Engineering. The site serves dual purpose: professional portfolio for career positioning and a technical playground for experimenting with micro-frontend architecture (Module Federation via Vite). The monorepo is intentionally over-structured for a single app because the goal is to have federation plumbing ready when remotes are added.
@@ -141,4 +149,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-03-27 after v1.1 milestone started_
+_Last updated: 2026-03-31 after Phase 5 (Theme System) completed_
