@@ -71,15 +71,15 @@ onMounted(() => {
       @submit.prevent="handleSubmit"
     >
       <span class="text-accent font-bold">$</span>
+      <span
+        class="bg-accent-yellow inline-block h-4 w-2 shrink-0 animate-[blink_1s_step-end_infinite]"
+      />
       <input
         v-model="currentInput"
         type="text"
         class="text-text placeholder:text-text-muted flex-1 bg-transparent outline-none"
         placeholder="Type a command..."
         autofocus
-      />
-      <span
-        class="bg-accent-yellow inline-block h-4 w-2 animate-[blink_1s_step-end_infinite]"
       />
     </form>
   </div>
