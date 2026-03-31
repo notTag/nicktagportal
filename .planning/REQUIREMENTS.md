@@ -101,60 +101,60 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status  |
 | ----------- | ----- | ------- |
-| CLI-01      | TBD   | Pending |
-| CLI-02      | TBD   | Pending |
-| CLI-03      | TBD   | Pending |
-| CLI-04      | TBD   | Pending |
-| CLI-05      | TBD   | Pending |
-| CLI-06      | TBD   | Pending |
-| CLI-07      | TBD   | Pending |
-| CLI-08      | TBD   | Pending |
-| CLI-09      | TBD   | Pending |
-| CLI-10      | TBD   | Pending |
-| CLI-11      | TBD   | Pending |
-| CLI-12      | TBD   | Pending |
-| CLI-13      | TBD   | Pending |
-| CLI-14      | TBD   | Pending |
-| CLI-15      | TBD   | Pending |
-| CLI-16      | TBD   | Pending |
-| CLI-17      | TBD   | Pending |
-| CLI-18      | TBD   | Pending |
-| CLI-19      | TBD   | Pending |
-| CLI-20      | TBD   | Pending |
-| VFS-01      | TBD   | Pending |
-| VFS-02      | TBD   | Pending |
-| VFS-03      | TBD   | Pending |
-| FED-01      | TBD   | Pending |
-| FED-02      | TBD   | Pending |
-| FED-03      | TBD   | Pending |
-| FED-04      | TBD   | Pending |
-| FED-05      | TBD   | Pending |
-| FED-06      | TBD   | Pending |
-| THM-01      | TBD   | Pending |
-| THM-02      | TBD   | Pending |
-| THM-03      | TBD   | Pending |
-| THM-04      | TBD   | Pending |
-| THM-05      | TBD   | Pending |
-| THM-06      | TBD   | Pending |
-| SKL-01      | TBD   | Pending |
-| SKL-02      | TBD   | Pending |
-| SKL-03      | TBD   | Pending |
-| SKL-04      | TBD   | Pending |
-| SKL-05      | TBD   | Pending |
-| SKL-06      | TBD   | Pending |
-| SKL-07      | TBD   | Pending |
-| SKL-08      | TBD   | Pending |
-| INF-01      | TBD   | Pending |
-| INF-02      | TBD   | Pending |
-| INF-03      | TBD   | Pending |
+| THM-01      | 5     | Pending |
+| THM-02      | 5     | Pending |
+| THM-03      | 5     | Pending |
+| THM-04      | 5     | Pending |
+| THM-05      | 8     | Pending |
+| THM-06      | 5     | Pending |
+| SKL-01      | 6     | Pending |
+| SKL-02      | 6     | Pending |
+| SKL-03      | 6     | Pending |
+| SKL-04      | 6     | Pending |
+| SKL-05      | 6     | Pending |
+| SKL-06      | 6     | Pending |
+| SKL-07      | 6     | Pending |
+| SKL-08      | 6     | Pending |
+| CLI-01      | 7     | Pending |
+| CLI-02      | 7     | Pending |
+| CLI-03      | 7     | Pending |
+| CLI-04      | 7     | Pending |
+| CLI-05      | 7     | Pending |
+| CLI-06      | 7     | Pending |
+| CLI-07      | 7     | Pending |
+| CLI-08      | 7     | Pending |
+| CLI-09      | 7     | Pending |
+| CLI-10      | 7     | Pending |
+| CLI-11      | 7     | Pending |
+| CLI-12      | 7     | Pending |
+| CLI-13      | 7     | Pending |
+| CLI-14      | 7     | Pending |
+| CLI-15      | 7     | Pending |
+| CLI-16      | 7     | Pending |
+| CLI-17      | 7     | Pending |
+| CLI-18      | 7     | Pending |
+| CLI-19      | 7     | Pending |
+| CLI-20      | 7     | Pending |
+| VFS-01      | 7     | Pending |
+| VFS-02      | 7     | Pending |
+| VFS-03      | 7     | Pending |
+| FED-01      | 8     | Pending |
+| FED-02      | 8     | Pending |
+| FED-03      | 8     | Pending |
+| FED-04      | 8     | Pending |
+| FED-05      | 8     | Pending |
+| FED-06      | 8     | Pending |
+| INF-01      | 9     | Pending |
+| INF-02      | 9     | Pending |
+| INF-03      | 9     | Pending |
 
 **Coverage:**
 
-- v1.1 requirements: 42 total
-- Mapped to phases: 0
-- Unmapped: 42 ⚠️
+- v1.1 requirements: 46 total
+- Mapped to phases: 46
+- Unmapped: 0
 
 ---
 
 _Requirements defined: 2026-03-31_
-_Last updated: 2026-03-31 after initial definition_
+_Last updated: 2026-03-31 after roadmap creation_
