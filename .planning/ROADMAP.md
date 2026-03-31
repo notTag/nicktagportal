@@ -47,8 +47,14 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 2. Selecting a theme instantly changes all site colors without a page reload
 3. SynthWave '84 is the default theme for first-time visitors
 4. User's theme choice persists across browser sessions (no flash of wrong theme on reload)
-   **Plans**: TBD
+   **Plans**: 3 plans
    **UI hint**: yes
+
+Plans:
+
+- [ ] 05-01-PLAN.md -- Theme data layer, CSS infrastructure, and FOUC prevention
+- [ ] 05-02-PLAN.md -- ThemeDropdown WAI-ARIA listbox and TheHeader responsive layout
+- [ ] 05-03-PLAN.md -- MobileMenu overlay, AppLayout wiring, and visual verification
 
 ### Phase 6: Skills Diamond Wall
 
@@ -113,7 +119,7 @@ Phases execute in numeric order: 5 -> 5.1 -> 6 -> 7 -> 7.1 -> 8 -> 9
 
 | Phase                          | Milestone | Plans Complete | Status      | Completed |
 | ------------------------------ | --------- | -------------- | ----------- | --------- |
-| 5. Theme System                | v1.1      | 0/TBD          | Not started | -         |
+| 5. Theme System                | v1.1      | 0/3            | Planned     | -         |
 | 6. Skills Diamond Wall         | v1.1      | 0/TBD          | Not started | -         |
 | 7. CLI Terminal Core           | v1.1      | 0/TBD          | Not started | -         |
 | 8. CLI Federation Integration  | v1.1      | 0/TBD          | Not started | -         |
