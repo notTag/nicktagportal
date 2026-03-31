@@ -76,7 +76,7 @@ onMounted(() => {
           v-model="currentInput"
           type="text"
           class="text-text placeholder:text-text-muted w-full bg-transparent caret-transparent outline-none"
-          placeholder="Type a command..."
+          placeholder=""
           autofocus
         />
         <span

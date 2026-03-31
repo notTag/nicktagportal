@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
-status: executing
-stopped_at: Completed 05-02-PLAN.md
-last_updated: "2026-03-31T14:52:51.347Z"
+status: verifying
+stopped_at: Completed 05-03-PLAN.md
+last_updated: '2026-03-31T15:43:09.790Z'
 last_activity: 2026-03-31
 progress:
   total_phases: 11
-  completed_phases: 0
+  completed_phases: 1
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 
 Phase: 05 (theme-system) — EXECUTING
 Plan: 3 of 3
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-03-31
 
 Progress: [░░░░░░░░░░] 0%
@@ -52,6 +52,8 @@ All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 - [Phase 05]: Corrected SynthWave surface colors to actual VSCode JSON values (#262335)
 - [Phase 05]: FOUC script embeds all 9 theme maps inline for zero-dependency pre-paint application
 - [Phase 05]: Click-outside uses capture-phase document listener for reliable detection
+- [Phase 05]: MobileMenu applies themes immediately on tap (no preview flow on mobile)
+- [Phase 05]: AppLayout uses Vue 3 fragment template to keep MobileMenu outside inert container
 
 ### Pending Todos
 
@@ -64,6 +66,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-31T14:52:51.344Z
-Stopped at: Completed 05-02-PLAN.md
+Last session: 2026-03-31T15:43:09.787Z
+Stopped at: Completed 05-03-PLAN.md
 Resume file: None
