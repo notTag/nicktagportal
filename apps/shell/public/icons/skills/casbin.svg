@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-  <rect width="24" height="24" rx="4" fill="#495495" opacity="0.3"/>
-  <text x="12" y="15" text-anchor="middle" font-family="Inter, sans-serif" font-size="8" font-weight="bold" fill="#848bbd">CB</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <!-- Casbin: orange shield with "C" -->
+  <path d="M64 10 L108 30 L108 70 Q108 100 64 118 Q20 100 20 70 L20 30 Z" fill="#F56B22" opacity="0.15"/>
+  <path d="M64 10 L108 30 L108 70 Q108 100 64 118 Q20 100 20 70 L20 30 Z" fill="none" stroke="#F56B22" stroke-width="4"/>
+  <text x="64" y="80" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="48" font-weight="700" fill="#F56B22">C</text>
 </svg>

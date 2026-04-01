@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-  <rect width="24" height="24" rx="4" fill="#495495" opacity="0.3"/>
-  <text x="12" y="15" text-anchor="middle" font-family="Inter, sans-serif" font-size="8" font-weight="bold" fill="#848bbd">OG</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <path d="M64 16 C64 16 40 16 32 52 L28 76 L100 76 L96 52 C88 16 64 16 64 16 Z" fill="#172B4D" opacity="0.2"/>
+  <path d="M64 16 C64 16 40 16 32 52 L28 76 L100 76 L96 52 C88 16 64 16 64 16 Z" fill="none" stroke="#172B4D" stroke-width="4"/>
+  <line x1="24" y1="76" x2="104" y2="76" stroke="#172B4D" stroke-width="4" stroke-linecap="round"/>
+  <path d="M52 76 Q52 96 64 96 Q76 96 76 76" fill="none" stroke="#172B4D" stroke-width="4"/>
+  <circle cx="64" cy="12" r="4" fill="#172B4D"/>
 </svg>

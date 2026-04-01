@@ -1,4 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
-  <rect width="24" height="24" rx="4" fill="#495495" opacity="0.3"/>
-  <text x="12" y="15" text-anchor="middle" font-family="Inter, sans-serif" font-size="8" font-weight="bold" fill="#848bbd">DD</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect x="14" y="14" width="100" height="100" rx="20" fill="#632CA6" opacity="0.15"/>
+  <rect x="14" y="14" width="100" height="100" rx="20" fill="none" stroke="#632CA6" stroke-width="4"/>
+  <text x="64" y="80" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="42" font-weight="800" fill="#632CA6">DD</text>
 </svg>
