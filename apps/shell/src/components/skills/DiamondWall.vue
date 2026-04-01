@@ -8,13 +8,11 @@ import techSkills from '@/data/techSkills.json'
 const ROW_SPEEDS = [20, 30, 25, 35, 22, 28, 32, 24]
 
 const store = useSkillsStore()
-const isVisible = ref(false)
 const isEntranceComplete = ref(false)
 
 const diamondSize = ref(80)
 const rowCount = ref(7)
 
-/** Toolbar height estimate for row calculation */
 const TOOLBAR_HEIGHT = 120
 
 function updateResponsive() {
@@ -42,18 +40,24 @@ function updateResponsive() {
   }
 }
 
+/** Seeded shuffle so each row gets a deterministic but varied order */
+function shuffleWithSeed(arr: Skill[], seed: number): Skill[] {
+  const result = [...arr]
+  let s = seed
+  for (let i = result.length - 1; i > 0; i--) {
+    s = (s * 16807 + 0) % 2147483647
+    const j = s % (i + 1)
+    ;[result[i], result[j]] = [result[j], result[i]]
+  }
+  return result
+}
+
 onMounted(() => {
   updateResponsive()
   window.addEventListener('resize', updateResponsive)
-  // Double rAF ensures browser has painted opacity-0 before transitioning to opacity-100
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      isVisible.value = true
-      setTimeout(() => {
-        isEntranceComplete.value = true
-      }, 800)
-    })
-  })
+  setTimeout(() => {
+    isEntranceComplete.value = true
+  }, 300)
 })
 
 onUnmounted(() => {
@@ -62,19 +66,15 @@ onUnmounted(() => {
 
 const rows = computed(() => {
   const allSkills: Skill[] = techSkills as Skill[]
-  const result: Skill[][] = Array.from({ length: rowCount.value }, () => [])
-  allSkills.forEach((skill, i) => {
-    result[i % rowCount.value].push(skill)
-  })
-  return result
+  return Array.from({ length: rowCount.value }, (_, i) =>
+    shuffleWithSeed(allSkills, (i + 1) * 7919),
+  )
 })
 </script>
 
 <template>
   <div
-    ref="wallRef"
-    class="w-full overflow-hidden transition-opacity duration-700 ease-out"
-    :class="isVisible ? 'opacity-100' : 'opacity-0'"
+    class="w-full overflow-hidden"
     role="img"
     aria-label="Technology skills showcase"
   >
