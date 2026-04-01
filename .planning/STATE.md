@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
 status: executing
-stopped_at: Completed 06-01-PLAN.md
-last_updated: '2026-04-01T19:24:51.000Z'
+stopped_at: Completed 06-02-PLAN.md
+last_updated: "2026-04-01T19:32:07.647Z"
 last_activity: 2026-04-01
 progress:
   total_phases: 11
   completed_phases: 1
   total_plans: 6
-  completed_plans: 3
-  percent: 0
+  completed_plans: 5
+  percent: 33
 ---
 
 # Project State
@@ -26,8 +26,8 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 ## Current Position
 
 Phase: 06
-Plan: 1 of 3
-Status: Plan 01 complete — executing
+Plan: 2 of 3
+Status: Ready to execute
 Last activity: 2026-04-01
 
 Progress: [███░░░░░░░] 33%
@@ -58,6 +58,9 @@ All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 - [Phase 06]: Placeholder years value 3 on all 27 skills -- Nick updates with real values later
 - [Phase 06]: Set-based category filtering with All-deselects-individuals toggle logic
 - [Phase 06]: isSkillVisible returns boolean for opacity-based filtering (no DOM removal)
+- [Phase 06]: Diamond hover uses inline style for combined rotate+translate transforms
+- [Phase 06]: DiamondInfoPanel uses Teleport to body to escape overflow:hidden clipping
+- [Phase 06]: Skill duplication count computed from viewport width for seamless infinite scroll
 
 ### Pending Todos
 
@@ -70,6 +73,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-01T19:24:51.000Z
-Stopped at: Completed 06-01-PLAN.md
+Last session: 2026-04-01T19:32:07.644Z
+Stopped at: Completed 06-02-PLAN.md
 Resume file: None
