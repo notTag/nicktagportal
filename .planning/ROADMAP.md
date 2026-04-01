@@ -73,7 +73,7 @@ Plans:
 
 Plans:
 
-- [ ] 06-01-PLAN.md -- Data layer, types, SVGs, composables, Pinia store, routing, and nav wiring
+- [x] 06-01-PLAN.md -- Data layer, types, SVGs, composables, Pinia store, routing, and nav wiring
 - [ ] 06-02-PLAN.md -- Diamond components (SkillDiamond, DiamondRow, DiamondWall) and toolbar (CategoryPills, ProficiencyToggle, SkillsToolbar)
 - [ ] 06-03-PLAN.md -- SkillsView assembly and visual verification checkpoint
 

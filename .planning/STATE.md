@@ -2,10 +2,10 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
-status: verifying
-stopped_at: Phase 6 context gathered
-last_updated: '2026-04-01T04:21:24.988Z'
-last_activity: 2026-03-31
+status: executing
+stopped_at: Completed 06-01-PLAN.md
+last_updated: '2026-04-01T19:24:51.000Z'
+last_activity: 2026-04-01
 progress:
   total_phases: 11
   completed_phases: 1
@@ -21,26 +21,27 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-27)
 
 **Core value:** The shell app works as a polished, deployable personal site from day one -- federation infrastructure is ready but never blocks the core experience.
-**Current focus:** Phase 05 — theme-system
+**Current focus:** Phase 06 — skills-diamond-wall
 
 ## Current Position
 
-Phase: 999.1
-Plan: Not started
-Status: Phase complete — ready for verification
-Last activity: 2026-03-31
+Phase: 06
+Plan: 1 of 3
+Status: Plan 01 complete — executing
+Last activity: 2026-04-01
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [███░░░░░░░] 33%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 0 (v1.1)
-- Average duration: --
-- Total execution time: --
+- Total plans completed: 1 (v1.1)
+- Average duration: 3min
+- Total execution time: 3min
 
 _Updated after each plan completion_
+| Phase 06 P01 | 3min | 3 tasks | 34 files |
 
 ## Accumulated Context
 
@@ -54,6 +55,9 @@ All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 - [Phase 05]: Click-outside uses capture-phase document listener for reliable detection
 - [Phase 05]: MobileMenu applies themes immediately on tap (no preview flow on mobile)
 - [Phase 05]: AppLayout uses Vue 3 fragment template to keep MobileMenu outside inert container
+- [Phase 06]: Placeholder years value 3 on all 27 skills -- Nick updates with real values later
+- [Phase 06]: Set-based category filtering with All-deselects-individuals toggle logic
+- [Phase 06]: isSkillVisible returns boolean for opacity-based filtering (no DOM removal)
 
 ### Pending Todos
 
@@ -66,6 +70,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-01T04:21:24.983Z
-Stopped at: Phase 6 context gathered
-Resume file: .planning/phases/06-skills-diamond-wall/06-CONTEXT.md
+Last session: 2026-04-01T19:24:51.000Z
+Stopped at: Completed 06-01-PLAN.md
+Resume file: None

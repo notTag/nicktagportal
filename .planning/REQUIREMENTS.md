@@ -56,14 +56,14 @@ Requirements for milestone v1.1: CLI Remote & Site Polish. Each maps to roadmap 
 
 ### Skills Diamond Wall
 
-- [ ] **SKL-01**: User can navigate to a dedicated /skills route
+- [x] **SKL-01**: User can navigate to a dedicated /skills route
 - [ ] **SKL-02**: Skills display as a diamond/rotated grid layout with technology icons (Devicon SVGs)
 - [ ] **SKL-03**: Diamonds animate in with staggered entrance animation
 - [ ] **SKL-04**: Diamonds respond to hover with scale/glow effects
 - [ ] **SKL-05**: Diamond wall is responsive across screen sizes
-- [ ] **SKL-06**: Diamonds show skill proficiency level via visual indicator (fill, opacity, or glow intensity)
-- [ ] **SKL-07**: User can filter/search diamonds by category or name
-- [ ] **SKL-08**: Animations trigger on scroll into view (IntersectionObserver)
+- [x] **SKL-06**: Diamonds show skill proficiency level via visual indicator (fill, opacity, or glow intensity)
+- [x] **SKL-07**: User can filter/search diamonds by category or name
+- [x] **SKL-08**: Animations trigger on scroll into view (IntersectionObserver)
 
 ### Infrastructure
 
@@ -107,14 +107,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | THM-04      | 5     | Complete |
 | THM-05      | 8     | Pending |
 | THM-06      | 5     | Complete |
-| SKL-01      | 6     | Pending |
+| SKL-01      | 6     | Complete |
 | SKL-02      | 6     | Pending |
 | SKL-03      | 6     | Pending |
 | SKL-04      | 6     | Pending |
 | SKL-05      | 6     | Pending |
-| SKL-06      | 6     | Pending |
-| SKL-07      | 6     | Pending |
-| SKL-08      | 6     | Pending |
+| SKL-06      | 6     | Complete |
+| SKL-07      | 6     | Complete |
+| SKL-08      | 6     | Complete |
 | CLI-01      | 7     | Pending |
 | CLI-02      | 7     | Pending |
 | CLI-03      | 7     | Pending |
