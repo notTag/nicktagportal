@@ -18,6 +18,9 @@ const store = useSkillsStore()
 const isHovered = ref(false)
 const diamondRef = ref<HTMLElement | null>(null)
 
+/** The outer cell size that contains the rotated diamond without clipping */
+const cellSize = computed(() => Math.ceil(props.diamondSize * 1.5))
+
 const isVisible = computed(() =>
   store.isSkillVisible(props.skill.category, props.skill.displayName),
 )
@@ -91,21 +94,31 @@ function handleClick() {
 </script>
 
 <template>
+  <!-- Outer cell: sized to the rotated bounding box, no overflow hidden -->
   <div
-    ref="diamondRef"
-    class="shrink-0 overflow-hidden rounded-sm border border-border bg-surface-raised transition-[transform,box-shadow,opacity] duration-200 ease-out"
-    :class="isVisible ? 'opacity-100' : 'opacity-30'"
-    :style="diamondStyle"
-    :aria-label="skill.displayName"
-    @mouseenter="handleMouseEnter"
-    @mouseleave="handleMouseLeave"
-    @click="handleClick"
+    class="flex shrink-0 items-center justify-center"
+    :style="{
+      width: `${cellSize}px`,
+      height: `${cellSize}px`,
+    }"
   >
-    <img
-      :src="skill.iconPath"
-      :alt="skill.displayName"
-      class="h-full w-full object-contain p-2"
-      :style="{ transform: 'rotate(-45deg)' }"
-    />
+    <!-- Inner rotated diamond -->
+    <div
+      ref="diamondRef"
+      class="overflow-hidden rounded-sm border border-border bg-surface-raised transition-[transform,box-shadow,opacity] duration-200 ease-out"
+      :class="isVisible ? 'opacity-100' : 'opacity-30'"
+      :style="diamondStyle"
+      :aria-label="skill.displayName"
+      @mouseenter="handleMouseEnter"
+      @mouseleave="handleMouseLeave"
+      @click="handleClick"
+    >
+      <img
+        :src="skill.iconPath"
+        :alt="skill.displayName"
+        class="h-full w-full object-contain p-2"
+        :style="{ transform: 'rotate(-45deg)' }"
+      />
+    </div>
   </div>
 </template>

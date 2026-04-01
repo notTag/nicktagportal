@@ -17,24 +17,42 @@ const isPaused = ref(false)
 const hoveredSkill = ref<Skill | null>(null)
 const panelPosition = ref<{ x: number; y: number } | null>(null)
 
+/** Cell size accounts for the rotated diamond's bounding box */
+const cellSize = computed(() => Math.ceil(props.diamondSize * 1.5))
 const gap = 4
-const singleSetWidth = computed(
-  () => props.skills.length * (props.diamondSize + gap),
+
+/**
+ * Calculate how many copies of the skill set fill the viewport.
+ * We create exactly 2 identical halves so translateX(-50%) loops perfectly.
+ */
+const viewportWidth =
+  typeof window !== 'undefined' ? window.innerWidth : 1920
+const fillCount = computed(() =>
+  Math.max(1, Math.ceil(viewportWidth / (props.skills.length * (cellSize.value + gap)))),
 )
-const minWidth =
-  typeof window !== 'undefined' ? window.innerWidth * 2 : 2560
-const repeatCount = computed(
-  () => Math.ceil(minWidth / singleSetWidth.value) + 1,
-)
-const duplicatedSkills = computed(() => {
+const oneHalf = computed(() => {
   const result: Skill[] = []
-  for (let i = 0; i < repeatCount.value; i++) {
+  for (let i = 0; i < fillCount.value; i++) {
     result.push(...props.skills)
   }
   return result
 })
+const duplicatedSkills = computed(() => [...oneHalf.value, ...oneHalf.value])
 
-const duration = computed(() => singleSetWidth.value / props.speed)
+/** Pixel distance of exactly one half for seamless loop */
+const scrollDistance = computed(
+  () => oneHalf.value.length * (cellSize.value + gap),
+)
+
+const duration = computed(() => scrollDistance.value / props.speed)
+
+/** Row height = cell bounding box + small vertical gap */
+const rowHeight = computed(() => cellSize.value + gap)
+
+/** Alternating row offset: half a cell width */
+const rowOffset = computed(() =>
+  props.rowIndex % 2 === 1 ? `${-(cellSize.value / 2)}px` : '0',
+)
 
 function onDiamondHover(
   payload: { skill: Skill; element: HTMLElement },
@@ -62,23 +80,27 @@ function handleRowLeave() {
 
 <template>
   <div
-    class="relative overflow-hidden"
+    class="relative"
     :class="{ paused: isPaused }"
     :style="{
-      height: `${diamondSize + 8}px`,
-      marginLeft: rowIndex % 2 === 1 ? `${-(diamondSize / 2)}px` : '0',
+      height: `${rowHeight}px`,
+      marginLeft: rowOffset,
     }"
     @mouseenter="isPaused = true"
     @mouseleave="handleRowLeave"
   >
     <div
-      class="flex shrink-0 items-center gap-1"
+      class="flex shrink-0 items-center"
       :class="{ 'scroll-row-animation': isEntranceComplete }"
-      :style="{ animationDuration: `${duration}s` }"
+      :style="{
+        animationDuration: `${duration}s`,
+        gap: `${gap}px`,
+        '--scroll-distance': `-${scrollDistance}px`,
+      }"
     >
       <SkillDiamond
         v-for="(skill, i) in duplicatedSkills"
-        :key="`${skill.name}-${rowIndex}-${i}`"
+        :key="`${skill.name}-${props.rowIndex}-${i}`"
         :skill="skill"
         :mode="mode"
         :diamond-size="diamondSize"
@@ -97,7 +119,7 @@ function handleRowLeave() {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translateX(var(--scroll-distance));
   }
 }
 
