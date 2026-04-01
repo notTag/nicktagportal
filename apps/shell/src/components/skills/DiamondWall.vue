@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
 import { useSkillsStore } from '@/stores/skills'
-import { useIntersectionObserver } from '@/composables/useIntersectionObserver'
 import DiamondRow from './DiamondRow.vue'
 import type { Skill } from '@/types/skills'
 import techSkills from '@/data/techSkills.json'
@@ -9,11 +8,7 @@ import techSkills from '@/data/techSkills.json'
 const ROW_SPEEDS = [20, 30, 25, 35, 22, 28, 32, 24]
 
 const store = useSkillsStore()
-const wallRef = ref<HTMLElement | null>(null)
-const { isVisible } = useIntersectionObserver(wallRef, {
-  threshold: 0.1,
-  once: true,
-})
+const isVisible = ref(false)
 const isEntranceComplete = ref(false)
 
 const diamondSize = ref(80)
@@ -34,12 +29,10 @@ function updateResponsive() {
     diamondSize.value = 80
   }
 
-  // Calculate how many rows fill the available viewport below toolbar
   const cellHeight = Math.ceil(diamondSize.value * 1.5) + 4
   const availableHeight = h - TOOLBAR_HEIGHT
   const dynamicRows = Math.ceil(availableHeight / cellHeight)
 
-  // Enforce minimums per breakpoint
   if (w < 640) {
     rowCount.value = Math.max(5, dynamicRows)
   } else if (w < 1024) {
@@ -49,9 +42,14 @@ function updateResponsive() {
   }
 }
 
-onMounted(() => {
+onMounted(async () => {
   updateResponsive()
   window.addEventListener('resize', updateResponsive)
+  await nextTick()
+  isVisible.value = true
+  setTimeout(() => {
+    isEntranceComplete.value = true
+  }, 800)
 })
 
 onUnmounted(() => {
@@ -66,21 +64,12 @@ const rows = computed(() => {
   })
   return result
 })
-
-watch(isVisible, (visible) => {
-  if (visible) {
-    // Short delay then start scrolling - entrance is a simple opacity fade
-    setTimeout(() => {
-      isEntranceComplete.value = true
-    }, 800)
-  }
-})
 </script>
 
 <template>
   <div
     ref="wallRef"
-    class="w-full overflow-hidden transition-opacity duration-600 ease-out"
+    class="w-full overflow-hidden transition-opacity duration-700 ease-out"
     :class="isVisible ? 'opacity-100' : 'opacity-0'"
     role="img"
     aria-label="Technology skills showcase"
