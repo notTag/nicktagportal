@@ -16,6 +16,7 @@
   { "name": "casbin", "displayName": "Casbin RBAC", "iconPath": "/icons/skills/casbin.svg", "category": "Security", "years": 3 },
   { "name": "liquibase", "displayName": "Liquibase", "iconPath": "/icons/skills/liquibase.svg", "category": "Databases", "years": 3 },
   { "name": "mysql", "displayName": "MySQL", "iconPath": "/icons/skills/mysql.svg", "category": "Databases", "years": 3 },
+  { "name": "sql", "displayName": "SQL", "iconPath": "/icons/skills/sql.svg", "category": "Databases", "years": 3 },
   { "name": "go-testing", "displayName": "Golang", "iconPath": "/icons/skills/go.svg", "category": "Testing", "years": 3 },
   { "name": "jwt", "displayName": "JWT", "iconPath": "/icons/skills/jwt.svg", "category": "Auth", "years": 3 },
   { "name": "iam", "displayName": "AWS IAM", "iconPath": "/icons/skills/iam.svg", "category": "Auth", "years": 3 },
