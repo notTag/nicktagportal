@@ -18,17 +18,18 @@ function onSearchInput() {
 </script>
 
 <template>
-  <div class="mx-auto max-w-5xl px-4 py-4">
+  <div class="mx-auto w-full max-w-5xl px-4 py-4">
+    <!-- Top row: category dropdown, search, proficiency toggle -->
     <div
-      class="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4"
+      class="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-3"
     >
-      <CategoryPills class="shrink-0" />
-      <div class="relative flex-1">
+      <CategoryPills class="w-full shrink-0 sm:w-auto" />
+      <div class="relative min-w-0 flex-1">
         <input
           v-model="localSearch"
           type="text"
           placeholder="Search skills..."
-          class="h-10 w-full rounded-md border border-border bg-surface-raised px-3 text-sm text-text placeholder-text-muted focus:border-accent focus:outline-none"
+          class="h-8 w-full min-w-[200px] rounded-md border border-border bg-surface-raised px-3 text-sm text-text placeholder-text-muted focus:border-accent focus:outline-none"
           @input="onSearchInput"
         />
       </div>
