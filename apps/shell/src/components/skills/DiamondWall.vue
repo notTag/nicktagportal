@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, nextTick, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useSkillsStore } from '@/stores/skills'
 import DiamondRow from './DiamondRow.vue'
 import type { Skill } from '@/types/skills'
@@ -42,14 +42,18 @@ function updateResponsive() {
   }
 }
 
-onMounted(async () => {
+onMounted(() => {
   updateResponsive()
   window.addEventListener('resize', updateResponsive)
-  await nextTick()
-  isVisible.value = true
-  setTimeout(() => {
-    isEntranceComplete.value = true
-  }, 800)
+  // Double rAF ensures browser has painted opacity-0 before transitioning to opacity-100
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      isVisible.value = true
+      setTimeout(() => {
+        isEntranceComplete.value = true
+      }, 800)
+    })
+  })
 })
 
 onUnmounted(() => {

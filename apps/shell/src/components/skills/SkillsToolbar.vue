@@ -38,31 +38,32 @@ const activePills = computed(() =>
       <ProficiencyToggle class="shrink-0" />
     </div>
 
-    <!-- Row 2: active category pills (below all controls) -->
+    <!-- Row 2: always-reserved space for active category pills -->
     <div
-      v-if="activePills.length > 0"
-      class="mt-2 flex items-center gap-1.5 overflow-x-auto [-webkit-overflow-scrolling:touch]"
+      class="mt-2 flex h-7 items-center gap-1.5 overflow-x-auto [-webkit-overflow-scrolling:touch]"
     >
-      <span
-        v-for="cat in activePills"
-        :key="cat"
-        class="inline-flex shrink-0 items-center gap-1 rounded-full border border-accent bg-accent/10 px-2.5 py-0.5 text-xs font-bold text-accent"
-      >
-        {{ cat }}
-        <button
-          class="ml-0.5 text-accent/60 transition-colors hover:text-text"
-          :aria-label="`Remove ${cat} filter`"
-          @click="store.toggleCategory(cat)"
+      <template v-if="activePills.length > 0">
+        <span
+          v-for="cat in activePills"
+          :key="cat"
+          class="inline-flex shrink-0 items-center gap-1 rounded-full border border-accent bg-accent/10 px-2.5 py-0.5 text-xs font-bold text-accent"
         >
-          &times;
+          {{ cat }}
+          <button
+            class="ml-0.5 text-accent/60 transition-colors hover:text-text"
+            :aria-label="`Remove ${cat} filter`"
+            @click="store.toggleCategory(cat)"
+          >
+            &times;
+          </button>
+        </span>
+        <button
+          class="shrink-0 rounded-full px-2 py-0.5 text-xs text-text-muted transition-colors hover:text-text"
+          @click="store.toggleCategory('All')"
+        >
+          Clear all
         </button>
-      </span>
-      <button
-        class="shrink-0 rounded-full px-2 py-0.5 text-xs text-text-muted transition-colors hover:text-text"
-        @click="store.toggleCategory('All')"
-      >
-        Clear all
-      </button>
+      </template>
     </div>
   </div>
 </template>
