@@ -63,6 +63,14 @@ watch(
           Home
         </RouterLink>
         <RouterLink
+          to="/skills"
+          class="block py-2 text-2xl font-bold text-text"
+          active-class="!text-accent"
+          @click="emit('close')"
+        >
+          Skills
+        </RouterLink>
+        <RouterLink
           to="/cli"
           class="block py-2 text-2xl font-bold text-text"
           active-class="!text-accent"

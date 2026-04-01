@@ -25,6 +25,13 @@ const emit = defineEmits<{
           Home
         </RouterLink>
         <RouterLink
+          to="/skills"
+          class="text-text-muted hover:text-accent text-sm font-normal transition-colors"
+          active-class="!text-accent"
+        >
+          Skills
+        </RouterLink>
+        <RouterLink
           to="/cli"
           class="text-text-muted hover:text-accent text-sm font-normal transition-colors"
           active-class="!text-accent"
