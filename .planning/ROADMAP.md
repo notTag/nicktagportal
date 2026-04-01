@@ -68,8 +68,14 @@ Plans:
 3. Hovering a diamond produces a scale/glow effect showing the skill name and proficiency
 4. Diamond wall renders correctly on mobile, tablet, and desktop screen sizes
 5. User can filter or search diamonds by category or name
-   **Plans**: TBD
+   **Plans**: 3 plans
    **UI hint**: yes
+
+Plans:
+
+- [ ] 06-01-PLAN.md -- Data layer, types, SVGs, composables, Pinia store, routing, and nav wiring
+- [ ] 06-02-PLAN.md -- Diamond components (SkillDiamond, DiamondRow, DiamondWall) and toolbar (CategoryPills, ProficiencyToggle, SkillsToolbar)
+- [ ] 06-03-PLAN.md -- SkillsView assembly and visual verification checkpoint
 
 ### Phase 7: CLI Terminal Core
 
@@ -120,7 +126,7 @@ Phases execute in numeric order: 5 -> 5.1 -> 6 -> 7 -> 7.1 -> 8 -> 9
 | Phase                          | Milestone | Plans Complete | Status      | Completed |
 | ------------------------------ | --------- | -------------- | ----------- | --------- |
 | 5. Theme System                | v1.1      | 0/3            | Planned     | -         |
-| 6. Skills Diamond Wall         | v1.1      | 0/TBD          | Not started | -         |
+| 6. Skills Diamond Wall         | v1.1      | 0/3            | Planned     | -         |
 | 7. CLI Terminal Core           | v1.1      | 0/TBD          | Not started | -         |
 | 8. CLI Federation Integration  | v1.1      | 0/TBD          | Not started | -         |
 | 9. Deployment & Infrastructure | v1.1      | 0/TBD          | Not started | -         |
