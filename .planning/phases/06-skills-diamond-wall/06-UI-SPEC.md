@@ -43,22 +43,22 @@ Exceptions:
 
 - Diamond size: 80px (desktop), 56px (tablet), 48px (mobile) -- not on 8-point scale, but constrained to multiples of 8
 - Diamond gap (between touching neighbors): 4px visual gap via CSS margin
-- Hamburger menu touch target: 44px (existing pattern from TheHeader)
+- Hamburger menu touch target: 44px -- frozen from phase 5 TheHeader implementation, not a new design decision in this phase
 
 ---
 
 ## Typography
 
-| Role    | Size             | Weight              | Line Height |
-| ------- | ---------------- | ------------------- | ----------- |
-| Body    | 14px (text-sm)   | 400 (font-normal)   | 1.5         |
-| Label   | 12px (text-xs)   | 600 (font-semibold) | 1.5         |
-| Heading | 16px (text-base) | 700 (font-bold)     | 1.2         |
+| Role    | Size             | Weight            | Line Height |
+| ------- | ---------------- | ----------------- | ----------- |
+| Body    | 14px (text-sm)   | 400 (font-normal) | 1.5         |
+| Label   | 12px (text-xs)   | 700 (font-bold)   | 1.5         |
+| Heading | 16px (text-base) | 700 (font-bold)   | 1.2         |
 
 Usage in this phase:
 
 - **Body (14px/400):** Search input text, info panel "years of experience" line, category text in info panel
-- **Label (12px/600):** Category pill labels, proficiency mode toggle labels, info panel category tag
+- **Label (12px/700):** Category pill labels, proficiency mode toggle labels, info panel category tag. Size difference (12px vs 16px) provides sufficient visual separation from Heading without requiring a third weight.
 - **Heading (16px/700):** Info panel skill name (displayName)
 
 No display size needed -- decision D-22 says no page title.
