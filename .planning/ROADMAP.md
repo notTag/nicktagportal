@@ -192,3 +192,13 @@ Plans:
 Plans:
 
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.8: 100% Unit Test Coverage (BACKLOG)
+
+**Goal:** Achieve 100% unit test coverage across the monorepo. Set up Vitest, configure coverage reporting, write unit tests for all components, composables, stores, and utilities. Establish CI gates to enforce coverage thresholds and prevent regressions.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
