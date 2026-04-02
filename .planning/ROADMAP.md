@@ -212,3 +212,13 @@ Plans:
 Plans:
 
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.10: Update Skills Wall with More Skills (BACKLOG)
+
+**Goal:** Expand the skills data in techSkills to include additional technologies and tools, filling out the diamond wall with a more comprehensive representation of Nick's skill set.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
