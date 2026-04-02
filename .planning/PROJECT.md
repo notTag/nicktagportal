@@ -50,7 +50,7 @@ The shell app works as a polished, deployable personal site from day one — fed
 **Workstream B: Polish & Infrastructure**
 
 - [ ] Theme interchangeability system with VSCode theme mapping
-- [ ] Skills animated diamond wall on /skills route
+- [x] Skills diamond wall on /skills route — Validated in Phase 6 (entrance animation deferred to backlog 999.9)
 - [ ] Rollback workflow testing end-to-end
 - [ ] Tree shaking audit and bundle optimization
 - [ ] GitHub Actions Node.js 24 migration
@@ -95,6 +95,15 @@ The shell app works as a polished, deployable personal site from day one — fed
 - Pinia store + useTheme composable for reactive CSS custom property switching
 - FOUC prevention via inline script in index.html
 - localStorage persistence across sessions
+
+**Phase 6 complete 2026-04-02** — Skills Diamond Wall
+
+- /skills route with continuously scrolling diamond grid of technology icons
+- Toolbar with category filter, search, and proficiency mode toggle (Uniform/Glow/Size/Fill)
+- Hover interaction: row pauses, diamond lifts, info panel with name/years/category
+- Multiple rows at different scroll speeds for parallax depth effect
+- Responsive: 48px/3 rows mobile, 56px/4 rows tablet, 80px/4-5 rows desktop
+- Entrance animation deferred to backlog 999.9
 
 ## Context
 
@@ -149,4 +158,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-03-31 after Phase 5 (Theme System) completed_
+_Last updated: 2026-04-02 after Phase 6 (Skills Diamond Wall) completed_
