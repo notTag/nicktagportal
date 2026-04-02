@@ -202,3 +202,13 @@ Plans:
 Plans:
 
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.9: Skills Entrance Animation (BACKLOG)
+
+**Goal:** Implement staggered entrance animation for the Skills Diamond Wall (SKL-03, SKL-08). Rows should fade in and scale up one-by-one with staggered delay, triggered by the existing `useIntersectionObserver` composable. Currently all rows appear and start scrolling simultaneously after a flat 300ms timeout — the composable is built but unused by DiamondWall/DiamondRow.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
