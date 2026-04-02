@@ -18,6 +18,6 @@ export default defineConfigWithVueTs(
     },
   },
   {
-    ignores: ['**/dist/**', '**/node_modules/**'],
+    ignores: ['**/dist/**', '**/node_modules/**', '.claude/worktrees/**'],
   },
 )
