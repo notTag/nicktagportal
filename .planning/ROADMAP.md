@@ -252,3 +252,13 @@ Plans:
 Plans:
 
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.14: Add Resume PDF as a Tab for Download (BACKLOG)
+
+**Goal:** Add a navigation tab/route where users can view and download Nick's resume as a PDF. Could be a dedicated /resume route or an inline viewer with a download button.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
