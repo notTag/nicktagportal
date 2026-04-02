@@ -262,3 +262,13 @@ Plans:
 Plans:
 
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.15: Allow Horizontal Scrolling on Skills Page — Hide Scrollbar (BACKLOG)
+
+**Goal:** Enable horizontal scrolling on the skills page so the diamond wall can extend beyond the viewport, but hide the browser's horizontal scrollbar for a clean visual. Likely CSS `overflow-x: auto` with scrollbar-hiding utilities.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
