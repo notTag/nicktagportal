@@ -222,3 +222,23 @@ Plans:
 Plans:
 
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.11: Update Okta Icon from Skills Wall (BACKLOG)
+
+**Goal:** Replace or update the Okta icon used in the skills diamond wall with a better or more current version.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.12: Remove Casbin RBAC (BACKLOG)
+
+**Goal:** Remove Casbin RBAC from the skills wall data — it's not a relevant skill to showcase.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
