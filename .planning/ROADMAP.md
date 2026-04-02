@@ -242,3 +242,13 @@ Plans:
 Plans:
 
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.13: Update Experience Time Lengths for Each Skill Based on Resume (BACKLOG)
+
+**Goal:** Review Nick's resume and update the experience duration / years for each skill in techSkills data to accurately reflect real-world usage history.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
