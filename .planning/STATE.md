@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
 status: verifying
-stopped_at: Completed 07-02-PLAN.md
-last_updated: '2026-04-03T20:31:47.331Z'
-last_activity: 2026-04-03
+stopped_at: Completed 07-03-PLAN.md
+last_updated: '2026-04-03T20:38:33.230Z'
+last_activity: 2026-04-02
 progress:
-  total_phases: 21
-  completed_phases: 3
-  total_plans: 17
-  completed_plans: 15
+  total_phases: 13
+  completed_phases: 2
+  total_plans: 6
+  completed_plans: 7
   percent: 100
 ---
 
@@ -25,10 +25,10 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 
 ## Current Position
 
-Phase: 999.9
+Phase: 999.1
 Plan: Not started
 Status: Phase complete — ready for verification
-Last activity: 2026-04-03
+Last activity: 2026-04-02
 
 Progress: [██████████] 100%
 
@@ -62,9 +62,8 @@ All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 - [Phase 06]: DiamondInfoPanel uses Teleport to body to escape overflow:hidden clipping
 - [Phase 06]: Skill duplication count computed from viewport width for seamless infinite scroll
 - [Phase 06]: Entrance animation (stagger fade/scale) deferred to backlog 999.9 per user decision
-- [Phase 07]: Terminal theme defaults to dark-modern independently from site theme (localStorage key: nicksite-cli-theme)
-- [Phase 07]: VFS uses Map<string, VfsNode> for O(1) child lookup by name
-- [Phase 07]: ANSI color codes embedded at VFS build time for direct cat passthrough
+- [Phase 07]: CLITHEME= handled as variable assignment in Shell, not as registered command (per D-06)
+- [Phase 07]: Tab completion splits on first space to distinguish command name vs file path completion
 
 ### Pending Todos
 
@@ -77,6 +76,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-03T20:30:57.921Z
-Stopped at: Completed 07-02-PLAN.md
+Last session: 2026-04-03T20:38:33.227Z
+Stopped at: Completed 07-03-PLAN.md
 Resume file: None
