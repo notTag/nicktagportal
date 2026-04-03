@@ -89,8 +89,15 @@ Plans:
 3. User can use tab completion, command history (up/down arrows), and help to discover available commands
 4. User-created files, directories, and aliases persist across browser sessions via localStorage
 5. Terminal displays an ASCII art welcome banner and supports Easter egg commands (ssh, resume)
-   **Plans**: TBD
+   **Plans**: 4 plans
    **UI hint**: yes
+
+Plans:
+
+- [ ] 07-01-PLAN.md -- Data layer: types, ANSI helpers, terminal theme store, resume JSON
+- [ ] 07-02-PLAN.md -- Virtual filesystem and command handlers (navigation, files, info)
+- [ ] 07-03-PLAN.md -- Shell orchestrator, command registry, banner, tab completion, history
+- [ ] 07-04-PLAN.md -- useTerminal composable, CliView.vue rewrite, visual verification
 
 ### Phase 8: CLI Federation Integration
 
@@ -127,7 +134,7 @@ Phases execute in numeric order: 5 -> 5.1 -> 6 -> 7 -> 7.1 -> 8 -> 9
 | ------------------------------ | --------- | -------------- | ----------- | ---------- |
 | 5. Theme System                | v1.1      | 0/3            | Planned     | -          |
 | 6. Skills Diamond Wall         | v1.1      | 3/3            | Complete    | 2026-04-02 |
-| 7. CLI Terminal Core           | v1.1      | 0/TBD          | Not started | -          |
+| 7. CLI Terminal Core           | v1.1      | 0/4            | Planned     | -          |
 | 8. CLI Federation Integration  | v1.1      | 0/TBD          | Not started | -          |
 | 9. Deployment & Infrastructure | v1.1      | 0/TBD          | Not started | -          |
 
