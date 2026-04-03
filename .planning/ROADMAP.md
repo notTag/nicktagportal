@@ -278,3 +278,23 @@ Plans:
 Plans:
 
 - [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.16: Add Unit Test Step to GitHub Actions Pipeline (BACKLOG)
+
+**Goal:** Add a unit test step to the GitHub Actions deploy workflow that auto-runs on every deployment. Tests must pass before the build/deploy proceeds — deployment should be blocked if any test fails.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
+
+### Phase 999.17: Add Unit Tests to Commit Hook (BACKLOG)
+
+**Goal:** Add a pre-commit or pre-push git hook that auto-runs unit tests on every commit. The commit should fail if any tests fail, preventing broken code from being committed.
+**Requirements:** TBD
+**Plans:** 0 plans
+
+Plans:
+
+- [ ] TBD (promote with /gsd:review-backlog when ready)
