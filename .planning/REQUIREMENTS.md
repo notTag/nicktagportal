@@ -17,15 +17,15 @@ Requirements for milestone v1.1: CLI Remote & Site Polish. Each maps to roadmap 
 - [ ] **CLI-06**: User can see current directory with `pwd`
 - [ ] **CLI-07**: User can identify themselves with `whoami`
 - [ ] **CLI-08**: User can see available commands with `help`
-- [ ] **CLI-09**: User can reset terminal with `clear`
+- [x] **CLI-09**: User can reset terminal with `clear`
 - [ ] **CLI-10**: User can output text with `echo`
 - [ ] **CLI-11**: User can view directory structure with `tree`
-- [ ] **CLI-12**: User can recall previous commands with `history` and up/down arrows
-- [ ] **CLI-13**: User can tab-complete commands and file paths
+- [x] **CLI-12**: User can recall previous commands with `history` and up/down arrows
+- [x] **CLI-13**: User can tab-complete commands and file paths
 - [ ] **CLI-14**: User sees red error text for unknown commands
 - [ ] **CLI-15**: User can create directories with `mkdir` (persisted to localStorage)
 - [ ] **CLI-16**: User can create files with `touch` (persisted to localStorage)
-- [ ] **CLI-17**: User can set aliases with `alias` (persisted to localStorage)
+- [x] **CLI-17**: User can set aliases with `alias` (persisted to localStorage)
 - [ ] **CLI-18**: User sees an ASCII art welcome banner on terminal load
 - [ ] **CLI-19**: User can view a formatted resume summary with `resume` command
 - [ ] **CLI-20**: User can trigger an `ssh` Easter egg command
@@ -123,15 +123,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CLI-06      | 7     | Pending |
 | CLI-07      | 7     | Pending |
 | CLI-08      | 7     | Pending |
-| CLI-09      | 7     | Pending |
+| CLI-09      | 7     | Complete |
 | CLI-10      | 7     | Pending |
 | CLI-11      | 7     | Pending |
-| CLI-12      | 7     | Pending |
-| CLI-13      | 7     | Pending |
+| CLI-12      | 7     | Complete |
+| CLI-13      | 7     | Complete |
 | CLI-14      | 7     | Pending |
 | CLI-15      | 7     | Pending |
 | CLI-16      | 7     | Pending |
-| CLI-17      | 7     | Pending |
+| CLI-17      | 7     | Complete |
 | CLI-18      | 7     | Pending |
 | CLI-19      | 7     | Pending |
 | CLI-20      | 7     | Pending |

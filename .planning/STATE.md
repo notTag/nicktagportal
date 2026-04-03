@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
 status: verifying
-stopped_at: Completed 06-03-PLAN.md
-last_updated: '2026-04-02T18:03:11.745Z'
+stopped_at: Completed 07-03-PLAN.md
+last_updated: "2026-04-03T20:38:33.230Z"
 last_activity: 2026-04-02
 progress:
   total_phases: 13
   completed_phases: 2
   total_plans: 6
-  completed_plans: 6
+  completed_plans: 7
   percent: 100
 ---
 
@@ -62,6 +62,8 @@ All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 - [Phase 06]: DiamondInfoPanel uses Teleport to body to escape overflow:hidden clipping
 - [Phase 06]: Skill duplication count computed from viewport width for seamless infinite scroll
 - [Phase 06]: Entrance animation (stagger fade/scale) deferred to backlog 999.9 per user decision
+- [Phase 07]: CLITHEME= handled as variable assignment in Shell, not as registered command (per D-06)
+- [Phase 07]: Tab completion splits on first space to distinguish command name vs file path completion
 
 ### Pending Todos
 
@@ -74,6 +76,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-02T17:17:32.906Z
-Stopped at: Completed 06-03-PLAN.md
+Last session: 2026-04-03T20:38:33.227Z
+Stopped at: Completed 07-03-PLAN.md
 Resume file: None
