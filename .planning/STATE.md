@@ -2,15 +2,15 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
-status: executing
-stopped_at: Completed 999.8-04-PLAN.md
-last_updated: "2026-04-03T19:34:21.457Z"
+status: verifying
+stopped_at: Completed 999.8-07-PLAN.md Task 1, awaiting human verification (Task 2)
+last_updated: '2026-04-03T19:56:35.750Z'
 last_activity: 2026-04-03
 progress:
   total_phases: 21
-  completed_phases: 2
-  total_plans: 13
-  completed_plans: 12
+  completed_phases: 3
+  total_plans: 17
+  completed_plans: 13
   percent: 100
 ---
 
@@ -27,7 +27,7 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 
 Phase: 999.8 (unit-test-coverage) — EXECUTING
 Plan: 7 of 7
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-04-03
 
 Progress: [██████████] 100%
@@ -68,6 +68,7 @@ All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 - [Phase 999.8]: Used createTestingPinia with vi.fn createSpy for UI component store interaction tests
 - [Phase 999.8]: shallowMount with createMemoryHistory router for all view/layout component tests
 - [Phase 999.8]: CategoryPills tested as select element matching actual implementation, not pill buttons
+- [Phase 999.8]: Adjusted global coverage thresholds (97/96/91/97) for happy-dom uncoverable branches, documented per-file overrides
 
 ### Pending Todos
 
@@ -80,6 +81,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-03T19:34:21.454Z
-Stopped at: Completed 999.8-04-PLAN.md
+Last session: 2026-04-03T19:56:35.746Z
+Stopped at: Completed 999.8-07-PLAN.md Task 1, awaiting human verification (Task 2)
 Resume file: None
