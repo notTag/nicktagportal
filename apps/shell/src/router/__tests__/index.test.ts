@@ -54,4 +54,47 @@ describe('router configuration', () => {
     const base = router.options.history.base
     expect(base === '/' || base === '').toBe(true)
   })
+
+  describe('lazy-loaded route components', () => {
+    it('resolves SkillsView component from /skills route', async () => {
+      const routes = router.getRoutes()
+      const skills = routes.find((r) => r.name === 'skills')
+      const componentDef = skills!.components!.default
+      // Lazy routes have a function that returns a promise
+      if (typeof componentDef === 'function') {
+        const mod = await (componentDef as () => Promise<unknown>)()
+        expect(mod).toBeTruthy()
+      }
+    })
+
+    it('resolves CliView component from /cli route', async () => {
+      const routes = router.getRoutes()
+      const cli = routes.find((r) => r.name === 'cli')
+      const componentDef = cli!.components!.default
+      if (typeof componentDef === 'function') {
+        const mod = await (componentDef as () => Promise<unknown>)()
+        expect(mod).toBeTruthy()
+      }
+    })
+
+    it('resolves PlaygroundView component from /playground route', async () => {
+      const routes = router.getRoutes()
+      const playground = routes.find((r) => r.name === 'playground')
+      const componentDef = playground!.components!.default
+      if (typeof componentDef === 'function') {
+        const mod = await (componentDef as () => Promise<unknown>)()
+        expect(mod).toBeTruthy()
+      }
+    })
+
+    it('resolves NotFoundView component from catch-all route', async () => {
+      const routes = router.getRoutes()
+      const notFound = routes.find((r) => r.name === 'not-found')
+      const componentDef = notFound!.components!.default
+      if (typeof componentDef === 'function') {
+        const mod = await (componentDef as () => Promise<unknown>)()
+        expect(mod).toBeTruthy()
+      }
+    })
+  })
 })

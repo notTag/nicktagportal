@@ -64,7 +64,9 @@ describe('ThemeDropdown', () => {
     const wrapper = mountDropdown()
     await wrapper.find('[role="button"]').trigger('click')
     const options = wrapper.findAll('[role="option"]')
-    const synthwave = options.find((o) => o.attributes('aria-selected') === 'true')
+    const synthwave = options.find(
+      (o) => o.attributes('aria-selected') === 'true',
+    )
     expect(synthwave).toBeDefined()
     expect(synthwave!.text()).toContain("SynthWave '84")
   })
@@ -102,5 +104,128 @@ describe('ThemeDropdown', () => {
     await wrapper.find('[role="button"]').trigger('click')
     const listbox = wrapper.find('[role="listbox"]')
     expect(listbox.attributes('aria-label')).toBe('Select theme')
+  })
+
+  describe('keyboard navigation', () => {
+    it('opens dropdown on Enter key on trigger', async () => {
+      const wrapper = mountDropdown()
+      await wrapper.find('[role="button"]').trigger('keydown', { key: 'Enter' })
+      expect(wrapper.find('[role="listbox"]').exists()).toBe(true)
+    })
+
+    it('opens dropdown on Space key on trigger', async () => {
+      const wrapper = mountDropdown()
+      await wrapper.find('[role="button"]').trigger('keydown', { key: ' ' })
+      expect(wrapper.find('[role="listbox"]').exists()).toBe(true)
+    })
+
+    it('opens dropdown on ArrowDown key on trigger', async () => {
+      const wrapper = mountDropdown()
+      await wrapper
+        .find('[role="button"]')
+        .trigger('keydown', { key: 'ArrowDown' })
+      expect(wrapper.find('[role="listbox"]').exists()).toBe(true)
+    })
+
+    it('navigates down with ArrowDown in listbox', async () => {
+      const wrapper = mountDropdown()
+      const store = useThemeStore()
+      await wrapper.find('[role="button"]').trigger('click')
+      const listbox = wrapper.find('[role="listbox"]')
+
+      await listbox.trigger('keydown', { key: 'ArrowDown' })
+      // Should preview the next theme
+      expect(store.previewTheme).toHaveBeenCalled()
+    })
+
+    it('navigates up with ArrowUp in listbox', async () => {
+      const wrapper = mountDropdown()
+      const store = useThemeStore()
+      await wrapper.find('[role="button"]').trigger('click')
+      const listbox = wrapper.find('[role="listbox"]')
+
+      // Move down first, then up
+      await listbox.trigger('keydown', { key: 'ArrowDown' })
+      await listbox.trigger('keydown', { key: 'ArrowUp' })
+      expect(store.previewTheme).toHaveBeenCalledTimes(2)
+    })
+
+    it('selects theme with Enter in listbox', async () => {
+      const wrapper = mountDropdown()
+      const store = useThemeStore()
+      await wrapper.find('[role="button"]').trigger('click')
+      const listbox = wrapper.find('[role="listbox"]')
+
+      await listbox.trigger('keydown', { key: 'Enter' })
+      expect(store.setTheme).toHaveBeenCalled()
+      // Should close after Enter
+      expect(wrapper.find('[role="listbox"]').exists()).toBe(false)
+    })
+
+    it('closes dropdown and reverts on Tab in listbox', async () => {
+      const wrapper = mountDropdown()
+      const store = useThemeStore()
+      await wrapper.find('[role="button"]').trigger('click')
+      const listbox = wrapper.find('[role="listbox"]')
+
+      await listbox.trigger('keydown', { key: 'Tab' })
+      expect(store.revertPreview).toHaveBeenCalled()
+      expect(wrapper.find('[role="listbox"]').exists()).toBe(false)
+    })
+  })
+
+  describe('toggle behavior', () => {
+    it('closes dropdown and reverts preview on second click', async () => {
+      const wrapper = mountDropdown()
+      const store = useThemeStore()
+      // Open
+      await wrapper.find('[role="button"]').trigger('click')
+      expect(wrapper.find('[role="listbox"]').exists()).toBe(true)
+      // Close
+      await wrapper.find('[role="button"]').trigger('click')
+      expect(wrapper.find('[role="listbox"]').exists()).toBe(false)
+      expect(store.revertPreview).toHaveBeenCalled()
+    })
+  })
+
+  describe('click outside', () => {
+    it('closes dropdown on click outside', async () => {
+      const wrapper = mountDropdown()
+      const store = useThemeStore()
+      await wrapper.find('[role="button"]').trigger('click')
+      expect(wrapper.find('[role="listbox"]').exists()).toBe(true)
+
+      // Simulate click outside by dispatching event on document
+      const event = new MouseEvent('click', { bubbles: true })
+      document.dispatchEvent(event)
+
+      // Wait for the handler to process
+      await wrapper.vm.$nextTick()
+      expect(store.revertPreview).toHaveBeenCalled()
+    })
+  })
+
+  describe('trigger keydown when open', () => {
+    it('does not re-open when pressing Enter on trigger while listbox is open', async () => {
+      const wrapper = mountDropdown()
+      // Open first
+      await wrapper.find('[role="button"]').trigger('click')
+      expect(wrapper.find('[role="listbox"]').exists()).toBe(true)
+
+      // Press Enter on trigger — should not cause issues (isOpen is true, so condition is false)
+      await wrapper.find('[role="button"]').trigger('keydown', { key: 'Enter' })
+      // Should still be open (the handler only opens when NOT open)
+      expect(wrapper.find('[role="listbox"]').exists()).toBe(true)
+    })
+  })
+
+  describe('lifecycle', () => {
+    it('cleans up document click listener on unmount', () => {
+      const spy = vi.spyOn(document, 'removeEventListener')
+      const wrapper = mountDropdown()
+      wrapper.unmount()
+      expect(spy).toHaveBeenCalledWith('click', expect.any(Function), true)
+      spy.mockRestore()
+    })
   })
 })

@@ -14,7 +14,9 @@ const testSkill: Skill = {
   years: 3,
 }
 
-function createWrapper(props: Partial<{ skill: Skill; mode: string; diamondSize: number }> = {}) {
+function createWrapper(
+  props: Partial<{ skill: Skill; mode: string; diamondSize: number }> = {},
+) {
   return mount(SkillDiamond, {
     props: {
       skill: testSkill,
@@ -113,6 +115,33 @@ describe('SkillDiamond', () => {
       // Glow should have a non-none box-shadow
       expect(style).toContain('box-shadow')
       expect(style).not.toContain('box-shadow: none')
+    })
+
+    it('applies scale transform in size mode', () => {
+      const wrapper = createWrapper({ mode: 'size' })
+      const diamond = wrapper.find('[aria-label="Vue.js"]')
+      const style = diamond.attributes('style') ?? ''
+      // Size mode: scale(0.85 + years * 0.03) = scale(0.85 + 3 * 0.03) = scale(0.94)
+      expect(style).toContain('scale(0.94)')
+    })
+
+    it('processes fill mode without glow or size styles', () => {
+      const wrapper = createWrapper({ mode: 'fill' })
+      const diamond = wrapper.find('[aria-label="Vue.js"]')
+      const style = diamond.attributes('style') ?? ''
+      // Fill mode applies background-color via color-mix (happy-dom may strip it)
+      // Verify it doesn't apply glow (box-shadow) or size (scale) styles
+      expect(style).toContain('rotate(45deg)')
+      expect(style).not.toContain('scale(')
+      expect(style).toContain('box-shadow: none')
+    })
+
+    it('applies default empty object in uniform mode', () => {
+      const wrapper = createWrapper({ mode: 'uniform' })
+      const diamond = wrapper.find('[aria-label="Vue.js"]')
+      const style = diamond.attributes('style') ?? ''
+      expect(style).toContain('rotate(45deg)')
+      expect(style).toContain('box-shadow: none')
     })
   })
 

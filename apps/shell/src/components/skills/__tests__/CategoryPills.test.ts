@@ -67,5 +67,31 @@ describe('CategoryPills', () => {
 
       expect(toggleSpy).toHaveBeenCalledWith('Auth')
     })
+
+    it('does not call store.toggleCategory when empty value is selected', async () => {
+      const toggleSpy = vi.spyOn(store, 'toggleCategory')
+      const wrapper = createWrapper()
+
+      const selectEl = wrapper.find('select').element as HTMLSelectElement
+
+      // Set to empty string to trigger the guard clause
+      selectEl.value = ''
+      selectEl.dispatchEvent(new Event('change', { bubbles: true }))
+      await wrapper.vm.$nextTick()
+
+      expect(toggleSpy).not.toHaveBeenCalled()
+    })
+
+    it('resets select value to empty after selection', async () => {
+      const wrapper = createWrapper()
+      const selectEl = wrapper.find('select').element as HTMLSelectElement
+
+      selectEl.value = 'Auth'
+      selectEl.dispatchEvent(new Event('change', { bubbles: true }))
+      await wrapper.vm.$nextTick()
+
+      // The select should be reset to empty
+      expect(selectEl.value).toBe('')
+    })
   })
 })

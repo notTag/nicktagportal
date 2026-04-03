@@ -3,8 +3,18 @@ import { mount } from '@vue/test-utils'
 import SocialLinks from '../SocialLinks.vue'
 
 const sampleLinks = [
-  { type: 'github', label: 'GitHub', url: 'https://github.com/nicktag', icon: 'github' },
-  { type: 'linkedin', label: 'LinkedIn', url: 'https://linkedin.com/in/nicktag', icon: 'linkedin' },
+  {
+    type: 'github',
+    label: 'GitHub',
+    url: 'https://github.com/nicktag',
+    icon: 'github',
+  },
+  {
+    type: 'linkedin',
+    label: 'LinkedIn',
+    url: 'https://linkedin.com/in/nicktag',
+    icon: 'linkedin',
+  },
 ]
 
 describe('SocialLinks', () => {
@@ -22,7 +32,9 @@ describe('SocialLinks', () => {
     })
     const anchors = wrapper.findAll('a')
     expect(anchors[0].attributes('href')).toBe('https://github.com/nicktag')
-    expect(anchors[1].attributes('href')).toBe('https://linkedin.com/in/nicktag')
+    expect(anchors[1].attributes('href')).toBe(
+      'https://linkedin.com/in/nicktag',
+    )
   })
 
   it('each link has correct label text', () => {
@@ -65,5 +77,19 @@ describe('SocialLinks', () => {
       props: { links: sampleLinks, orientation: 'right' },
     })
     expect(right.find('div').classes()).toContain('justify-end')
+  })
+
+  it('applies hidden class for none orientation', () => {
+    const wrapper = mount(SocialLinks, {
+      props: { links: sampleLinks, orientation: 'none' },
+    })
+    expect(wrapper.find('div').classes()).toContain('hidden')
+  })
+
+  it('falls back to justify-center for unknown orientation', () => {
+    const wrapper = mount(SocialLinks, {
+      props: { links: sampleLinks, orientation: 'unknown' as never },
+    })
+    expect(wrapper.find('div').classes()).toContain('justify-center')
   })
 })

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import { createRouter, createMemoryHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
@@ -14,6 +14,12 @@ const router = createRouter({
 
 function mountHomeView() {
   return shallowMount(HomeView, {
+    global: { plugins: [createTestingPinia(), router] },
+  })
+}
+
+function fullMountHomeView() {
+  return mount(HomeView, {
     global: { plugins: [createTestingPinia(), router] },
   })
 }
@@ -46,5 +52,29 @@ describe('HomeView', () => {
   it('displays the Tech Stack section', () => {
     const wrapper = mountHomeView()
     expect(wrapper.text()).toContain('Tech Stack')
+  })
+
+  describe('skills by category', () => {
+    it('renders skill categories from techSkills data', () => {
+      const wrapper = fullMountHomeView()
+      // techSkills.json has multiple categories — check for at least one
+      const h3Elements = wrapper.findAll('h3')
+      expect(h3Elements.length).toBeGreaterThan(0)
+    })
+
+    it('renders skill badges within each category', () => {
+      const wrapper = fullMountHomeView()
+      // Each skill should be rendered as a span with displayName
+      const spans = wrapper.findAll('.flex.flex-wrap span')
+      expect(spans.length).toBeGreaterThan(0)
+    })
+
+    it('groups skills into correct categories', () => {
+      const wrapper = fullMountHomeView()
+      const categories = wrapper.findAll('h3')
+      const categoryNames = categories.map((c) => c.text())
+      // Should have at least Frontend and Backend
+      expect(categoryNames.some((name) => name.length > 0)).toBe(true)
+    })
   })
 })

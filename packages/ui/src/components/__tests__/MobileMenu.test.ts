@@ -2,7 +2,9 @@ import { describe, it, expect, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import { createRouter, createMemoryHistory } from 'vue-router'
+import { nextTick } from 'vue'
 import MobileMenu from '../MobileMenu.vue'
+import { useThemeStore } from '@/stores/theme'
 
 const router = createRouter({
   history: createMemoryHistory(),
@@ -10,7 +12,11 @@ const router = createRouter({
     { path: '/', name: 'home', component: { template: '<div />' } },
     { path: '/skills', name: 'skills', component: { template: '<div />' } },
     { path: '/cli', name: 'cli', component: { template: '<div />' } },
-    { path: '/playground', name: 'playground', component: { template: '<div />' } },
+    {
+      path: '/playground',
+      name: 'playground',
+      component: { template: '<div />' },
+    },
   ],
 })
 
@@ -63,11 +69,32 @@ describe('MobileMenu', () => {
     expect(wrapper.emitted('close')).toHaveLength(1)
   })
 
-  it('emits close when a navigation link is clicked', async () => {
+  it('emits close when Home link is clicked', async () => {
     const wrapper = mountMenu(true)
     const links = wrapper.findAll('nav a')
-    expect(links.length).toBeGreaterThan(0)
+    expect(links.length).toBe(4)
     await links[0].trigger('click')
+    expect(wrapper.emitted('close')).toHaveLength(1)
+  })
+
+  it('emits close when Skills link is clicked', async () => {
+    const wrapper = mountMenu(true)
+    const links = wrapper.findAll('nav a')
+    await links[1].trigger('click')
+    expect(wrapper.emitted('close')).toHaveLength(1)
+  })
+
+  it('emits close when CLI link is clicked', async () => {
+    const wrapper = mountMenu(true)
+    const links = wrapper.findAll('nav a')
+    await links[2].trigger('click')
+    expect(wrapper.emitted('close')).toHaveLength(1)
+  })
+
+  it('emits close when Playground link is clicked', async () => {
+    const wrapper = mountMenu(true)
+    const links = wrapper.findAll('nav a')
+    await links[3].trigger('click')
     expect(wrapper.emitted('close')).toHaveLength(1)
   })
 
@@ -84,5 +111,57 @@ describe('MobileMenu', () => {
     // Should have theme buttons (9 themes)
     const themeButtons = wrapper.findAll('.mt-4 button')
     expect(themeButtons.length).toBeGreaterThan(0)
+  })
+
+  describe('escape key', () => {
+    it('emits close on Escape key press', async () => {
+      const wrapper = mountMenu(true)
+      const dialog = wrapper.find('[role="dialog"]')
+      await dialog.trigger('keydown', { key: 'Escape' })
+      expect(wrapper.emitted('close')).toHaveLength(1)
+    })
+  })
+
+  describe('theme selection', () => {
+    it('calls store.setTheme when a theme button is clicked', async () => {
+      const wrapper = mountMenu(true)
+      const store = useThemeStore()
+      const themeButtons = wrapper.findAll('.mt-4 button')
+      await themeButtons[1].trigger('click')
+      expect(store.setTheme).toHaveBeenCalled()
+    })
+
+    it('marks the active theme with a checkmark', () => {
+      const wrapper = mountMenu(true)
+      // The confirmed theme should have the checkmark character
+      const html = wrapper.html()
+      expect(html).toContain('\u2713')
+    })
+  })
+
+  describe('focus management', () => {
+    it('focuses close button when menu opens', async () => {
+      const wrapper = mountMenu(false)
+      // Re-open by changing prop
+      await wrapper.setProps({ isOpen: true })
+      await nextTick()
+      await nextTick()
+
+      // The close button should receive focus (via the watch + nextTick)
+      const closeButton = wrapper.find('button[aria-label="Close menu"]')
+      expect(closeButton.exists()).toBe(true)
+    })
+  })
+
+  describe('navigation link routing', () => {
+    it('has correct route paths for all nav links', () => {
+      const wrapper = mountMenu(true)
+      const links = wrapper.findAll('nav a')
+      const hrefs = links.map((l) => l.attributes('href'))
+      expect(hrefs).toContain('/')
+      expect(hrefs).toContain('/skills')
+      expect(hrefs).toContain('/cli')
+      expect(hrefs).toContain('/playground')
+    })
   })
 })

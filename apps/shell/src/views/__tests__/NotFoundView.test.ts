@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import { createRouter, createMemoryHistory } from 'vue-router'
 import NotFoundView from '@/views/NotFoundView.vue'
 
@@ -7,12 +7,12 @@ const router = createRouter({
   history: createMemoryHistory(),
   routes: [
     { path: '/', component: { template: '<div />' } },
-    { path: '/:pathMatch(.*)*', component: { template: '<div />' } },
+    { path: '/:pathMatch(.*)*', component: NotFoundView },
   ],
 })
 
 function mountNotFoundView() {
-  return shallowMount(NotFoundView, {
+  return mount(NotFoundView, {
     global: { plugins: [router] },
   })
 }
@@ -33,8 +33,15 @@ describe('NotFoundView', () => {
     expect(wrapper.text()).toContain('Page not found')
   })
 
-  it('contains a link back to home', () => {
+  it('renders a RouterLink pointing to home', () => {
     const wrapper = mountNotFoundView()
-    expect(wrapper.html()).toContain('/')
+    const link = wrapper.find('a[href="/"]')
+    expect(link.exists()).toBe(true)
+    expect(link.text()).toContain('Go back home')
+  })
+
+  it('has the informational paragraph about the page', () => {
+    const wrapper = mountNotFoundView()
+    expect(wrapper.text()).toContain("doesn't exist or has been moved")
   })
 })
