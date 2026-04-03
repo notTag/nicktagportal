@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
 status: executing
-stopped_at: Completed 999.8-06-PLAN.md
-last_updated: "2026-04-03T19:30:13.831Z"
+stopped_at: Completed 999.8-05-PLAN.md
+last_updated: "2026-04-03T19:30:33.022Z"
 last_activity: 2026-04-03
 progress:
   total_phases: 19
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 ## Current Position
 
 Phase: 999.8 (unit-test-coverage) — EXECUTING
-Plan: 5 of 7
+Plan: 6 of 7
 Status: Ready to execute
 Last activity: 2026-04-03
 
@@ -66,6 +66,7 @@ All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 - [Phase 999.8]: Pinia stores tested via setActivePinia(createPinia()) -- no internal mocking
 - [Phase 999.8]: Fixed test-setup.ts IntersectionObserver mock to use vi.fn constructor pattern and added full localStorage mock for happy-dom
 - [Phase 999.8]: Used createTestingPinia with vi.fn createSpy for UI component store interaction tests
+- [Phase 999.8]: shallowMount with createMemoryHistory router for all view/layout component tests
 
 ### Pending Todos
 
@@ -78,6 +79,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-03T19:30:13.828Z
-Stopped at: Completed 999.8-06-PLAN.md
+Last session: 2026-04-03T19:30:33.019Z
+Stopped at: Completed 999.8-05-PLAN.md
 Resume file: None
