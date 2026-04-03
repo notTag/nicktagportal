@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
 status: verifying
-stopped_at: Completed 999.8-07-PLAN.md Task 1, awaiting human verification (Task 2)
-last_updated: '2026-04-03T19:56:35.750Z'
-last_activity: 2026-04-03
+stopped_at: Completed 07-01-PLAN.md
+last_updated: '2026-04-03T20:24:55.013Z'
+last_activity: 2026-04-02
 progress:
-  total_phases: 21
-  completed_phases: 3
-  total_plans: 17
-  completed_plans: 13
+  total_phases: 13
+  completed_phases: 2
+  total_plans: 6
+  completed_plans: 7
   percent: 100
 ---
 
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-27)
 
 **Core value:** The shell app works as a polished, deployable personal site from day one -- federation infrastructure is ready but never blocks the core experience.
-**Current focus:** Phase 999.8 — unit-test-coverage
+**Current focus:** Phase 06 — skills-diamond-wall
 
 ## Current Position
 
-Phase: 999.8 (unit-test-coverage) — EXECUTING
-Plan: 7 of 7
+Phase: 999.1
+Plan: Not started
 Status: Phase complete — ready for verification
-Last activity: 2026-04-03
+Last activity: 2026-04-02
 
 Progress: [██████████] 100%
 
@@ -62,13 +62,8 @@ All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 - [Phase 06]: DiamondInfoPanel uses Teleport to body to escape overflow:hidden clipping
 - [Phase 06]: Skill duplication count computed from viewport width for seamless infinite scroll
 - [Phase 06]: Entrance animation (stagger fade/scale) deferred to backlog 999.9 per user decision
-- [Phase 999.8]: Installed @vitejs/plugin-vue at root level for packages/ui vitest config resolution
-- [Phase 999.8]: Pinia stores tested via setActivePinia(createPinia()) -- no internal mocking
-- [Phase 999.8]: Fixed test-setup.ts IntersectionObserver mock to use vi.fn constructor pattern and added full localStorage mock for happy-dom
-- [Phase 999.8]: Used createTestingPinia with vi.fn createSpy for UI component store interaction tests
-- [Phase 999.8]: shallowMount with createMemoryHistory router for all view/layout component tests
-- [Phase 999.8]: CategoryPills tested as select element matching actual implementation, not pill buttons
-- [Phase 999.8]: Adjusted global coverage thresholds (97/96/91/97) for happy-dom uncoverable branches, documented per-file overrides
+- [Phase 07]: Terminal theme defaults to dark-modern independently from site theme (localStorage key: nicksite-cli-theme)
+- [Phase 07]: VFS uses Map<string, VfsNode> for O(1) child lookup by name
 
 ### Pending Todos
 
@@ -81,6 +76,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-03T19:56:35.746Z
-Stopped at: Completed 999.8-07-PLAN.md Task 1, awaiting human verification (Task 2)
+Last session: 2026-04-03T20:24:55.010Z
+Stopped at: Completed 07-01-PLAN.md
 Resume file: None
