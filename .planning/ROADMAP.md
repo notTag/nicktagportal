@@ -197,13 +197,13 @@ Plans:
 
 **Goal:** Achieve 100% unit test coverage across the monorepo. Set up Vitest, configure coverage reporting, write unit tests for all components, composables, stores, and utilities. Establish CI gates to enforce coverage thresholds and prevent regressions.
 **Requirements:** COV-INFRA, COV-STORES, COV-UTILS, COV-CONFIG, COV-COMPOSABLES, COV-THEMES, COV-COMPONENTS-SHELL, COV-VIEWS, COV-ROUTER, COV-APP, COV-COMPONENTS-UI, COV-100, COV-CI
-**Plans:** 1/7 plans executed
+**Plans:** 3/7 plans executed
 
 Plans:
 
 - [x] 999.8-01-PLAN.md -- Vitest infrastructure, configs, setup files, CI gate
-- [ ] 999.8-02-PLAN.md -- Pinia stores, utilities, config, types, federation tests
-- [ ] 999.8-03-PLAN.md -- Composables and theme definitions tests
+- [x] 999.8-02-PLAN.md -- Pinia stores, utilities, config, types, federation tests
+- [x] 999.8-03-PLAN.md -- Composables and theme definitions tests
 - [ ] 999.8-04-PLAN.md -- Skills component tests (7 components)
 - [ ] 999.8-05-PLAN.md -- Views, AppLayout, router, and App.vue tests
 - [ ] 999.8-06-PLAN.md -- packages/ui component and barrel export tests
