@@ -10,7 +10,7 @@ Requirements for milestone v1.1: CLI Remote & Site Polish. Each maps to roadmap 
 ### CLI Terminal
 
 - [ ] **CLI-01**: User sees an xterm.js-powered terminal with responsive fit at /cli route
-- [ ] **CLI-02**: User sees a colored prompt displaying current working directory (nick@nicktag.tech:~/path $)
+- [x] **CLI-02**: User sees a colored prompt displaying current working directory (nick@nicktag.tech:~/path $)
 - [ ] **CLI-03**: User can navigate directories with `cd` (supports `.`, `..`, `~`, relative and absolute paths)
 - [ ] **CLI-04**: User can list directory contents with `ls`
 - [ ] **CLI-05**: User can read file contents with `cat`
@@ -22,18 +22,18 @@ Requirements for milestone v1.1: CLI Remote & Site Polish. Each maps to roadmap 
 - [ ] **CLI-11**: User can view directory structure with `tree`
 - [ ] **CLI-12**: User can recall previous commands with `history` and up/down arrows
 - [ ] **CLI-13**: User can tab-complete commands and file paths
-- [ ] **CLI-14**: User sees red error text for unknown commands
+- [x] **CLI-14**: User sees red error text for unknown commands
 - [ ] **CLI-15**: User can create directories with `mkdir` (persisted to localStorage)
 - [ ] **CLI-16**: User can create files with `touch` (persisted to localStorage)
 - [ ] **CLI-17**: User can set aliases with `alias` (persisted to localStorage)
-- [ ] **CLI-18**: User sees an ASCII art welcome banner on terminal load
+- [x] **CLI-18**: User sees an ASCII art welcome banner on terminal load
 - [ ] **CLI-19**: User can view a formatted resume summary with `resume` command
 - [ ] **CLI-20**: User can trigger an `ssh` Easter egg command
 
 ### Virtual Filesystem
 
-- [ ] **VFS-01**: Terminal loads a pre-populated resume filesystem with companies, teams, projects, roles, and skills directories
-- [ ] **VFS-02**: File contents display resume information when read with `cat`
+- [x] **VFS-01**: Terminal loads a pre-populated resume filesystem with companies, teams, projects, roles, and skills directories
+- [x] **VFS-02**: File contents display resume information when read with `cat`
 - [ ] **VFS-03**: User-created files and directories persist across sessions via localStorage
 
 ### Federation
@@ -116,7 +116,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SKL-07      | 6     | Complete |
 | SKL-08      | 6     | Complete |
 | CLI-01      | 7     | Pending |
-| CLI-02      | 7     | Pending |
+| CLI-02      | 7     | Complete |
 | CLI-03      | 7     | Pending |
 | CLI-04      | 7     | Pending |
 | CLI-05      | 7     | Pending |
@@ -128,15 +128,15 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CLI-11      | 7     | Pending |
 | CLI-12      | 7     | Pending |
 | CLI-13      | 7     | Pending |
-| CLI-14      | 7     | Pending |
+| CLI-14      | 7     | Complete |
 | CLI-15      | 7     | Pending |
 | CLI-16      | 7     | Pending |
 | CLI-17      | 7     | Pending |
-| CLI-18      | 7     | Pending |
+| CLI-18      | 7     | Complete |
 | CLI-19      | 7     | Pending |
 | CLI-20      | 7     | Pending |
-| VFS-01      | 7     | Pending |
-| VFS-02      | 7     | Pending |
+| VFS-01      | 7     | Complete |
+| VFS-02      | 7     | Complete |
 | VFS-03      | 7     | Pending |
 | FED-01      | 8     | Pending |
 | FED-02      | 8     | Pending |
