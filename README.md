@@ -50,9 +50,52 @@ bun run typecheck
 bun run lint
 bun run format
 
+# Run tests
+bun run test
+
+# Run tests in watch mode
+bun run test:watch
+
+# Run tests with coverage report
+bun run test:coverage
+
 # Production build
 bun run build
 ```
+
+## Testing
+
+Tests are powered by:
+
+| Tool | Purpose |
+|------|---------|
+| [Vitest](https://vitest.dev/) | Test runner and assertion library |
+| [happy-dom](https://github.com/nicktag/happy-dom) | Lightweight DOM implementation for component tests |
+| [@vue/test-utils](https://test-utils.vuejs.org/) | Vue 3 component mounting and interaction utilities |
+| [@pinia/testing](https://pinia.vuejs.org/cookbook/testing.html) | Pinia store mocking for isolated component tests |
+| [@vitest/coverage-v8](https://vitest.dev/guide/coverage) | V8-based code coverage reporting |
+
+Tests live alongside source code in `__tests__/` directories:
+
+```
+apps/shell/src/
+  stores/__tests__/            # Pinia store tests
+  composables/__tests__/       # Composable tests
+  components/skills/__tests__/ # Component tests
+  views/__tests__/             # View tests
+  themes/__tests__/            # Theme definition tests
+  utils/__tests__/             # Utility tests
+  config/__tests__/            # Config tests
+  federation/__tests__/        # Federation tests
+  router/__tests__/            # Router tests
+  __tests__/                   # App root tests
+
+packages/ui/src/
+  components/__tests__/        # Shared UI component tests
+  __tests__/                   # Barrel export tests
+```
+
+Both workspace projects enforce coverage thresholds via V8. Running `bun run test:coverage` will fail if coverage drops below the configured minimums. Per-file threshold overrides are documented inline in each workspace's `vitest.config.ts`.
 
 ## Deployment
 
