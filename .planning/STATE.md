@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
 status: verifying
-stopped_at: Completed 07-01-PLAN.md
-last_updated: '2026-04-03T20:24:55.013Z'
+stopped_at: Completed 07-02-PLAN.md
+last_updated: "2026-04-03T20:30:57.924Z"
 last_activity: 2026-04-02
 progress:
-  total_phases: 13
-  completed_phases: 2
-  total_plans: 6
-  completed_plans: 7
+  total_phases: 21
+  completed_phases: 3
+  total_plans: 17
+  completed_plans: 15
   percent: 100
 ---
 
@@ -64,6 +64,7 @@ All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 - [Phase 06]: Entrance animation (stagger fade/scale) deferred to backlog 999.9 per user decision
 - [Phase 07]: Terminal theme defaults to dark-modern independently from site theme (localStorage key: nicksite-cli-theme)
 - [Phase 07]: VFS uses Map<string, VfsNode> for O(1) child lookup by name
+- [Phase 07]: ANSI color codes embedded at VFS build time for direct cat passthrough
 
 ### Pending Todos
 
@@ -76,6 +77,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-03T20:24:55.010Z
-Stopped at: Completed 07-01-PLAN.md
+Last session: 2026-04-03T20:30:57.921Z
+Stopped at: Completed 07-02-PLAN.md
 Resume file: None

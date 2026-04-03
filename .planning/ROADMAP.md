@@ -94,8 +94,8 @@ Plans:
 
 Plans:
 
-- [ ] 07-01-PLAN.md -- Data layer: types, ANSI helpers, terminal theme store, resume JSON
-- [ ] 07-02-PLAN.md -- Virtual filesystem and command handlers (navigation, files, info)
+- [x] 07-01-PLAN.md -- Data layer: types, ANSI helpers, terminal theme store, resume JSON
+- [x] 07-02-PLAN.md -- Virtual filesystem and command handlers (navigation, files, info)
 - [ ] 07-03-PLAN.md -- Shell orchestrator, command registry, banner, tab completion, history
 - [ ] 07-04-PLAN.md -- useTerminal composable, CliView.vue rewrite, visual verification
 
