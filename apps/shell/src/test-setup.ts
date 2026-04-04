@@ -1,10 +1,12 @@
-import { vi } from 'vitest'
+import { vi, beforeEach } from 'vitest'
 
 // Mock IntersectionObserver (not available in happy-dom)
 // Stub with a real class so `new IntersectionObserver(...)` works correctly
-const MockIntersectionObserver = vi.fn(function (
-  this: { observe: ReturnType<typeof vi.fn>; unobserve: ReturnType<typeof vi.fn>; disconnect: ReturnType<typeof vi.fn> },
-) {
+const MockIntersectionObserver = vi.fn(function (this: {
+  observe: ReturnType<typeof vi.fn>
+  unobserve: ReturnType<typeof vi.fn>
+  disconnect: ReturnType<typeof vi.fn>
+}) {
   this.observe = vi.fn()
   this.unobserve = vi.fn()
   this.disconnect = vi.fn()

@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest'
 import { mount, shallowMount } from '@vue/test-utils'
 import { setActivePinia, createPinia } from 'pinia'
 import { useSkillsStore } from '@/stores/skills'

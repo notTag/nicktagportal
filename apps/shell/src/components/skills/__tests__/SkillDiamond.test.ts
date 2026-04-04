@@ -4,7 +4,7 @@ import { setActivePinia, createPinia } from 'pinia'
 import { nextTick } from 'vue'
 import SkillDiamond from '../SkillDiamond.vue'
 import { useSkillsStore } from '@/stores/skills'
-import type { Skill } from '@/types/skills'
+import type { Skill, ProficiencyMode } from '@/types/skills'
 
 const testSkill: Skill = {
   name: 'vue',
@@ -15,7 +15,11 @@ const testSkill: Skill = {
 }
 
 function createWrapper(
-  props: Partial<{ skill: Skill; mode: string; diamondSize: number }> = {},
+  props: Partial<{
+    skill: Skill
+    mode: ProficiencyMode
+    diamondSize: number
+  }> = {},
 ) {
   return mount(SkillDiamond, {
     props: {

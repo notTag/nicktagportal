@@ -69,7 +69,9 @@ describe('useTheme', () => {
 
   it('returns the theme store with setTheme function', () => {
     const wrapper = mountWithTheme()
-    const store = wrapper.vm.store
+    const store = (
+      wrapper.vm as unknown as { store: ReturnType<typeof useTheme> }
+    ).store
     expect(store).toBeDefined()
     expect(typeof store.setTheme).toBe('function')
     expect(typeof store.previewTheme).toBe('function')
