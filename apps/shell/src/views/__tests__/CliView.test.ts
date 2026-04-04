@@ -1,7 +1,12 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
 import { shallowMount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import CliView from '@/views/CliView.vue'
+
+// Mock the useTerminal composable — xterm.js requires a real DOM
+vi.mock('@/composables/useTerminal', () => ({
+  useTerminal: vi.fn(),
+}))
 
 function mountCliView() {
   return shallowMount(CliView, {
@@ -15,15 +20,16 @@ describe('CliView', () => {
     expect(wrapper.exists()).toBe(true)
   })
 
-  it('displays CLI heading', () => {
+  it('contains a terminal container element', () => {
     const wrapper = mountCliView()
-    const h1 = wrapper.find('h1')
-    expect(h1.exists()).toBe(true)
-    expect(h1.text()).toBe('CLI')
+    // The terminal container is the inner div that xterm attaches to
+    const container = wrapper.find('.min-h-0.flex-1')
+    expect(container.exists()).toBe(true)
   })
 
-  it('contains TerminalPanel child component', () => {
-    const wrapper = mountCliView()
-    expect(wrapper.html()).toContain('terminal-panel')
+  it('calls useTerminal composable', async () => {
+    const { useTerminal } = await import('@/composables/useTerminal')
+    mountCliView()
+    expect(useTerminal).toHaveBeenCalled()
   })
 })
