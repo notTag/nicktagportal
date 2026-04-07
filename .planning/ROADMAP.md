@@ -30,7 +30,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 
 - [ ] **Phase 5: Theme System** - Runtime-swappable VSCode theme layer with CSS custom properties and localStorage persistence
 - [x] **Phase 6: Skills Diamond Wall** - Animated diamond grid of technology icons on dedicated /skills route
-- [ ] **Phase 7: CLI Terminal Core** - xterm.js terminal with virtual resume filesystem and shell commands as a standalone Vue app
+- [x] **Phase 7: CLI Terminal Core** - xterm.js terminal with virtual resume filesystem and shell commands as a standalone Vue app
 - [ ] **Phase 8: CLI Federation Integration** - Wire CLI remote into shell via Module Federation with shared singletons and fallback handling
 - [ ] **Phase 9: Deployment & Infrastructure** - GitHub Actions Node.js 24 migration, tree shaking audit, and rollback verification
 
@@ -96,8 +96,8 @@ Plans:
 
 - [x] 07-01-PLAN.md -- Data layer: types, ANSI helpers, terminal theme store, resume JSON
 - [x] 07-02-PLAN.md -- Virtual filesystem and command handlers (navigation, files, info)
-- [ ] 07-03-PLAN.md -- Shell orchestrator, command registry, banner, tab completion, history
-- [ ] 07-04-PLAN.md -- useTerminal composable, CliView.vue rewrite, visual verification
+- [x] 07-03-PLAN.md -- Shell orchestrator, command registry, banner, tab completion, history
+- [x] 07-04-PLAN.md -- useTerminal composable, CliView.vue rewrite, visual verification
 
 ### Phase 8: CLI Federation Integration
 
@@ -134,7 +134,7 @@ Phases execute in numeric order: 5 -> 5.1 -> 6 -> 7 -> 7.1 -> 8 -> 9
 | ------------------------------ | --------- | -------------- | ----------- | ---------- |
 | 5. Theme System                | v1.1      | 0/3            | Planned     | -          |
 | 6. Skills Diamond Wall         | v1.1      | 3/3            | Complete    | 2026-04-02 |
-| 7. CLI Terminal Core           | v1.1      | 0/4            | Planned     | -          |
+| 7. CLI Terminal Core           | v1.1      | 4/4            | Complete    | 2026-04-06 |
 | 8. CLI Federation Integration  | v1.1      | 0/TBD          | Not started | -          |
 | 9. Deployment & Infrastructure | v1.1      | 0/TBD          | Not started | -          |
 

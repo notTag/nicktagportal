@@ -28,16 +28,18 @@ const skillsByCategory = computed(() => {
       {{ profile.bio }}
     </p>
     <RouterLink
-      to="/playground"
+      to="/skills"
       class="bg-accent text-surface mt-8 inline-block rounded-lg px-6 py-3 text-sm font-bold transition-opacity hover:opacity-90"
     >
-      Explore Playground
+      Explore Skills
     </RouterLink>
   </section>
 
   <section class="mx-auto max-w-4xl px-4 pt-12 pb-16">
     <h2 class="text-text mb-6 text-2xl font-bold">Tech Stack</h2>
-    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+    <div
+      class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+    >
       <div v-for="(skills, category) in skillsByCategory" :key="category">
         <h3 class="text-accent-cyan mb-2 text-sm font-bold">
           {{ category }}

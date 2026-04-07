@@ -33,7 +33,8 @@ patterns-established:
   - 'useTerminal composable: Vue lifecycle hooks managing non-Vue library (xterm.js) with proper cleanup'
   - 'ResizeObserver disconnect before terminal.dispose() to prevent orphaned observers'
 
-requirements-completed: [CLI-01, CLI-19, CLI-20]
+requirements-completed: [CLI-01]
+requirements-deferred: [CLI-19, CLI-20] # deferred per D-21/D-22, not implemented
 
 duration: 4min
 completed: 2026-04-03

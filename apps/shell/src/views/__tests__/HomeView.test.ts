@@ -45,8 +45,8 @@ describe('HomeView', () => {
 
   it('contains a link to the playground', () => {
     const wrapper = mountHomeView()
-    const link = wrapper.find('a[href="/playground"]')
-    expect(link.exists() || wrapper.html().includes('/playground')).toBe(true)
+    const link = wrapper.find('a[href="/skills"]')
+    expect(link.exists() || wrapper.html().includes('/skills')).toBe(true)
   })
 
   it('displays the Tech Stack section', () => {

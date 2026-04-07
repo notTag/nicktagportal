@@ -2,13 +2,13 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
-status: verifying
-stopped_at: Checkpoint in 07-04-PLAN.md Task 2 (human-verify)
-last_updated: '2026-04-03T20:45:30Z'
-last_activity: 2026-04-03
+status: active
+stopped_at: null
+last_updated: '2026-04-06T00:00:00Z'
+last_activity: 2026-04-06
 progress:
   total_phases: 13
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 6
   completed_plans: 6
   percent: 100
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-27)
 
 **Core value:** The shell app works as a polished, deployable personal site from day one -- federation infrastructure is ready but never blocks the core experience.
-**Current focus:** Phase 06 — skills-diamond-wall
+**Current focus:** Phase 08 — CLI Federation Integration
 
 ## Current Position
 
-Phase: 07-cli-terminal-core
-Plan: 4 of 4
-Status: Checkpoint -- awaiting human verification of CLI terminal
-Last activity: 2026-04-03
+Phase: 08-cli-federation-integration
+Plan: 0 of TBD
+Status: Starting — needs discuss phase
+Last activity: 2026-04-06
 
 Progress: [████████░░] 80%
 
@@ -74,6 +74,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-03T20:45:30Z
-Stopped at: Checkpoint in 07-04-PLAN.md Task 2 (human-verify)
+Last session: 2026-04-06
+Stopped at: Phase 7 complete, advancing to Phase 8
 Resume file: None
