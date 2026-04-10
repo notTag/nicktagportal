@@ -1,0 +1,98 @@
+graph TB
+    subgraph MONOREPO["🗂 Bun Monorepo — nick-site"]
+        direction TB
+
+        subgraph PACKAGES["packages/"]
+            UI["📦 packages/ui\nTheHeader · TheFooter\nSocialLinks · TerminalPanel\nThemeDropdown · MobileMenu"]
+            TYPES["📦 packages/types\nShared TypeScript types"]
+        end
+
+        subgraph SHELL["apps/shell — Vue 3 Shell App"]
+            direction TB
+
+            subgraph VIEWS["Views (Vue Router)"]
+                V1["/ · HomeView"]
+                V2["/skills · SkillsView"]
+                V3["/cli · CliView"]
+                V4["/playground · PlaygroundView"]
+                V5["/* · NotFoundView"]
+            end
+
+            subgraph STATE["State (Pinia Stores)"]
+                S1["appStore"]
+                S2["skillsStore"]
+                S3["terminalStore"]
+                S4["themeStore"]
+            end
+
+            subgraph SKILLS_COMP["Skills Components"]
+                SC1["DiamondWall\nDiamondRow · SkillDiamond\nDiamondInfoPanel\nSkillsToolbar · CategoryPills"]
+            end
+
+            subgraph FEDERATION["Module Federation"]
+                HOST["Shell Host\n@originjs/vite-plugin-federation\nShared: vue · vue-router · pinia"]
+                R1["Remote A\n(future)"]
+                R2["Remote B\n(future)"]
+            end
+
+            ROUTER["Vue Router 4\nHTML5 history mode"]
+            LAYOUT["AppLayout\n(packages/ui)"]
+        end
+    end
+
+    subgraph CI_CD["CI/CD — GitHub Actions"]
+        BUILD["Build Job\nbun install → bun run build\nvue-tsc type-check"]
+        GATE["Approval Gate\nRequired reviewer"]
+        DEPLOY["Deploy Job\nGitHub Pages artifact"]
+        ROLLBACK["rollback.yml\nredeploy prior run"]
+    end
+
+    subgraph HOSTING["Hosting"]
+        GHP["GitHub Pages\nnicktag.tech"]
+        SPA["SPA Routing\n404.html = index.html"]
+    end
+
+    %% Internal wiring
+    ROUTER --> VIEWS
+    LAYOUT --> ROUTER
+    UI --> LAYOUT
+    TYPES --> SHELL
+    VIEWS --> STATE
+    V2 --> SKILLS_COMP
+    V3 --> S3
+    HOST -->|"loads at runtime"| R1
+    HOST -->|"loads at runtime"| R2
+
+    %% Build → Deploy
+    MONOREPO -->|"push to main"| BUILD
+    BUILD --> GATE
+    GATE -->|approved| DEPLOY
+    DEPLOY --> GHP
+    GHP --> SPA
+    ROLLBACK -->|"re-deploy prior artifact"| DEPLOY
+
+    %% Vite build
+    subgraph BUILD_TOOLS["Build Tools"]
+        VITE["Vite 6\n@vitejs/plugin-vue\n@tailwindcss/vite\nvite-plugin-federation"]
+        TW["TailwindCSS v4\nCSS-first config\n@theme directives"]
+        TS["TypeScript strict\nvue-tsc"]
+    end
+
+    SHELL -->|"built by"| VITE
+    VITE --> TW
+    VITE --> TS
+
+    %% Styling
+    classDef pkg fill:#1e3a5f,stroke:#3b82f6,color:#e2e8f0
+    classDef view fill:#1a3a2a,stroke:#22c55e,color:#e2e8f0
+    classDef store fill:#3a1a2a,stroke:#ec4899,color:#e2e8f0
+    classDef ci fill:#2a2a1a,stroke:#eab308,color:#e2e8f0
+    classDef host fill:#1a2a3a,stroke:#60a5fa,color:#e2e8f0
+    classDef tool fill:#2a1a3a,stroke:#a78bfa,color:#e2e8f0
+
+    class UI,TYPES pkg
+    class V1,V2,V3,V4,V5,SKILLS_COMP view
+    class S1,S2,S3,S4 store
+    class BUILD,GATE,DEPLOY,ROLLBACK ci
+    class GHP,SPA host
+    class VITE,TW,TS tool

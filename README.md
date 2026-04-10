@@ -1,6 +1,4 @@
 # NICK TAG . TECH
-                                                                                                                 
-                                                                                                                 
 
 A personal portfolio and micro-frontend playground built as a Bun monorepo with a Vue 3 shell app. The shell app hosts micro-frontends via Module Federation — federation infrastructure is scaffolded upfront but the shell works as a polished standalone site from day one.
 
@@ -67,13 +65,13 @@ bun run build
 
 Tests are powered by:
 
-| Tool | Purpose |
-|------|---------|
-| [Vitest](https://vitest.dev/) | Test runner and assertion library |
-| [happy-dom](https://github.com/nicktag/happy-dom) | Lightweight DOM implementation for component tests |
-| [@vue/test-utils](https://test-utils.vuejs.org/) | Vue 3 component mounting and interaction utilities |
-| [@pinia/testing](https://pinia.vuejs.org/cookbook/testing.html) | Pinia store mocking for isolated component tests |
-| [@vitest/coverage-v8](https://vitest.dev/guide/coverage) | V8-based code coverage reporting |
+| Tool                                                            | Purpose                                            |
+| --------------------------------------------------------------- | -------------------------------------------------- |
+| [Vitest](https://vitest.dev/)                                   | Test runner and assertion library                  |
+| [happy-dom](https://github.com/nicktag/happy-dom)               | Lightweight DOM implementation for component tests |
+| [@vue/test-utils](https://test-utils.vuejs.org/)                | Vue 3 component mounting and interaction utilities |
+| [@pinia/testing](https://pinia.vuejs.org/cookbook/testing.html) | Pinia store mocking for isolated component tests   |
+| [@vitest/coverage-v8](https://vitest.dev/guide/coverage)        | V8-based code coverage reporting                   |
 
 Tests live alongside source code in `__tests__/` directories:
 
@@ -141,3 +139,7 @@ Before the first deploy, configure these in your GitHub repo:
    - 185.199.109.153
    - 185.199.110.153
    - 185.199.111.153
+
+## System Design
+
+![System Design Diagram](docs/system-design.png)
