@@ -122,7 +122,7 @@
     "name": "echo",
     "displayName": "Echo Framework",
     "iconPath": "/icons/skills/go.svg",
-    "category": "Languages",
+    "category": "Backend Frameworks",
     "years": 7
   },
   {
