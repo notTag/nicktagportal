@@ -119,6 +119,13 @@
     "years": 7
   },
   {
+    "name": "echo",
+    "displayName": "Echo Framework",
+    "iconPath": "/icons/skills/go.svg",
+    "category": "Languages",
+    "years": 7
+  },
+  {
     "name": "jwt",
     "displayName": "JWT",
     "iconPath": "/icons/skills/jwt.svg",
