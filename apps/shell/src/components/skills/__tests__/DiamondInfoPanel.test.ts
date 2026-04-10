@@ -11,7 +11,10 @@ const testSkill: Skill = {
   years: 3,
 }
 
-function createWrapper(props: { skill: Skill | null; position: { x: number; y: number } | null }) {
+function createWrapper(props: {
+  skill: Skill | null
+  position: { x: number; y: number } | null
+}) {
   return mount(DiamondInfoPanel, {
     props,
     global: {
@@ -47,6 +50,15 @@ describe('DiamondInfoPanel', () => {
         position: { x: 100, y: 200 },
       })
       expect(wrapper.text()).toContain('1 year experience')
+    })
+
+    it('renders "10+" for skills with more than 10 years', () => {
+      const veteranSkill = { ...testSkill, years: 13 }
+      const wrapper = createWrapper({
+        skill: veteranSkill,
+        position: { x: 100, y: 200 },
+      })
+      expect(wrapper.text()).toContain('10+ years experience')
     })
 
     it('renders skill category', () => {

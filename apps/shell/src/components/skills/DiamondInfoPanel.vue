@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { formatYears } from '@/types/skills'
 import type { Skill } from '@/types/skills'
 
 defineProps<{
@@ -20,21 +21,22 @@ defineProps<{
       <div
         v-if="skill && position"
         role="tooltip"
-        class="pointer-events-none fixed z-50 rounded-md border border-border bg-surface-raised px-4 py-3 shadow-lg"
+        class="border-border bg-surface-raised pointer-events-none fixed z-50 rounded-md border px-4 py-3 shadow-lg"
         :style="{
           left: `${position.x}px`,
           top: `${position.y}px`,
           transform: 'translateX(-50%)',
         }"
       >
-        <p class="text-base font-bold text-text">
+        <p class="text-text text-base font-bold">
           {{ skill.displayName }}
         </p>
-        <p class="text-sm font-normal text-text-muted">
-          {{ skill.years }} {{ skill.years === 1 ? 'year' : 'years' }}
+        <p class="text-text-muted text-sm font-normal">
+          {{ formatYears(skill.years) }}
+          {{ skill.years === 1 ? 'year' : 'years' }}
           experience
         </p>
-        <span class="mt-1 inline-block text-xs font-bold text-accent-cyan">
+        <span class="text-accent-cyan mt-1 inline-block text-xs font-bold">
           {{ skill.category }}
         </span>
       </div>

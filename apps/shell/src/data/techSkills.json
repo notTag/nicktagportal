@@ -1,32 +1,233 @@
 [
-  { "name": "splunk", "displayName": "Splunk", "iconPath": "/icons/skills/splunk.svg", "category": "Observability", "years": 3 },
-  { "name": "datadog", "displayName": "DataDog APM", "iconPath": "/icons/skills/datadog.svg", "category": "Observability", "years": 3 },
-  { "name": "jira", "displayName": "JIRA Metrics", "iconPath": "/icons/skills/jira.svg", "category": "Observability", "years": 3 },
-  { "name": "terraform", "displayName": "Terraform", "iconPath": "/icons/skills/terraform.svg", "category": "CI/CD", "years": 3 },
-  { "name": "atlantis", "displayName": "Atlantis", "iconPath": "/icons/skills/atlantis.svg", "category": "CI/CD", "years": 3 },
-  { "name": "ansible", "displayName": "Ansible", "iconPath": "/icons/skills/ansible.svg", "category": "CI/CD", "years": 3 },
-  { "name": "gitlab", "displayName": "Gitlab", "iconPath": "/icons/skills/gitlab.svg", "category": "CI/CD", "years": 3 },
-  { "name": "github", "displayName": "GitHub", "iconPath": "/icons/skills/github.svg", "category": "CI/CD", "years": 3 },
-  { "name": "aws", "displayName": "AWS", "iconPath": "/icons/skills/aws.svg", "category": "Infrastructure", "years": 3 },
-  { "name": "cloudflare", "displayName": "Cloudflare", "iconPath": "/icons/skills/cloudflare.svg", "category": "Infrastructure", "years": 3 },
-  { "name": "sqs", "displayName": "SQS", "iconPath": "/icons/skills/sqs.svg", "category": "Infrastructure", "years": 3 },
-  { "name": "kafka", "displayName": "Kafka", "iconPath": "/icons/skills/kafka.svg", "category": "Infrastructure", "years": 3 },
-  { "name": "vault", "displayName": "HashiCorp Vault", "iconPath": "/icons/skills/vault.svg", "category": "Security", "years": 3 },
-  { "name": "cycode", "displayName": "Cycode", "iconPath": "/icons/skills/cycode.svg", "category": "Security", "years": 3 },
-  { "name": "casbin", "displayName": "Casbin RBAC", "iconPath": "/icons/skills/casbin.svg", "category": "Security", "years": 3 },
-  { "name": "mysql", "displayName": "MySQL", "iconPath": "/icons/skills/mysql.svg", "category": "Databases", "years": 3 },
-  { "name": "sql", "displayName": "SQL", "iconPath": "/icons/skills/sql.svg", "category": "Databases", "years": 3 },
-  { "name": "go-testing", "displayName": "Golang", "iconPath": "/icons/skills/go.svg", "category": "Testing", "years": 3 },
-  { "name": "jwt", "displayName": "JWT", "iconPath": "/icons/skills/jwt.svg", "category": "Auth", "years": 3 },
-  { "name": "iam", "displayName": "AWS IAM", "iconPath": "/icons/skills/iam.svg", "category": "Auth", "years": 3 },
-  { "name": "okta", "displayName": "Okta", "iconPath": "/icons/skills/okta.svg", "category": "Auth", "years": 3 },
-  { "name": "opsgenie", "displayName": "OpsGenie", "iconPath": "/icons/skills/opsgenie.svg", "category": "Incident Mgmt", "years": 3 },
-  { "name": "slack", "displayName": "Slack", "iconPath": "/icons/skills/slack.svg", "category": "Incident Mgmt", "years": 3 },
-  { "name": "swagger", "displayName": "Swagger", "iconPath": "/icons/skills/swagger.svg", "category": "Documentation", "years": 3 },
-  { "name": "postman", "displayName": "Postman", "iconPath": "/icons/skills/postman.svg", "category": "Documentation", "years": 3 },
-  { "name": "gitlab-ff", "displayName": "Gitlab FF", "iconPath": "/icons/skills/gitlab.svg", "category": "Feature Flags", "years": 3 },
-  { "name": "unleash", "displayName": "Unleash", "iconPath": "/icons/skills/unleash.svg", "category": "Feature Flags", "years": 3 },
-  { "name": "cloudflare-cdn", "displayName": "Cloudflare CDN", "iconPath": "/icons/skills/cloudflare.svg", "category": "Caching", "years": 3 },
-  { "name": "matomo", "displayName": "Matomo", "iconPath": "/icons/skills/matomo.svg", "category": "Logging", "years": 3 },
-  { "name": "uptime", "displayName": "Uptime / SLAs", "iconPath": "/icons/skills/uptime.svg", "category": "SLA/Reliability", "years": 3 }
+  {
+    "name": "splunk",
+    "displayName": "Splunk",
+    "iconPath": "/icons/skills/splunk.svg",
+    "category": "Observability",
+    "years": 7
+  },
+  {
+    "name": "datadog",
+    "displayName": "DataDog APM",
+    "iconPath": "/icons/skills/datadog.svg",
+    "category": "Observability",
+    "years": 5
+  },
+  {
+    "name": "jira",
+    "displayName": "JIRA Metrics",
+    "iconPath": "/icons/skills/jira.svg",
+    "category": "Observability",
+    "years": 11
+  },
+  {
+    "name": "terraform",
+    "displayName": "Terraform",
+    "iconPath": "/icons/skills/terraform.svg",
+    "category": "CI/CD",
+    "years": 5
+  },
+  {
+    "name": "atlantis",
+    "displayName": "Atlantis",
+    "iconPath": "/icons/skills/atlantis.svg",
+    "category": "CI/CD",
+    "years": 4
+  },
+  {
+    "name": "ansible",
+    "displayName": "Ansible",
+    "iconPath": "/icons/skills/ansible.svg",
+    "category": "CI/CD",
+    "years": 5
+  },
+  {
+    "name": "gitlab",
+    "displayName": "Gitlab",
+    "iconPath": "/icons/skills/gitlab.svg",
+    "category": "CI/CD",
+    "years": 11
+  },
+  {
+    "name": "github",
+    "displayName": "GitHub",
+    "iconPath": "/icons/skills/github.svg",
+    "category": "CI/CD",
+    "years": 13
+  },
+  {
+    "name": "aws",
+    "displayName": "AWS",
+    "iconPath": "/icons/skills/aws.svg",
+    "category": "Infrastructure",
+    "years": 7
+  },
+  {
+    "name": "cloudflare",
+    "displayName": "Cloudflare",
+    "iconPath": "/icons/skills/cloudflare.svg",
+    "category": "Infrastructure",
+    "years": 5
+  },
+  {
+    "name": "sqs",
+    "displayName": "SQS",
+    "iconPath": "/icons/skills/sqs.svg",
+    "category": "Infrastructure",
+    "years": 2
+  },
+  {
+    "name": "kafka",
+    "displayName": "Kafka",
+    "iconPath": "/icons/skills/kafka.svg",
+    "category": "Infrastructure",
+    "years": 5
+  },
+  {
+    "name": "vault",
+    "displayName": "HashiCorp Vault",
+    "iconPath": "/icons/skills/vault.svg",
+    "category": "Security",
+    "years": 5
+  },
+  {
+    "name": "cycode",
+    "displayName": "Cycode",
+    "iconPath": "/icons/skills/cycode.svg",
+    "category": "Security",
+    "years": 3
+  },
+  {
+    "name": "mysql",
+    "displayName": "MySQL",
+    "iconPath": "/icons/skills/mysql.svg",
+    "category": "Databases",
+    "years": 7
+  },
+  {
+    "name": "sql",
+    "displayName": "SQL",
+    "iconPath": "/icons/skills/sql.svg",
+    "category": "Databases",
+    "years": 13
+  },
+  {
+    "name": "go-testing",
+    "displayName": "Golang",
+    "iconPath": "/icons/skills/go.svg",
+    "category": "Testing",
+    "years": 7
+  },
+  {
+    "name": "jwt",
+    "displayName": "JWT",
+    "iconPath": "/icons/skills/jwt.svg",
+    "category": "Auth",
+    "years": 7
+  },
+  {
+    "name": "iam",
+    "displayName": "AWS IAM",
+    "iconPath": "/icons/skills/iam.svg",
+    "category": "Auth",
+    "years": 7
+  },
+  {
+    "name": "okta",
+    "displayName": "Okta",
+    "iconPath": "/icons/skills/okta.svg",
+    "category": "Auth",
+    "years": 5
+  },
+  {
+    "name": "opsgenie",
+    "displayName": "OpsGenie",
+    "iconPath": "/icons/skills/opsgenie.svg",
+    "category": "Incident Mgmt",
+    "years": 5
+  },
+  {
+    "name": "slack",
+    "displayName": "Slack",
+    "iconPath": "/icons/skills/slack.svg",
+    "category": "Incident Mgmt",
+    "years": 8
+  },
+  {
+    "name": "swagger",
+    "displayName": "Swagger",
+    "iconPath": "/icons/skills/swagger.svg",
+    "category": "Documentation",
+    "years": 8
+  },
+  {
+    "name": "postman",
+    "displayName": "Postman",
+    "iconPath": "/icons/skills/postman.svg",
+    "category": "Documentation",
+    "years": 10
+  },
+  {
+    "name": "unleash",
+    "displayName": "Unleash",
+    "iconPath": "/icons/skills/unleash.svg",
+    "category": "Feature Flags",
+    "years": 3
+  },
+  {
+    "name": "cloudflare-cdn",
+    "displayName": "Cloudflare CDN",
+    "iconPath": "/icons/skills/cloudflare.svg",
+    "category": "Caching",
+    "years": 5
+  },
+  {
+    "name": "matomo",
+    "displayName": "Matomo",
+    "iconPath": "/icons/skills/matomo.svg",
+    "category": "Logging",
+    "years": 4
+  },
+  {
+    "name": "uptime",
+    "displayName": "Uptime / SLAs",
+    "iconPath": "/icons/skills/uptime.svg",
+    "category": "SLA/Reliability",
+    "years": 6
+  },
+  {
+    "name": "csharp",
+    "displayName": "C#",
+    "iconPath": "/icons/skills/csharp.svg",
+    "category": "Languages",
+    "years": 3
+  },
+  {
+    "name": "angular",
+    "displayName": "Angular",
+    "iconPath": "/icons/skills/angular.svg",
+    "category": "Frontend",
+    "years": 4
+  },
+  {
+    "name": "react",
+    "displayName": "React",
+    "iconPath": "/icons/skills/react.svg",
+    "category": "Frontend",
+    "years": 4
+  },
+  {
+    "name": "javascript",
+    "displayName": "JavaScript",
+    "iconPath": "/icons/skills/javascript.svg",
+    "category": "Frontend",
+    "years": 13
+  },
+  {
+    "name": "python",
+    "displayName": "Python",
+    "iconPath": "/icons/skills/python.svg",
+    "category": "Languages",
+    "years": 5
+  }
 ]

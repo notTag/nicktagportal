@@ -6,6 +6,11 @@ export interface Skill {
   years: number
 }
 
+/** Format years for display — caps at "10+" for values over 10 */
+export function formatYears(years: number): string {
+  return years > 10 ? '10+' : String(years)
+}
+
 export type ProficiencyMode = 'uniform' | 'glow' | 'size' | 'fill'
 
 export const PROFICIENCY_MODES: { id: ProficiencyMode; label: string }[] = [
