@@ -112,10 +112,10 @@
     "years": 13
   },
   {
-    "name": "go-testing",
+    "name": "golang",
     "displayName": "Golang",
     "iconPath": "/icons/skills/go.svg",
-    "category": "Testing",
+    "category": "Languages",
     "years": 7
   },
   {
