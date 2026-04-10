@@ -213,21 +213,21 @@
     "name": "angular",
     "displayName": "Angular",
     "iconPath": "/icons/skills/angular.svg",
-    "category": "Frontend",
+    "category": "Frontend Frameworks",
     "years": 4
   },
   {
     "name": "react",
     "displayName": "React",
     "iconPath": "/icons/skills/react.svg",
-    "category": "Frontend",
+    "category": "Frontend Frameworks",
     "years": 4
   },
   {
     "name": "javascript",
     "displayName": "JavaScript",
     "iconPath": "/icons/skills/javascript.svg",
-    "category": "Frontend",
+    "category": "Frontend Frameworks",
     "years": 13
   },
   {
