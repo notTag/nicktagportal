@@ -4,8 +4,8 @@ milestone: v1.1
 milestone_name: CLI Remote & Site Polish
 status: active
 stopped_at: null
-last_updated: '2026-04-06T00:00:00Z'
-last_activity: 2026-04-06
+last_updated: '2026-04-10T00:00:00Z'
+last_activity: 2026-04-10
 progress:
   total_phases: 13
   completed_phases: 3
@@ -55,7 +55,7 @@ All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 - [Phase 05]: Click-outside uses capture-phase document listener for reliable detection
 - [Phase 05]: MobileMenu applies themes immediately on tap (no preview flow on mobile)
 - [Phase 05]: AppLayout uses Vue 3 fragment template to keep MobileMenu outside inert container
-- [Phase 06]: Placeholder years value 3 on all 27 skills -- Nick updates with real values later
+- [Phase 06]: Skills years updated (quick task 260410-gwy) -- 10+ cap display, 5 new skills added (C#, Angular, React, JavaScript, Python), Casbin/Gitlab FF removed
 - [Phase 06]: Set-based category filtering with All-deselects-individuals toggle logic
 - [Phase 06]: isSkillVisible returns boolean for opacity-based filtering (no DOM removal)
 - [Phase 06]: Diamond hover uses inline style for combined rotate+translate transforms
