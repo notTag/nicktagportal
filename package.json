@@ -18,7 +18,8 @@
     "test:coverage": "vitest run --coverage",
     "dev:cli": "bun run --filter '@nick-site/cli' dev",
     "build:cli": "bun run --filter '@nick-site/cli' build",
-    "dev:federation": "bun run build:cli && bun run dev",
+    "preview:cli": "bun run --filter '@nick-site/cli' preview",
+    "dev:federation": "bun run build:cli && (bun run preview:cli &) && bun run dev",
     "prepare": "husky"
   },
   "lint-staged": {
