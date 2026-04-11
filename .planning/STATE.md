@@ -4,8 +4,8 @@ milestone: v1.1
 milestone_name: CLI Remote & Site Polish
 status: active
 stopped_at: null
-last_updated: '2026-04-10T00:00:00Z'
-last_activity: 2026-04-10
+last_updated: '2026-04-11T00:00:00Z'
+last_activity: 2026-04-11
 progress:
   total_phases: 13
   completed_phases: 3
