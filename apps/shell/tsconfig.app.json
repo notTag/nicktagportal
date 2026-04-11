@@ -8,7 +8,7 @@
       "@/*": ["./src/*"],
       "@ui/*": ["../../packages/ui/src/*"],
       "@ui": ["../../packages/ui/src"],
-      "@types/*": ["../../packages/types/src/*"]
+      "@ntypes/*": ["../../packages/types/src/*"]
     }
   },
   "include": [

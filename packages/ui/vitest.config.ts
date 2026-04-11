@@ -8,7 +8,7 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, '../../apps/shell/src'),
       '@ui': resolve(__dirname, 'src'),
-      '@types': resolve(__dirname, '../types/src'),
+      '@ntypes': resolve(__dirname, '../types/src'),
     },
   },
   test: {

@@ -5,4 +5,4 @@ export {
   type Theme,
   type ThemeColors,
   type ThemeId,
-} from '@types/themes'
+} from '@ntypes/themes'

@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { themes, DEFAULT_THEME_ID } from '@types/themes'
-import type { ThemeId } from '@types/themes'
+import { themes, DEFAULT_THEME_ID } from '@ntypes/themes'
+import type { ThemeId } from '@ntypes/themes'
 
 const STORAGE_KEY = 'nicksite-theme'
 

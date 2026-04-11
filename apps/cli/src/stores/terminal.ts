@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { themes } from '@types/themes'
-import type { ThemeId } from '@types/themes'
+import { themes } from '@ntypes/themes'
+import type { ThemeId } from '@ntypes/themes'
 import { toXtermTheme } from '@/terminal/theme/terminalTheme'
 
 const STORAGE_KEY = 'nicksite-cli-theme'

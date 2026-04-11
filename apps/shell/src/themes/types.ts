@@ -1,1 +1,1 @@
-export type { Theme, ThemeColors, ThemeId } from '@types/themes'
+export type { Theme, ThemeColors, ThemeId } from '@ntypes/themes'

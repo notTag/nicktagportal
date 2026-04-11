@@ -5,7 +5,7 @@ import '@xterm/xterm/css/xterm.css'
 import { Shell } from '@/terminal/Shell'
 import { useTerminalThemeStore } from '@/stores/terminal'
 import { useThemeStore } from '@/stores/theme'
-import { themes } from '@types/themes'
+import { themes } from '@ntypes/themes'
 import { toXtermTheme } from '@/terminal/theme/terminalTheme'
 
 export function useTerminal(containerRef: Ref<HTMLElement | null>) {
