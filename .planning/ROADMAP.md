@@ -111,7 +111,13 @@ Plans:
 3. Vue, Vue Router, and Pinia load as shared singletons (verified: no duplication in bundle)
 4. xterm.js terminal colors update when the user switches themes in the shell header
 5. Dev workflow scripts orchestrate remote build before shell dev server
-   **Plans**: TBD
+   **Plans**: 3 plans
+
+Plans:
+
+- [ ] 08-01-PLAN.md -- Extract theme definitions to packages/types shared package
+- [ ] 08-02-PLAN.md -- Scaffold apps/cli, migrate terminal code, add theme bridge
+- [ ] 08-03-PLAN.md -- Wire shell to load CLI remote, fallback component, dev scripts
 
 ### Phase 9: Deployment & Infrastructure
 
@@ -135,7 +141,7 @@ Phases execute in numeric order: 5 -> 5.1 -> 6 -> 7 -> 7.1 -> 8 -> 9
 | 5. Theme System                | v1.1      | 0/3            | Planned     | -          |
 | 6. Skills Diamond Wall         | v1.1      | 3/3            | Complete    | 2026-04-02 |
 | 7. CLI Terminal Core           | v1.1      | 4/4            | Complete    | 2026-04-06 |
-| 8. CLI Federation Integration  | v1.1      | 0/TBD          | Not started | -          |
+| 8. CLI Federation Integration  | v1.1      | 0/3            | Planned     | -          |
 | 9. Deployment & Infrastructure | v1.1      | 0/TBD          | Not started | -          |
 
 ## Backlog
