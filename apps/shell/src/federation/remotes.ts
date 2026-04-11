@@ -1,20 +1,17 @@
 // Remote micro-frontend URL resolver
-// Extend RemoteName union when adding new remotes: 'blogApp' | 'projectsApp'
-export type RemoteName = never
+export type RemoteName = 'cliApp'
 
 const DEV_BASE = 'http://localhost'
 const PROD_BASE = 'https://nicktag.tech'
 
 // Map remote names to local dev server ports
 const remotePortsDev: Record<string, number> = {
-  // 'blogApp': 3001,
-  // 'projectsApp': 3002,
+  cliApp: 3001,
 }
 
 // Map remote names to production URL paths
 const remotePathsProd: Record<string, string> = {
-  // 'blogApp': '/remotes/blog',
-  // 'projectsApp': '/remotes/projects',
+  cliApp: '/remotes/cli',
 }
 
 /**

@@ -13,8 +13,7 @@ export default defineConfig({
     federation({
       name: 'shell',
       remotes: {
-        // Example: uncomment and configure when adding a remote
-        // 'blogApp': 'http://localhost:3001/assets/remoteEntry.js',
+        cliApp: 'http://localhost:3001/assets/remoteEntry.js',
       },
       shared: ['vue', 'vue-router', 'pinia'],
     }),
