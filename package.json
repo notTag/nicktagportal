@@ -16,6 +16,9 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "dev:cli": "bun run --filter '@nick-site/cli' dev",
+    "build:cli": "bun run --filter '@nick-site/cli' build",
+    "dev:federation": "bun run build:cli && bun run dev",
     "prepare": "husky"
   },
   "lint-staged": {
