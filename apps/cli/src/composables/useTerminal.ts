@@ -4,6 +4,9 @@ import { FitAddon } from '@xterm/addon-fit'
 import '@xterm/xterm/css/xterm.css'
 import { Shell } from '@/terminal/Shell'
 import { useTerminalThemeStore } from '@/stores/terminal'
+import { useThemeStore } from '@/stores/theme'
+import { themes } from '@types/themes'
+import { toXtermTheme } from '@/terminal/theme/terminalTheme'
 
 export function useTerminal(containerRef: Ref<HTMLElement | null>) {
   const terminalThemeStore = useTerminalThemeStore()
@@ -50,12 +53,24 @@ export function useTerminal(containerRef: Ref<HTMLElement | null>) {
     // Auto-focus terminal on mount
     terminal.focus()
 
-    // Watch for external theme changes
+    // Watch for $CLITHEME manual preference changes (D-06)
     watch(
       () => terminalThemeStore.xtermTheme,
       (newTheme) => {
         if (terminal) {
           terminal.options.theme = { ...newTheme }
+        }
+      },
+    )
+
+    // Site theme bridge (THM-05) -- updates xterm.js when site theme changes
+    const themeStore = useThemeStore()
+    watch(
+      () => themeStore.activeThemeId,
+      (newThemeId) => {
+        const siteTheme = themes[newThemeId]
+        if (terminal && siteTheme) {
+          terminal.options.theme = { ...toXtermTheme(siteTheme.colors) }
         }
       },
     )

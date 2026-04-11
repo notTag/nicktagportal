@@ -20,6 +20,8 @@
   },
   "references": [
     { "path": "./apps/shell/tsconfig.app.json" },
-    { "path": "./apps/shell/tsconfig.node.json" }
+    { "path": "./apps/shell/tsconfig.node.json" },
+    { "path": "./apps/cli/tsconfig.app.json" },
+    { "path": "./apps/cli/tsconfig.node.json" }
   ]
 }
