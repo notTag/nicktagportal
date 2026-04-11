@@ -22,7 +22,7 @@ export default defineConfig({
     alias: {
       '@': resolve(__dirname, 'src'),
       '@ui': resolve(__dirname, '../../packages/ui/src'),
-      '@types': resolve(__dirname, '../../packages/types/src'),
+      '@ntypes': resolve(__dirname, '../../packages/types/src'),
     },
   },
   build: {
