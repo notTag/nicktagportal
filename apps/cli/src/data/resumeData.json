@@ -1,0 +1,111 @@
+{
+  "about": {
+    "name": "Nick Tagliasacchi",
+    "title": "Director of Engineering | SaaS, Platform, and Scale",
+    "summary": "Engineering leader with 13 years of software engineering experience and 6 years leading distributed teams building large-scale, security-sensitive SaaS platforms. Proven track record modernizing architecture, scaling engineering execution, and driving delivery in complex environments through strong technical judgment and cross-functional leadership."
+  },
+  "work": [
+    {
+      "company": "BlueVoyant",
+      "location": "Remote",
+      "roles": [
+        {
+          "title": "Technical Lead, Supply Chain Defense Platform",
+          "period": "Nov 2023 - July 2025",
+          "highlights": [
+            "Owned technical direction and delivery for a security-critical SaaS supply chain defense platform serving enterprise customers in regulated industries",
+            "Acted as final decision-maker for architectural tradeoffs, guiding platform scalability, performance, and operational risk management",
+            "Established and enforced engineering standards across multiple teams supporting the platform, including frontend/backend collaboration workflows, GraphQL API integration practices, release processes, and CI/CD pipelines, improving delivery consistency and stabilizing execution during backend leadership transitions",
+            "Partnered with product, design, and executive leadership (Director, VP, and CISO stakeholders) to define roadmap priorities, align platform architecture and delivery with enterprise security objectives"
+          ]
+        },
+        {
+          "title": "Technical Lead, Managed Detection & Response",
+          "period": "Apr 2023 - July 2025",
+          "highlights": [
+            "Led engineering for systems supporting managed detection and response workflows, enabling high-volume alerting and triage operations for enterprise security teams",
+            "Served as escalation point for production incidents, guiding technical response and authoring post-incident reports to drive systemic improvements",
+            "Made final architectural decisions for public and internal APIs supporting the SaaS platform. Environment design across development, quality assurance, pre-production, and production systems",
+            "Led annual disaster recovery exercises validating failover procedures and platform resilience"
+          ]
+        },
+        {
+          "title": "Offshore Engineering Team Lead, Client Applications Team",
+          "period": "Apr 2022 - Apr 2023",
+          "highlights": [
+            "Built and led an offshore engineering team in Slovakia (3 engineers), establishing hiring standards and execution practices while expanding engineering capacity and enabling distributed delivery across multiple teams (2-5 engineers each) spanning EU and US time zones",
+            "Owned delivery outcomes across multiple workstreams, coordinating priorities between US-based stakeholders and offshore engineers",
+            "Implemented agile execution practices to improve predictability, delivery throughput, and team autonomy"
+          ]
+        },
+        {
+          "title": "Senior Full-Stack Engineer, Client Applications Team",
+          "period": "Mar 2020 - Apr 2022",
+          "highlights": [
+            "Led development of customer-facing SaaS features for a security platform, improving scalability and usability across enterprise customer workflows",
+            "Partnered closely with product and design to translate requirements into resilient, maintainable implementations"
+          ]
+        },
+        {
+          "title": "MSS Software Engineer",
+          "period": "Dec 2018 - Mar 2020",
+          "highlights": [
+            "Built and maintained backend services supporting managed security operations, emphasizing reliability and data integrity",
+            "Gained deep exposure to SOC workflows, alert pipelines, and operational constraints in enterprise security environments"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "DOOR3 / AIG",
+      "location": "New York, NY",
+      "roles": [
+        {
+          "title": "Senior Software Engineer (Consultant)",
+          "period": "May 2017 - Nov 2018",
+          "highlights": [
+            "Delivered enterprise-grade financial systems for AIG through DOOR3 consultancy in a highly regulated environment",
+            "Partnered with client stakeholders to translate complex requirements into secure, maintainable implementations",
+            "Contributed to architectural decisions balancing compliance, scalability, and delivery speed"
+          ]
+        }
+      ]
+    },
+    {
+      "company": "Netsmart Technologies",
+      "location": "Overland Park, KS",
+      "roles": [
+        {
+          "title": "Software Engineer",
+          "period": "Jan 2013 - June 2016",
+          "highlights": [
+            "Led migration of a legacy bug tracking system to Jira, improving reporting accuracy and workflow efficiency",
+            "Built proof-of-concept Electronic Health Record features with dynamic, interactive data visualizations",
+            "Worked closely with product and engineering leadership to identify process risks and delivery improvements"
+          ]
+        }
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Bachelor of Science in Computer Science",
+      "school": "Stony Brook University",
+      "location": "Stony Brook, New York",
+      "year": "2012"
+    }
+  ],
+  "skills": {
+    "Engineering Leadership": "Distributed teams, cross-functional execution, hiring & mentoring, roadmap execution, stakeholder alignment",
+    "Platform & Architecture": "Microservices, distributed systems, cloud infrastructure, API design, GraphQL, event-driven architectures, SaaS",
+    "Security & Operations": "Security platforms, incident response, disaster recovery testing, risk management, CI/CD",
+    "Technologies": "Golang, Vue, React, PostgreSQL, AWS, Docker, Splunk",
+    "Artificial Intelligence": "LLMs, RAG pipelines, AI workflow orchestration, prompt engineering, MCP, secure AI environments"
+  },
+  "projects": [
+    {
+      "name": "nicktag.tech",
+      "description": "Personal portfolio and micro-frontend playground built as a Bun monorepo with Vue 3, Module Federation, and an interactive terminal-based resume explorer"
+    }
+  ]
+}

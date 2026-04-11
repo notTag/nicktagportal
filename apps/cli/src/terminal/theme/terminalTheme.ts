@@ -1,5 +1,5 @@
 import type { ITheme } from '@xterm/xterm'
-import type { ThemeColors } from '@/themes/types'
+import type { ThemeColors } from '@types/themes'
 
 export function toXtermTheme(colors: ThemeColors): ITheme {
   return {
