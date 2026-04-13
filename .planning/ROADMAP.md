@@ -115,9 +115,9 @@ Plans:
 
 Plans:
 
-- [ ] 08-01-PLAN.md -- Extract theme definitions to packages/types shared package
-- [ ] 08-02-PLAN.md -- Scaffold apps/cli, migrate terminal code, add theme bridge
-- [ ] 08-03-PLAN.md -- Wire shell to load CLI remote, fallback component, dev scripts
+- [x] 08-01-PLAN.md -- Extract theme definitions to packages/types shared package
+- [x] 08-02-PLAN.md -- Scaffold apps/cli, migrate terminal code, add theme bridge
+- [x] 08-03-PLAN.md -- Wire shell to load CLI remote, fallback component, dev scripts
 
 ### Phase 9: Deployment & Infrastructure
 

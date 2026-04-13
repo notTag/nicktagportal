@@ -10,13 +10,17 @@ export default defineConfig({
     vue(),
     tailwindcss(),
     vueDevTools(),
-    federation({
-      name: 'shell',
-      remotes: {
-        cliApp: 'http://localhost:3001/assets/remoteEntry.js',
-      },
-      shared: ['vue', 'vue-router', 'pinia'],
-    }),
+    ...(!process.env.VITEST
+      ? [
+          federation({
+            name: 'shell',
+            remotes: {
+              cliApp: 'http://localhost:3001/assets/remoteEntry.js',
+            },
+            shared: ['vue', 'vue-router', 'pinia'],
+          }),
+        ]
+      : []),
   ],
   resolve: {
     alias: {

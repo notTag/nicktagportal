@@ -1,9 +1,15 @@
 import { defineConfig, mergeConfig } from 'vitest/config'
+import { resolve } from 'path'
 import viteConfig from './vite.config'
 
 export default mergeConfig(
   viteConfig,
   defineConfig({
+    resolve: {
+      alias: {
+        'cliApp/CliView': resolve(__dirname, 'src/__mocks__/cliApp/CliView.ts'),
+      },
+    },
     test: {
       environment: 'happy-dom',
       globals: true,
