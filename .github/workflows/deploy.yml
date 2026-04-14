@@ -27,9 +27,16 @@ jobs:
       - name: Run tests with coverage
         run: bun run test:coverage
 
+      - name: Build CLI remote
+        working-directory: apps/cli
+        run: bun run build
+
       - name: Build shell app
         working-directory: apps/shell
         run: bun run build
+
+      - name: Copy CLI remote into shell dist
+        run: mkdir -p apps/shell/dist/remotes/cli && cp -r apps/cli/dist/* apps/shell/dist/remotes/cli/
 
       - name: Create 404.html for SPA routing
         run: cp apps/shell/dist/index.html apps/shell/dist/404.html
