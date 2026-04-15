@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import { createRouter, createMemoryHistory } from 'vue-router'
 import TheHeader from '../TheHeader.vue'
@@ -10,11 +10,17 @@ const router = createRouter({
     { path: '/', name: 'home', component: { template: '<div />' } },
     { path: '/skills', name: 'skills', component: { template: '<div />' } },
     { path: '/cli', name: 'cli', component: { template: '<div />' } },
-    { path: '/playground', name: 'playground', component: { template: '<div />' } },
+    {
+      path: '/playground',
+      name: 'playground',
+      component: { template: '<div />' },
+    },
   ],
 })
 
-function mountHeader(props: { showThemePicker?: boolean; isMobileMenuOpen?: boolean } = {}) {
+function mountHeader(
+  props: { showThemePicker?: boolean; isMobileMenuOpen?: boolean } = {},
+) {
   return mount(TheHeader, {
     props: {
       showThemePicker: false,
@@ -48,6 +54,36 @@ describe('TheHeader', () => {
     expect(nav.text()).toContain('Playground')
   })
 
+  it('renders navigation links with the correct route paths', () => {
+    const wrapper = mountHeader()
+    const hrefs = wrapper
+      .findAll('nav a')
+      .map((link) => link.attributes('href'))
+
+    expect(hrefs).toEqual(['/', '/skills', '/cli', '/playground'])
+  })
+
+  it.each([
+    ['Home', '/', '/skills'],
+    ['Skills', '/skills', '/'],
+    ['CLI', '/cli', '/'],
+    ['Playground', '/playground', '/'],
+  ])(
+    'navigates to %s when clicked',
+    async (_label, expectedPath, startPath) => {
+      await router.push(startPath)
+      await router.isReady()
+
+      const wrapper = mountHeader()
+      const link = wrapper.get(`a[href="${expectedPath}"]`)
+
+      await link.trigger('click')
+      await flushPromises()
+
+      expect(router.currentRoute.value.path).toBe(expectedPath)
+    },
+  )
+
   it('renders theme picker area when showThemePicker is true', () => {
     const wrapper = mountHeader({ showThemePicker: true })
     // ThemeDropdown is a child component; look for the wrapper div that conditionally renders
@@ -71,9 +107,15 @@ describe('TheHeader', () => {
 
   it('sets aria-expanded on the menu button based on isMobileMenuOpen', () => {
     const closed = mountHeader({ isMobileMenuOpen: false })
-    expect(closed.find('button[aria-label="Toggle menu"]').attributes('aria-expanded')).toBe('false')
+    expect(
+      closed
+        .find('button[aria-label="Toggle menu"]')
+        .attributes('aria-expanded'),
+    ).toBe('false')
 
     const open = mountHeader({ isMobileMenuOpen: true })
-    expect(open.find('button[aria-label="Toggle menu"]').attributes('aria-expanded')).toBe('true')
+    expect(
+      open.find('button[aria-label="Toggle menu"]').attributes('aria-expanded'),
+    ).toBe('true')
   })
 })

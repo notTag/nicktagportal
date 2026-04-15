@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { mount, shallowMount } from '@vue/test-utils'
+import { mount, shallowMount, flushPromises } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import { createRouter, createMemoryHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
@@ -47,6 +47,19 @@ describe('HomeView', () => {
     const wrapper = mountHomeView()
     const link = wrapper.find('a[href="/skills"]')
     expect(link.exists() || wrapper.html().includes('/skills')).toBe(true)
+  })
+
+  it('navigates to skills when Explore Skills is clicked', async () => {
+    await router.push('/')
+    await router.isReady()
+
+    const wrapper = fullMountHomeView()
+    const link = wrapper.get('a[href="/skills"]')
+
+    await link.trigger('click')
+    await flushPromises()
+
+    expect(router.currentRoute.value.path).toBe('/skills')
   })
 
   it('displays the Tech Stack section', () => {
