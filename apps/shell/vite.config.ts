@@ -5,7 +5,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 import federation from '@originjs/vite-plugin-federation'
 import { resolve } from 'path'
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
   plugins: [
     vue(),
     tailwindcss(),
@@ -15,7 +15,10 @@ export default defineConfig({
           federation({
             name: 'shell',
             remotes: {
-              cliApp: 'http://localhost:3001/assets/remoteEntry.js',
+              cliApp:
+                mode === 'production'
+                  ? 'https://nicktag.tech/remotes/cli/assets/remoteEntry.js'
+                  : 'http://localhost:3001/assets/remoteEntry.js',
             },
             shared: ['vue', 'vue-router', 'pinia'],
           }),
@@ -33,4 +36,4 @@ export default defineConfig({
     target: 'esnext', // Required: Module Federation uses top-level await and dynamic imports
     minify: false, // re-enable after confirming live
   },
-})
+}))
