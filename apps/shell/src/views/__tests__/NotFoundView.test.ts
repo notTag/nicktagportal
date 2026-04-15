@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { createRouter, createMemoryHistory } from 'vue-router'
 import NotFoundView from '@/views/NotFoundView.vue'
 
@@ -38,6 +38,19 @@ describe('NotFoundView', () => {
     const link = wrapper.find('a[href="/"]')
     expect(link.exists()).toBe(true)
     expect(link.text()).toContain('Go back home')
+  })
+
+  it('navigates home when Go back home is clicked', async () => {
+    await router.push('/missing-page')
+    await router.isReady()
+
+    const wrapper = mountNotFoundView()
+    const link = wrapper.get('a[href="/"]')
+
+    await link.trigger('click')
+    await flushPromises()
+
+    expect(router.currentRoute.value.path).toBe('/')
   })
 
   it('has the informational paragraph about the page', () => {

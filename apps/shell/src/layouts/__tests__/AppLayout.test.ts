@@ -1,9 +1,10 @@
 import { describe, it, expect, vi } from 'vitest'
-import { shallowMount } from '@vue/test-utils'
+import { mount, shallowMount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import { createRouter, createMemoryHistory } from 'vue-router'
 import { nextTick } from 'vue'
 import AppLayout from '@/layouts/AppLayout.vue'
+import socialLinksData from '@/data/socialLinks.json'
 
 const router = createRouter({
   history: createMemoryHistory(),
@@ -14,6 +15,12 @@ function mountAppLayout(attachTo?: HTMLElement) {
   return shallowMount(AppLayout, {
     global: { plugins: [createTestingPinia({ createSpy: vi.fn }), router] },
     attachTo,
+  })
+}
+
+function fullMountAppLayout() {
+  return mount(AppLayout, {
+    global: { plugins: [createTestingPinia({ createSpy: vi.fn }), router] },
   })
 }
 
@@ -56,6 +63,23 @@ describe('AppLayout', () => {
   it('renders MobileMenu stub', () => {
     const wrapper = mountAppLayout()
     expect(wrapper.html()).toContain('mobile-menu')
+  })
+
+  it('renders footer external links from social links data', async () => {
+    await router.push('/')
+    await router.isReady()
+
+    const wrapper = fullMountAppLayout()
+    const footerLinks = wrapper.findAll('footer a[target="_blank"]')
+
+    expect(footerLinks).toHaveLength(socialLinksData.links.length)
+    expect(footerLinks.map((link) => link.attributes('href'))).toEqual(
+      socialLinksData.links.map((link) => link.url),
+    )
+
+    for (const footerLink of footerLinks) {
+      expect(footerLink.attributes('rel')).toBe('noopener noreferrer')
+    }
   })
 
   it('passes isMobileMenuOpen as false initially to TheHeader', () => {

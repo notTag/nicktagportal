@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+import { storeToRefs } from 'pinia'
 import { RouterLink } from 'vue-router'
+import { AsciiOverlay } from 'vue-ascii-overlay'
+import 'vue-ascii-overlay/style.css'
 import profile from '@/data/profile.json'
 import techSkills from '@/data/techSkills.json'
+import { useThemeStore } from '@/stores/theme'
+
+const { currentTheme } = storeToRefs(useThemeStore())
 
 const skillsByCategory = computed(() => {
   const grouped: Record<string, typeof techSkills> = {}
@@ -14,46 +20,57 @@ const skillsByCategory = computed(() => {
   }
   return grouped
 })
+
+const accentColor = computed(() => currentTheme.value.colors.accent)
 </script>
 
 <template>
-  <section class="mx-auto max-w-2xl px-4 pt-16 pb-12 text-left sm:text-center">
-    <h1 class="text-text text-4xl font-bold">
-      {{ profile.name }}
-    </h1>
-    <p class="text-text mt-2 text-2xl font-bold">
-      {{ profile.roleTrajectory }}
-    </p>
-    <p class="text-text-muted mx-auto mt-4 max-w-2xl text-base leading-normal">
-      {{ profile.bio }}
-    </p>
-    <RouterLink
-      to="/skills"
-      class="bg-accent text-surface mt-8 inline-block rounded-lg px-6 py-3 text-sm font-bold transition-opacity hover:opacity-90"
+  <div class="relative h-full w-full">
+    <div class="absolute inset-0 z-0">
+      <AsciiOverlay :color="accentColor" />
+    </div>
+    <section
+      class="relative z-10 mx-auto max-w-2xl px-4 pt-16 pb-12 text-left sm:text-center"
     >
-      Explore Skills
-    </RouterLink>
-  </section>
+      <h1 class="text-text text-4xl font-bold">
+        {{ profile.name }}
+      </h1>
+      <p class="text-text mt-2 text-2xl font-bold">
+        {{ profile.roleTrajectory }}
+      </p>
+      <p
+        class="text-text-muted mx-auto mt-4 max-w-2xl text-base leading-normal"
+      >
+        {{ profile.bio }}
+      </p>
+      <RouterLink
+        to="/skills"
+        class="bg-accent text-surface mt-8 inline-block rounded-lg px-6 py-3 text-sm font-bold transition-opacity hover:opacity-90"
+      >
+        Explore Skills
+      </RouterLink>
+    </section>
 
-  <section class="mx-auto max-w-4xl px-4 pt-12 pb-16">
-    <h2 class="text-text mb-6 text-2xl font-bold">Tech Stack</h2>
-    <div
-      class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-    >
-      <div v-for="(skills, category) in skillsByCategory" :key="category">
-        <h3 class="text-accent-cyan mb-2 text-sm font-bold">
-          {{ category }}
-        </h3>
-        <div class="flex flex-wrap gap-2">
-          <span
-            v-for="skill in skills"
-            :key="skill.name"
-            class="bg-surface-raised text-text rounded-full px-3 py-1 text-sm"
-          >
-            {{ skill.displayName }}
-          </span>
+    <section class="mx-auto max-w-4xl px-4 pt-12 pb-16">
+      <h2 class="text-text mb-6 text-2xl font-bold">Tech Stack</h2>
+      <div
+        class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      >
+        <div v-for="(skills, category) in skillsByCategory" :key="category">
+          <h3 class="text-accent-cyan mb-2 text-sm font-bold">
+            {{ category }}
+          </h3>
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-for="skill in skills"
+              :key="skill.name"
+              class="bg-surface-raised text-text rounded-full px-3 py-1 text-sm"
+            >
+              {{ skill.displayName }}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
 </template>

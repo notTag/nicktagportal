@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
-import { mount } from '@vue/test-utils'
+import { mount, flushPromises } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import { createRouter, createMemoryHistory } from 'vue-router'
 import { nextTick } from 'vue'
@@ -163,5 +163,27 @@ describe('MobileMenu', () => {
       expect(hrefs).toContain('/cli')
       expect(hrefs).toContain('/playground')
     })
+
+    it.each([
+      ['Home', '/', '/skills'],
+      ['Skills', '/skills', '/'],
+      ['CLI', '/cli', '/'],
+      ['Playground', '/playground', '/'],
+    ])(
+      'navigates to %s when clicked',
+      async (_label, expectedPath, startPath) => {
+        await router.push(startPath)
+        await router.isReady()
+
+        const wrapper = mountMenu(true)
+        const link = wrapper.get(`nav a[href="${expectedPath}"]`)
+
+        await link.trigger('click')
+        await flushPromises()
+
+        expect(router.currentRoute.value.path).toBe(expectedPath)
+        expect(wrapper.emitted('close')).toHaveLength(1)
+      },
+    )
   })
 })

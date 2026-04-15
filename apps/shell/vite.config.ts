@@ -32,6 +32,7 @@ export default defineConfig({
       '@ui': resolve(__dirname, '../../packages/ui/src'),
       '@ntypes': resolve(__dirname, '../../packages/types/src'),
     },
+    dedupe: ['vue'],
   },
   build: {
     target: 'esnext', // Required: Module Federation uses top-level await and dynamic imports
