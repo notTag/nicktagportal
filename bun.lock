@@ -5,7 +5,7 @@
     "": {
       "name": "nick-site",
       "dependencies": {
-        "vue-ascii-overlay": "0.1.0",
+        "vue-ascii-overlay": "^0.1.1",
       },
       "devDependencies": {
         "@pinia/testing": "^1.0.3",
@@ -922,7 +922,7 @@
 
     "vue": ["vue@3.5.32", "", { "dependencies": { "@vue/compiler-dom": "3.5.32", "@vue/compiler-sfc": "3.5.32", "@vue/runtime-dom": "3.5.32", "@vue/server-renderer": "3.5.32", "@vue/shared": "3.5.32" }, "peerDependencies": { "typescript": "*" }, "optionalPeers": ["typescript"] }, "sha512-vM4z4Q9tTafVfMAK7IVzmxg34rSzTFMyIe0UUEijUCkn9+23lj0WRfA83dg7eQZIUlgOSGrkViIaCfqSAUXsMw=="],
 
-    "vue-ascii-overlay": ["vue-ascii-overlay@0.1.0", "", { "peerDependencies": { "vue": "^3.3.0" } }, "sha512-Rfd4X47cW+srhClutbyzhAHz55/GwmqC8p594IHQdLS3q/DdGeHdpl+V2TykpMkWdMjzx+gJKJXk1dQhCzrb0Q=="],
+    "vue-ascii-overlay": ["vue-ascii-overlay@0.1.1", "", { "peerDependencies": { "vue": "^3.3.0" } }, "sha512-cJYnzN/dWMqNu7TxgChqMN9ZKo+yRoV33tY4cjLEe2WxGhtpAODlaxS79NeOLRFM1tM5RhCcH5tLfpMdhjFa6Q=="],
 
     "vue-component-type-helpers": ["vue-component-type-helpers@2.2.12", "", {}, "sha512-YbGqHZ5/eW4SnkPNR44mKVc6ZKQoRs/Rux1sxC6rdwXb4qpbOSYfDr9DsTHolOTGmIKgM9j141mZbBeg05R1pw=="],
 
@@ -979,6 +979,8 @@
     "@nick-site/cli/@vitejs/plugin-vue": ["@vitejs/plugin-vue@5.2.4", "", { "peerDependencies": { "vite": "^5.0.0 || ^6.0.0", "vue": "^3.2.25" } }, "sha512-7Yx/SXSOcQq5HiiV3orevHUFn+pmMB4cgbEkDYgnkUWb0WfeQ/wa2yFv6D5ICiCQOVpjA7vYDXrC7AGO8yjDHA=="],
 
     "@nick-site/shell/@vitejs/plugin-vue": ["@vitejs/plugin-vue@5.2.4", "", { "peerDependencies": { "vite": "^5.0.0 || ^6.0.0", "vue": "^3.2.25" } }, "sha512-7Yx/SXSOcQq5HiiV3orevHUFn+pmMB4cgbEkDYgnkUWb0WfeQ/wa2yFv6D5ICiCQOVpjA7vYDXrC7AGO8yjDHA=="],
+
+    "@nick-site/shell/vue-ascii-overlay": ["vue-ascii-overlay@0.1.0", "", { "peerDependencies": { "vue": "^3.3.0" } }, "sha512-Rfd4X47cW+srhClutbyzhAHz55/GwmqC8p594IHQdLS3q/DdGeHdpl+V2TykpMkWdMjzx+gJKJXk1dQhCzrb0Q=="],
 
     "@originjs/vite-plugin-federation/magic-string": ["magic-string@0.27.0", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.4.13" } }, "sha512-8UnnX2PeRAPZuN12svgR9j7M1uWMovg/CEnIwIG0LFkXSJJe4PdfUGiTGl8V9bsBHFUtfVINcSyYxd7q+kx9fA=="],
 
