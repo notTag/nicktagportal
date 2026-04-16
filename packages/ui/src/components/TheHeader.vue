@@ -46,10 +46,7 @@ const emit = defineEmits<{
           Playground
         </RouterLink>
       </nav>
-      <div
-        v-if="showThemePicker"
-        class="relative ml-auto hidden sm:block"
-      >
+      <div v-if="showThemePicker" class="relative ml-auto hidden sm:block">
         <ThemeDropdown />
       </div>
       <button
@@ -59,15 +56,15 @@ const emit = defineEmits<{
         @click="emit('toggle-menu')"
       >
         <span
-          class="block h-0.5 w-6 bg-text transition-transform duration-200"
+          class="block h-0.5 w-6 bg-current transition-transform duration-200"
           :class="{ 'translate-y-2 rotate-45': isMobileMenuOpen }"
         />
         <span
-          class="block h-0.5 w-6 bg-text transition-opacity duration-200"
+          class="block h-0.5 w-6 bg-current transition-opacity duration-200"
           :class="{ 'opacity-0': isMobileMenuOpen }"
         />
         <span
-          class="block h-0.5 w-6 bg-text transition-transform duration-200"
+          class="block h-0.5 w-6 bg-current transition-transform duration-200"
           :class="{ '-translate-y-2 -rotate-45': isMobileMenuOpen }"
         />
       </button>
