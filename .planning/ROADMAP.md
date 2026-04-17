@@ -28,11 +28,12 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 - Integer phases (5, 6, 7, 8, 9): Planned milestone work
 - Decimal phases (7.1, 7.2): Urgent insertions (marked with INSERTED)
 
-- [ ] **Phase 5: Theme System** - Runtime-swappable VSCode theme layer with CSS custom properties and localStorage persistence
+- [x] **Phase 5: Theme System** - Runtime-swappable VSCode theme layer with CSS custom properties and localStorage persistence
 - [x] **Phase 6: Skills Diamond Wall** - Animated diamond grid of technology icons on dedicated /skills route
 - [x] **Phase 7: CLI Terminal Core** - xterm.js terminal with virtual resume filesystem and shell commands as a standalone Vue app
-- [ ] **Phase 8: CLI Federation Integration** - Wire CLI remote into shell via Module Federation with shared singletons and fallback handling
+- [x] **Phase 8: CLI Federation Integration** - Wire CLI remote into shell via Module Federation with shared singletons and fallback handling
 - [ ] **Phase 9: Deployment & Infrastructure** - GitHub Actions Node.js 24 migration, tree shaking audit, and rollback verification
+- [ ] **Phase 10: Collapsible Sidebar Navigation** - Replace horizontal header nav with a floating icon rail that expands to a card; drag-to-dock (left/right); hamburger + slide-over fallback below 640px
 
 ## Phase Details
 
@@ -129,20 +130,47 @@ Plans:
 1. GitHub Actions workflows run on Node.js 24 without errors
 2. Production bundle is audited for tree shaking effectiveness with measurable results
 3. Rollback deployment workflow tested end-to-end and confirmed working in production
+   **Plans**: 5 plans
+
+Plans:
+
+- [ ] 09-01-PLAN.md -- Node 24 action version migration in deploy.yml + rollback.yml + Bun 1.3.12 pin (INF-01)
+- [ ] 09-02-PLAN.md -- Tree-shake audit wiring: rollup-plugin-visualizer in both apps, bundle-size.yml PR workflow, deploy.yml stats artifact, audit:bundle script (INF-02)
+- [ ] 09-03-PLAN.md -- Version stamping: pkg.json 1.1.0, Vite define, transformIndexHtml meta tag, window globals, AppVersion.vue footer (INF-03)
+- [ ] 09-04-PLAN.md -- Rollback verify step: automated meta-tag assertion with retry loop in rollback.yml (INF-03)
+- [ ] 09-05-PLAN.md -- BUNDLE-AUDIT.md + ROLLBACK-TEST.md deliverables with live-test evidence (INF-02, INF-03)
+
+### Phase 10: Collapsible Sidebar Navigation
+
+**Goal**: Users can navigate the site via a floating sidebar that stays visible as an icon rail on desktop, expands into a full nav card on click, and can be dragged to dock on either side of the viewport
+**Depends on**: Phase 5 (theme tokens), Phase 6 (Skills route), Phase 8 (CLI route wired)
+**Requirements**: NAV-01, NAV-02, NAV-03, NAV-04, NAV-05
+**Success Criteria** (what must be TRUE):
+
+1. On desktop (≥640px), a 56px floating icon rail is always visible with nav links (Home, Skills, CLI, Playground) and no horizontal header nav
+2. Clicking the rail expands it to a 260px floating card showing labels, brand, and theme picker; clicking outside or the close button collapses it back to rail
+3. User can drag the sidebar header across the screen to dock on the opposite edge; docked side persists across page reloads via localStorage
+4. Snap behavior uses symmetric hysteresis with a 15% dead zone around the viewport midpoint so casual drags stay sticky
+5. Below 640px, the rail hides and a hamburger trigger opens the full card as an overlay (existing mobile-menu behavior)
+6. Active route indicator works in both rail (background pill on icon) and card (background pill on full link) modes
+7. All existing header/MobileMenu tests pass or are updated; new component has its own unit tests
    **Plans**: TBD
+   **UI hint**: yes
+   **Design reference**: `.planning/sketches/001-collapsible-sidebar/` (winning variant D) and `.claude/skills/sketch-findings-nicktagportal/`
 
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 5 -> 5.1 -> 6 -> 7 -> 7.1 -> 8 -> 9
+Phases execute in numeric order: 5 -> 5.1 -> 6 -> 7 -> 7.1 -> 8 -> 9 -> 10
 
-| Phase                          | Milestone | Plans Complete | Status      | Completed  |
-| ------------------------------ | --------- | -------------- | ----------- | ---------- |
-| 5. Theme System                | v1.1      | 0/3            | Planned     | -          |
-| 6. Skills Diamond Wall         | v1.1      | 3/3            | Complete    | 2026-04-02 |
-| 7. CLI Terminal Core           | v1.1      | 4/4            | Complete    | 2026-04-06 |
-| 8. CLI Federation Integration  | v1.1      | 0/3            | Planned     | -          |
-| 9. Deployment & Infrastructure | v1.1      | 0/TBD          | Not started | -          |
+| Phase                              | Milestone | Plans Complete | Status      | Completed  |
+| ---------------------------------- | --------- | -------------- | ----------- | ---------- |
+| 5. Theme System                    | v1.1      | 3/3            | Complete    | 2026-03-27 |
+| 6. Skills Diamond Wall             | v1.1      | 3/3            | Complete    | 2026-04-02 |
+| 7. CLI Terminal Core               | v1.1      | 4/4            | Complete    | 2026-04-06 |
+| 8. CLI Federation Integration      | v1.1      | 3/3            | Complete    | 2026-04-11 |
+| 9. Deployment & Infrastructure     | v1.1      | 0/5            | Not started | -          |
+| 10. Collapsible Sidebar Navigation | v1.1      | 0/TBD          | Not started | -          |
 
 ## Backlog
 

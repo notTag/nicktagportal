@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
-status: Starting — needs discuss phase
+status: executing
 stopped_at: Phase 9 context gathered
-last_updated: '2026-04-17T18:52:14.792Z'
-last_activity: 2026-04-06
+last_updated: '2026-04-17T23:32:56.676Z'
+last_activity: 2026-04-17 -- Phase 09 planning complete
 progress:
-  total_phases: 21
+  total_phases: 22
   completed_phases: 5
-  total_plans: 20
+  total_plans: 25
   completed_plans: 20
-  percent: 100
+  percent: 80
 ---
 
 # Project State
@@ -27,8 +27,8 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 
 Phase: 08-cli-federation-integration
 Plan: 0 of TBD
-Status: Starting — needs discuss phase
-Last activity: 2026-04-06
+Status: Ready to execute
+Last activity: 2026-04-17 -- Phase 09 planning complete
 
 Progress: [████████░░] 80%
 
@@ -44,6 +44,10 @@ _Updated after each plan completion_
 | Phase 06 P01 | 3min | 3 tasks | 34 files |
 
 ## Accumulated Context
+
+### Roadmap Evolution
+
+- Phase 10 added (2026-04-17): Collapsible Sidebar Navigation — replace horizontal header nav with floating rail → card, drag-to-dock, mobile hamburger fallback. Design validated via sketch 001 (variant D); findings packaged into `.claude/skills/sketch-findings-nicktagportal/`.
 
 ### Decisions
 
