@@ -163,6 +163,16 @@ Do not make direct repo edits outside a GSD workflow unless the user explicitly 
 
 <!-- GSD:workflow-end -->
 
+<!-- GSD:skills-start -->
+
+## Project Skills
+
+Auto-loaded skills with project-specific context:
+
+- **Sketch findings for nicktagportal** (design decisions, CSS patterns, visual direction) → `Skill("sketch-findings-nicktagportal")`
+
+<!-- GSD:skills-end -->
+
 <!-- GSD:profile-start -->
 
 ## Developer Profile
