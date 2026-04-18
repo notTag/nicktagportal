@@ -31,3 +31,53 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Verify rollback via meta tag
+        id: verify
+        run: |
+          set -euo pipefail
+
+          # Expected version comes from the artifact we just deployed.
+          # download-artifact@v6 unpacks into $GITHUB_WORKSPACE by default.
+          # GitHub Pages artifact is a tar containing the site; extract index.html.
+          mkdir -p /tmp/rollback-check
+          if [[ -f artifact.tar ]]; then
+            tar -xf artifact.tar -C /tmp/rollback-check
+          else
+            echo "::error::artifact.tar not found in workspace — did download-artifact run?"
+            ls -la
+            exit 1
+          fi
+
+          EXPECTED=$(grep -oP '<meta\s+name="app-version"\s+content="\K[^"]+' \
+            /tmp/rollback-check/index.html || echo "")
+
+          if [[ -z "$EXPECTED" ]]; then
+            echo "::error::No app-version meta tag in rolled-back artifact — cannot verify"
+            exit 1
+          fi
+
+          echo "Expected version from artifact: $EXPECTED"
+          echo "expected=$EXPECTED" >> "$GITHUB_OUTPUT"
+
+          # Poll live site (allow CDN propagation: up to 90s, 6 attempts x 15s)
+          SITE_URL="${{ steps.deployment.outputs.page_url }}"
+          LIVE=""
+          for attempt in 1 2 3 4 5 6; do
+            sleep 15
+            LIVE_HTML=$(curl -fsSL --max-time 10 "$SITE_URL" || echo "")
+            LIVE=$(echo "$LIVE_HTML" \
+              | grep -oP '<meta\s+name="app-version"\s+content="\K[^"]+' \
+              || echo "")
+            echo "Attempt $attempt: live version = ${LIVE:-<not found>}"
+            if [[ "$LIVE" == "$EXPECTED" ]]; then
+              echo "::notice::Rollback verified — live version $LIVE matches expected $EXPECTED"
+              echo "live=$LIVE" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          done
+
+          echo "::error::Rollback verification FAILED"
+          echo "Expected: $EXPECTED"
+          echo "Got:      ${LIVE:-<not found>}"
+          exit 1
