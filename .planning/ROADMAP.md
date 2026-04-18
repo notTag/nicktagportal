@@ -135,7 +135,7 @@ Plans:
 Plans:
 
 - [x] 09-01-PLAN.md -- Node 24 action version migration in deploy.yml + rollback.yml + Bun 1.3.12 pin (INF-01)
-- [ ] 09-02-PLAN.md -- Tree-shake audit wiring: rollup-plugin-visualizer in both apps, bundle-size.yml PR workflow, deploy.yml stats artifact, audit:bundle script (INF-02)
+- [x] 09-02-PLAN.md -- Tree-shake audit wiring: rollup-plugin-visualizer in both apps, bundle-size.yml PR workflow, deploy.yml stats artifact, audit:bundle script (INF-02)
 - [ ] 09-03-PLAN.md -- Version stamping: pkg.json 1.1.0, Vite define, transformIndexHtml meta tag, window globals, AppVersion.vue footer (INF-03)
 - [ ] 09-04-PLAN.md -- Rollback verify step: automated meta-tag assertion with retry loop in rollback.yml (INF-03)
 - [ ] 09-05-PLAN.md -- BUNDLE-AUDIT.md + ROLLBACK-TEST.md deliverables with live-test evidence (INF-02, INF-03)

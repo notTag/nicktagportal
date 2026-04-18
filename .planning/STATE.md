@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
 status: executing
-stopped_at: Completed 09-01-node24-action-migration-PLAN.md
-last_updated: '2026-04-18T00:04:25.839Z'
+stopped_at: Completed 09-02-bundle-audit-wiring-PLAN.md
+last_updated: '2026-04-18T00:12:40.550Z'
 last_activity: 2026-04-18
 progress:
   total_phases: 22
   completed_phases: 5
   total_plans: 25
-  completed_plans: 21
-  percent: 84
+  completed_plans: 22
+  percent: 88
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 ## Current Position
 
 Phase: 09-deployment-infrastructure
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-04-18
 
@@ -68,6 +68,7 @@ All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 - [Phase 06]: Skill duplication count computed from viewport width for seamless infinite scroll
 - [Phase 06]: Entrance animation (stagger fade/scale) deferred to backlog 999.9 per user decision
 - [Phase 09]: Bumped GitHub Actions to Node 24-capable pins (checkout@v5, download-artifact@v6); Bun exact-pinned to 1.3.12 per D-02
+- [Phase 09]: Plan 09-02: Visualizer gated behind VITE_AUDIT || NODE_ENV=production; per-app filenames stats-{shell,cli}.html; build:all chains CLI→shell→copy to match deploy.yml; bundle-size PR workflow uses preactjs/compressed-size-action@v2 with bun install-script override, inform-only (no fail-on).
 
 ### Pending Todos
 
@@ -80,6 +81,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-18T00:04:25.834Z
-Stopped at: Completed 09-01-node24-action-migration-PLAN.md
+Last session: 2026-04-18T00:12:40.544Z
+Stopped at: Completed 09-02-bundle-audit-wiring-PLAN.md
 Resume file: None
