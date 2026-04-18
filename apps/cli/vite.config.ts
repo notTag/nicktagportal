@@ -2,6 +2,10 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import federation from '@originjs/vite-plugin-federation'
 import { resolve } from 'path'
+import { visualizer } from 'rollup-plugin-visualizer'
+
+const isProd = process.env.NODE_ENV === 'production'
+const emitVisualizer = process.env.VITE_AUDIT === 'true' || isProd
 
 export default defineConfig({
   plugins: [
@@ -14,6 +18,19 @@ export default defineConfig({
       },
       shared: ['vue', 'vue-router', 'pinia'],
     }),
+    ...(emitVisualizer
+      ? [
+          visualizer({
+            filename: 'dist/stats-cli.html',
+            template: 'treemap',
+            gzipSize: true,
+            brotliSize: true,
+            sourcemap: false,
+            emitFile: false,
+            title: '@nick-site/cli — Bundle Treemap',
+          }),
+        ]
+      : []),
   ],
   resolve: {
     alias: {

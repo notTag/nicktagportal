@@ -4,8 +4,10 @@ import tailwindcss from '@tailwindcss/vite'
 import vueDevTools from 'vite-plugin-vue-devtools'
 import federation from '@originjs/vite-plugin-federation'
 import { resolve } from 'path'
+import { visualizer } from 'rollup-plugin-visualizer'
 
 const isProd = process.env.NODE_ENV === 'production'
+const emitVisualizer = process.env.VITE_AUDIT === 'true' || isProd
 
 export default defineConfig({
   plugins: [
@@ -22,6 +24,19 @@ export default defineConfig({
                 : 'http://localhost:3001/assets/remoteEntry.js',
             },
             shared: ['vue', 'vue-router', 'pinia'],
+          }),
+        ]
+      : []),
+    ...(emitVisualizer
+      ? [
+          visualizer({
+            filename: 'dist/stats-shell.html',
+            template: 'treemap',
+            gzipSize: true,
+            brotliSize: true,
+            sourcemap: false,
+            emitFile: false,
+            title: '@nick-site/shell — Bundle Treemap',
           }),
         ]
       : []),
