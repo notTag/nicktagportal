@@ -19,3 +19,9 @@ declare module 'cliApp/*' {
   >
   export default component
 }
+
+declare const __APP_VERSION__: string
+
+interface Window {
+  __APP_VERSION__: string
+}
