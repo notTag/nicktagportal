@@ -137,7 +137,7 @@ Plans:
 - [x] 09-01-PLAN.md -- Node 24 action version migration in deploy.yml + rollback.yml + Bun 1.3.12 pin (INF-01)
 - [x] 09-02-PLAN.md -- Tree-shake audit wiring: rollup-plugin-visualizer in both apps, bundle-size.yml PR workflow, deploy.yml stats artifact, audit:bundle script (INF-02)
 - [x] 09-03-PLAN.md -- Version stamping: pkg.json 1.1.0, Vite define, transformIndexHtml meta tag, window globals, AppVersion.vue footer (INF-03)
-- [ ] 09-04-PLAN.md -- Rollback verify step: automated meta-tag assertion with retry loop in rollback.yml (INF-03)
+- [x] 09-04-PLAN.md -- Rollback verify step: automated meta-tag assertion with retry loop in rollback.yml (INF-03)
 - [ ] 09-05-PLAN.md -- BUNDLE-AUDIT.md + ROLLBACK-TEST.md deliverables with live-test evidence (INF-02, INF-03)
 
 ### Phase 10: Collapsible Sidebar Navigation
@@ -169,7 +169,7 @@ Phases execute in numeric order: 5 -> 5.1 -> 6 -> 7 -> 7.1 -> 8 -> 9 -> 10
 | 6. Skills Diamond Wall             | v1.1      | 3/3            | Complete    | 2026-04-02 |
 | 7. CLI Terminal Core               | v1.1      | 4/4            | Complete    | 2026-04-06 |
 | 8. CLI Federation Integration      | v1.1      | 3/3            | Complete    | 2026-04-11 |
-| 9. Deployment & Infrastructure     | v1.1      | 0/5            | Not started | -          |
+| 9. Deployment & Infrastructure     | v1.1      | 4/5            | In Progress |            |
 | 10. Collapsible Sidebar Navigation | v1.1      | 0/TBD          | Not started | -          |
 
 ## Backlog
@@ -178,7 +178,7 @@ Phases execute in numeric order: 5 -> 5.1 -> 6 -> 7 -> 7.1 -> 8 -> 9 -> 10
 
 **Goal:** VSCode theme mapping layer with settings button in the header. Users can swap color themes (SynthWave '84 as default); preference stored in localStorage. CSS variables map to VSCode theme variable names so any VSCode theme JSON can be dropped in.
 **Requirements:** TBD
-**Plans:** 0 plans
+**Plans:** 4/5 plans executed
 
 Plans:
 

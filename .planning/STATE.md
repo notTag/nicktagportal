@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
 status: executing
-stopped_at: Completed 09-03-version-stamping-PLAN.md
-last_updated: '2026-04-18T00:18:28.378Z'
+stopped_at: Completed 09-04-rollback-verify-step-PLAN.md
+last_updated: '2026-04-18T00:21:43.755Z'
 last_activity: 2026-04-18
 progress:
   total_phases: 22
   completed_phases: 5
   total_plans: 25
-  completed_plans: 23
-  percent: 92
+  completed_plans: 24
+  percent: 96
 ---
 
 # Project State
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-03-27)
 ## Current Position
 
 Phase: 09-deployment-infrastructure
-Plan: 4 of 5
+Plan: 5 of 5
 Status: Ready to execute
 Last activity: 2026-04-18
 
@@ -69,6 +69,7 @@ All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 - [Phase 06]: Entrance animation (stagger fade/scale) deferred to backlog 999.9 per user decision
 - [Phase 09]: Bumped GitHub Actions to Node 24-capable pins (checkout@v5, download-artifact@v6); Bun exact-pinned to 1.3.12 per D-02
 - [Phase 09]: Plan 09-02: Visualizer gated behind VITE_AUDIT || NODE_ENV=production; per-app filenames stats-{shell,cli}.html; build:all chains CLI→shell→copy to match deploy.yml; bundle-size PR workflow uses preactjs/compressed-size-action@v2 with bun install-script override, inform-only (no fail-on).
+- [Phase 09]: Plan 09-04: rollback.yml gains fail-closed verify step (6x15s retry, 90s total) that greps <meta name=app-version> from deploy-pages page_url and exits non-zero on mismatch — hardens every future rollback, not just INF-03 live test
 
 ### Pending Todos
 
@@ -81,6 +82,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-18T00:18:28.374Z
-Stopped at: Completed 09-03-version-stamping-PLAN.md
+Last session: 2026-04-18T00:21:39.058Z
+Stopped at: Completed 09-04-rollback-verify-step-PLAN.md
 Resume file: None
