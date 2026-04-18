@@ -3,6 +3,7 @@ import vue from '@vitejs/plugin-vue'
 import federation from '@originjs/vite-plugin-federation'
 import { resolve } from 'path'
 import { visualizer } from 'rollup-plugin-visualizer'
+import pkg from './package.json' with { type: 'json' }
 
 const isProd = process.env.NODE_ENV === 'production'
 const emitVisualizer = process.env.VITE_AUDIT === 'true' || isProd
@@ -32,6 +33,9 @@ export default defineConfig({
         ]
       : []),
   ],
+  define: {
+    __APP_VERSION__: JSON.stringify(pkg.version),
+  },
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),
