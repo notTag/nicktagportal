@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
 status: executing
-stopped_at: Phase 9 context gathered
-last_updated: '2026-04-17T23:32:56.676Z'
-last_activity: 2026-04-17 -- Phase 09 planning complete
+stopped_at: Completed 09-01-node24-action-migration-PLAN.md
+last_updated: '2026-04-18T00:04:25.839Z'
+last_activity: 2026-04-18
 progress:
   total_phases: 22
   completed_phases: 5
   total_plans: 25
-  completed_plans: 20
-  percent: 80
+  completed_plans: 21
+  percent: 84
 ---
 
 # Project State
@@ -21,27 +21,28 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-27)
 
 **Core value:** The shell app works as a polished, deployable personal site from day one -- federation infrastructure is ready but never blocks the core experience.
-**Current focus:** Phase 08 — CLI Federation Integration
+**Current focus:** Phase 09 — Deployment Infrastructure
 
 ## Current Position
 
-Phase: 08-cli-federation-integration
-Plan: 0 of TBD
+Phase: 09-deployment-infrastructure
+Plan: 2 of 5
 Status: Ready to execute
-Last activity: 2026-04-17 -- Phase 09 planning complete
+Last activity: 2026-04-18
 
-Progress: [████████░░] 80%
+Progress: [████████░░] 84%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 1 (v1.1)
-- Average duration: 3min
-- Total execution time: 3min
+- Total plans completed: 2 (v1.1)
+- Average duration: 2min
+- Total execution time: 4min
 
 _Updated after each plan completion_
 | Phase 06 P01 | 3min | 3 tasks | 34 files |
+| Phase 09 P01 | 1min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -66,6 +67,7 @@ All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 - [Phase 06]: DiamondInfoPanel uses Teleport to body to escape overflow:hidden clipping
 - [Phase 06]: Skill duplication count computed from viewport width for seamless infinite scroll
 - [Phase 06]: Entrance animation (stagger fade/scale) deferred to backlog 999.9 per user decision
+- [Phase 09]: Bumped GitHub Actions to Node 24-capable pins (checkout@v5, download-artifact@v6); Bun exact-pinned to 1.3.12 per D-02
 
 ### Pending Todos
 
@@ -78,6 +80,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-04-17T18:52:14.788Z
-Stopped at: Phase 9 context gathered
-Resume file: .planning/phases/09-deployment-infrastructure/09-CONTEXT.md
+Last session: 2026-04-18T00:04:25.834Z
+Stopped at: Completed 09-01-node24-action-migration-PLAN.md
+Resume file: None

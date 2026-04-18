@@ -67,7 +67,7 @@ Requirements for milestone v1.1: CLI Remote & Site Polish. Each maps to roadmap 
 
 ### Infrastructure
 
-- [ ] **INF-01**: GitHub Actions workflows updated to support Node.js 24 (before June 2, 2026 deadline)
+- [x] **INF-01**: GitHub Actions workflows updated to support Node.js 24 (before June 2, 2026 deadline)
 - [ ] **INF-02**: Production bundle audited for tree shaking effectiveness
 - [ ] **INF-03**: Rollback deployment workflow tested end-to-end in production
 
@@ -144,7 +144,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | FED-04      | 8     | Pending  |
 | FED-05      | 8     | Pending  |
 | FED-06      | 8     | Pending  |
-| INF-01      | 9     | Pending  |
+| INF-01      | 9     | Complete |
 | INF-02      | 9     | Pending  |
 | INF-03      | 9     | Pending  |
 
