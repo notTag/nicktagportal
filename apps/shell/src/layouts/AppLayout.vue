@@ -3,6 +3,7 @@ import { ref, watch } from 'vue'
 import { TheHeader, TheFooter, SocialLinks, MobileMenu } from '@ui'
 import { features } from '@/config/features'
 import socialLinksData from '@/data/socialLinks.json'
+import AppVersion from '@/components/AppVersion.vue'
 
 type Orientation = 'left' | 'right' | 'center' | 'none'
 
@@ -31,10 +32,7 @@ watch(isMobileMenuOpen, (open) => {
 </script>
 
 <template>
-  <div
-    id="app-content"
-    class="bg-surface text-text flex h-screen flex-col"
-  >
+  <div id="app-content" class="bg-surface text-text flex h-screen flex-col">
     <TheHeader
       :show-theme-picker="features.showThemePicker"
       :is-mobile-menu-open="isMobileMenuOpen"
@@ -44,14 +42,12 @@ watch(isMobileMenuOpen, (open) => {
       <RouterView />
     </main>
     <TheFooter v-if="features.showFooter">
+      <AppVersion />
       <SocialLinks
         :links="socialLinksData.links"
         :orientation="socialLinksData.orientation as Orientation"
       />
     </TheFooter>
   </div>
-  <MobileMenu
-    :is-open="isMobileMenuOpen"
-    @close="closeMobileMenu"
-  />
+  <MobileMenu :is-open="isMobileMenuOpen" @close="closeMobileMenu" />
 </template>
