@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "bun run --filter './apps/shell' dev",
     "build": "bun run --filter './apps/shell' build",
-    "build:all": "bun run --filter '*' build",
+    "build:all": "bun run --filter '@nick-site/cli' build && bun run --filter '@nick-site/shell' build && mkdir -p apps/shell/dist/remotes/cli && cp -r apps/cli/dist/* apps/shell/dist/remotes/cli/",
+    "audit:bundle": "VITE_AUDIT=true bun run build:all && echo '' && echo 'Bundle reports:' && echo '  apps/shell/dist/stats-shell.html' && echo '  apps/cli/dist/stats-cli.html'",
     "typecheck": "bun run --filter '*' typecheck",
     "lint": "eslint .",
     "format": "prettier --write .",
