@@ -2,10 +2,6 @@ import { describe, it, expect } from 'vitest'
 import * as UIExports from '@ui/index'
 
 describe('packages/ui barrel export', () => {
-  it('exports TheHeader as a component', () => {
-    expect(UIExports.TheHeader).toBeDefined()
-  })
-
   it('exports TheFooter as a component', () => {
     expect(UIExports.TheFooter).toBeDefined()
   })
@@ -22,10 +18,6 @@ describe('packages/ui barrel export', () => {
     expect(UIExports.ThemeDropdown).toBeDefined()
   })
 
-  it('exports MobileMenu as a component', () => {
-    expect(UIExports.MobileMenu).toBeDefined()
-  })
-
   it('exports TheSidebar as a component', () => {
     expect(UIExports.TheSidebar).toBeDefined()
   })
@@ -40,7 +32,15 @@ describe('packages/ui barrel export', () => {
     expect(typeof UIExports.computeSnapSide).toBe('function')
   })
 
-  it('exports exactly 9 runtime items (7 components + 2 composable fns)', () => {
-    expect(Object.keys(UIExports)).toHaveLength(9)
+  it('does not export TheHeader (deleted in phase 10)', () => {
+    expect('TheHeader' in UIExports).toBe(false)
+  })
+
+  it('does not export MobileMenu (deleted in phase 10)', () => {
+    expect('MobileMenu' in UIExports).toBe(false)
+  })
+
+  it('exports exactly 7 runtime items (5 components + 2 composable fns)', () => {
+    expect(Object.keys(UIExports)).toHaveLength(7)
   })
 })
