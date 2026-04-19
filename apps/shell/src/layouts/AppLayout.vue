@@ -42,11 +42,16 @@ watch(isMobileMenuOpen, (open) => {
       <RouterView />
     </main>
     <TheFooter v-if="features.showFooter">
-      <AppVersion />
-      <SocialLinks
-        :links="socialLinksData.links"
-        :orientation="socialLinksData.orientation as Orientation"
-      />
+      <div class="grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+        <span aria-hidden="true" />
+        <SocialLinks
+          :links="socialLinksData.links"
+          :orientation="socialLinksData.orientation as Orientation"
+        />
+        <div class="justify-self-end">
+          <AppVersion />
+        </div>
+      </div>
     </TheFooter>
   </div>
   <MobileMenu :is-open="isMobileMenuOpen" @close="closeMobileMenu" />
