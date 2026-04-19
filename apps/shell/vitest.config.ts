@@ -73,15 +73,6 @@ export default mergeConfig(
             statements: 90,
           },
 
-          // AppLayout: The `closeMobileMenu` function (line 50) is defined in script
-          // setup and bound to MobileMenu's @close event. In shallowMount the stub
-          // receives the binding but V8 counts it as a separate uncovered function.
-          'src/layouts/AppLayout.vue': {
-            functions: 75,
-            statements: 92,
-            lines: 92,
-          },
-
           // router/index.ts: Lazy route component imports (lines 15-35) are function
           // expressions that V8 counts as separate functions. The test exercises 4 of 5
           // lazy imports but the playground-remote route shares the same component import.
