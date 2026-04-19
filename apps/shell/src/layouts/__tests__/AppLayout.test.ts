@@ -1,75 +1,102 @@
 import { describe, it, expect, vi } from 'vitest'
-import { mount, shallowMount } from '@vue/test-utils'
+import { mount } from '@vue/test-utils'
 import { createTestingPinia } from '@pinia/testing'
 import { createRouter, createMemoryHistory } from 'vue-router'
-import { nextTick } from 'vue'
 import AppLayout from '@/layouts/AppLayout.vue'
 import socialLinksData from '@/data/socialLinks.json'
 
 const router = createRouter({
   history: createMemoryHistory(),
-  routes: [{ path: '/', component: { template: '<div />' } }],
+  routes: [
+    { path: '/', name: 'home', component: { template: '<div />' } },
+    { path: '/skills', name: 'skills', component: { template: '<div />' } },
+    { path: '/cli', name: 'cli', component: { template: '<div />' } },
+    {
+      path: '/playground',
+      name: 'playground',
+      component: { template: '<div />' },
+    },
+  ],
 })
 
-function mountAppLayout(attachTo?: HTMLElement) {
-  return shallowMount(AppLayout, {
-    global: { plugins: [createTestingPinia({ createSpy: vi.fn }), router] },
-    attachTo,
-  })
-}
-
-function fullMountAppLayout() {
+function mountLayout() {
   return mount(AppLayout, {
-    global: { plugins: [createTestingPinia({ createSpy: vi.fn }), router] },
+    global: {
+      plugins: [
+        createTestingPinia({
+          createSpy: vi.fn,
+          initialState: {
+            sidebar: { isOpen: false, dockedSide: 'left', isDragging: false },
+            theme: { themeId: 'synthwave-84', previewingId: null },
+          },
+        }),
+        router,
+      ],
+      stubs: {
+        // Stub RouterView so we do not resolve deep view components during the
+        // layout-only smoke test. Keep all other components real so we can
+        // assert on TheSidebar / TheFooter / AppVersion presence by name.
+        RouterView: { template: '<div data-testid="router-view" />' },
+      },
+    },
   })
 }
 
 describe('AppLayout', () => {
   it('renders without errors', () => {
-    const wrapper = mountAppLayout()
+    const wrapper = mountLayout()
     expect(wrapper.exists()).toBe(true)
   })
 
   it('has an element with id app-content', () => {
-    const wrapper = mountAppLayout()
+    const wrapper = mountLayout()
     expect(wrapper.find('#app-content').exists()).toBe(true)
   })
 
-  it('renders TheHeader stub', () => {
-    const wrapper = mountAppLayout()
-    expect(wrapper.html()).toContain('the-header')
+  it('mounts TheSidebar', () => {
+    const wrapper = mountLayout()
+    expect(wrapper.findComponent({ name: 'TheSidebar' }).exists()).toBe(true)
+  })
+
+  it('does not mount TheHeader (deleted in phase 10)', () => {
+    const wrapper = mountLayout()
+    expect(wrapper.findComponent({ name: 'TheHeader' }).exists()).toBe(false)
+  })
+
+  it('does not mount MobileMenu (deleted in phase 10)', () => {
+    const wrapper = mountLayout()
+    expect(wrapper.findComponent({ name: 'MobileMenu' }).exists()).toBe(false)
   })
 
   it('renders a main element', () => {
-    const wrapper = mountAppLayout()
+    const wrapper = mountLayout()
     expect(wrapper.find('main').exists()).toBe(true)
   })
 
-  it('renders RouterView stub inside main', () => {
-    const wrapper = mountAppLayout()
+  it('renders a RouterView inside main', () => {
+    const wrapper = mountLayout()
     const main = wrapper.find('main')
-    expect(main.html()).toContain('router-view')
+    expect(main.find('[data-testid="router-view"]').exists()).toBe(true)
   })
 
-  it('renders footer area when showFooter is true', () => {
-    const wrapper = mountAppLayout()
-    // TheFooter from @ui is rendered as a stub inside #app-content after main
-    const appContent = wrapper.find('#app-content')
-    const children = appContent.element.children
-    // Should have: TheHeader, main, and a footer-related stub
-    expect(children.length).toBeGreaterThanOrEqual(3)
+  it('renders TheFooter (a <footer> element) when showFooter is true', () => {
+    const wrapper = mountLayout()
+    expect(wrapper.find('footer').exists()).toBe(true)
   })
 
-  it('renders MobileMenu stub', () => {
-    const wrapper = mountAppLayout()
-    expect(wrapper.html()).toContain('mobile-menu')
+  it('renders AppVersion inside the footer slot', () => {
+    const wrapper = mountLayout()
+    const footer = wrapper.find('footer')
+    expect(footer.exists()).toBe(true)
+    // AppVersion renders "v{version}" inside a span — assert both marker and version string.
+    expect(footer.text()).toMatch(/v\d+\.\d+\.\d+/)
   })
 
   it('renders footer external links from social links data', async () => {
     await router.push('/')
     await router.isReady()
 
-    const wrapper = fullMountAppLayout()
+    const wrapper = mountLayout()
     const footerLinks = wrapper.findAll('footer a[target="_blank"]')
 
     expect(footerLinks).toHaveLength(socialLinksData.links.length)
@@ -80,97 +107,5 @@ describe('AppLayout', () => {
     for (const footerLink of footerLinks) {
       expect(footerLink.attributes('rel')).toBe('noopener noreferrer')
     }
-  })
-
-  it('passes isMobileMenuOpen as false initially to TheHeader', () => {
-    const wrapper = mountAppLayout()
-    const header = wrapper.find('the-header-stub')
-    expect(header.attributes('ismobilemenuopen')).toBe('false')
-  })
-
-  describe('mobile menu toggle', () => {
-    it('toggles mobile menu open when TheHeader emits toggle-menu', async () => {
-      const wrapper = mountAppLayout()
-      const header = wrapper.findComponent({ name: 'TheHeader' })
-      await header.vm.$emit('toggle-menu')
-      await nextTick()
-
-      const headerStub = wrapper.find('the-header-stub')
-      expect(headerStub.attributes('ismobilemenuopen')).toBe('true')
-    })
-
-    it('toggles mobile menu closed on second toggle-menu', async () => {
-      const wrapper = mountAppLayout()
-      const header = wrapper.findComponent({ name: 'TheHeader' })
-      await header.vm.$emit('toggle-menu')
-      await nextTick()
-      await header.vm.$emit('toggle-menu')
-      await nextTick()
-
-      const headerStub = wrapper.find('the-header-stub')
-      expect(headerStub.attributes('ismobilemenuopen')).toBe('false')
-    })
-
-    it('closes mobile menu when MobileMenu emits close', async () => {
-      const wrapper = mountAppLayout()
-      // Open it first
-      const header = wrapper.findComponent({ name: 'TheHeader' })
-      await header.vm.$emit('toggle-menu')
-      await nextTick()
-
-      // Now close via MobileMenu emit
-      const mobileMenu = wrapper.findComponent({ name: 'MobileMenu' })
-      await mobileMenu.vm.$emit('close')
-      await nextTick()
-
-      const headerStub = wrapper.find('the-header-stub')
-      expect(headerStub.attributes('ismobilemenuopen')).toBe('false')
-    })
-  })
-
-  describe('inert attribute management', () => {
-    it('sets inert and aria-hidden on app-content when menu opens', async () => {
-      // Attach to document so getElementById works inside the watch
-      const container = document.createElement('div')
-      document.body.appendChild(container)
-
-      const wrapper = mountAppLayout(container)
-      const header = wrapper.findComponent({ name: 'TheHeader' })
-      await header.vm.$emit('toggle-menu')
-      await nextTick()
-
-      // The watch uses document.getElementById, so check the real DOM element
-      const appContent = document.getElementById('app-content')
-      expect(appContent).toBeTruthy()
-      expect(appContent!.getAttribute('inert')).toBeDefined()
-      expect(appContent!.getAttribute('aria-hidden')).toBe('true')
-
-      wrapper.unmount()
-      document.body.removeChild(container)
-    })
-
-    it('removes inert and aria-hidden when menu closes', async () => {
-      const container = document.createElement('div')
-      document.body.appendChild(container)
-
-      const wrapper = mountAppLayout(container)
-      const header = wrapper.findComponent({ name: 'TheHeader' })
-
-      // Open
-      await header.vm.$emit('toggle-menu')
-      await nextTick()
-
-      // Close
-      await header.vm.$emit('toggle-menu')
-      await nextTick()
-
-      const appContent = document.getElementById('app-content')
-      expect(appContent).toBeTruthy()
-      expect(appContent!.hasAttribute('inert')).toBe(false)
-      expect(appContent!.hasAttribute('aria-hidden')).toBe(false)
-
-      wrapper.unmount()
-      document.body.removeChild(container)
-    })
   })
 })
