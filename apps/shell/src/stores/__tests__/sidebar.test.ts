@@ -11,9 +11,9 @@ describe('useSidebarStore', () => {
   })
 
   describe('default state', () => {
-    it('isOpen defaults to false', () => {
+    it('isOpen defaults to true (expanded on first load)', () => {
       const store = useSidebarStore()
-      expect(store.isOpen).toBe(false)
+      expect(store.isOpen).toBe(true)
     })
     it('dockedSide defaults to left when localStorage empty', () => {
       const store = useSidebarStore()
@@ -39,14 +39,16 @@ describe('useSidebarStore', () => {
     })
     it('toggle() flips isOpen', () => {
       const store = useSidebarStore()
+      store.close()
       store.toggle()
       expect(store.isOpen).toBe(true)
     })
     it('toggle() twice returns to the starting value', () => {
       const store = useSidebarStore()
+      const start = store.isOpen
       store.toggle()
       store.toggle()
-      expect(store.isOpen).toBe(false)
+      expect(store.isOpen).toBe(start)
     })
   })
 

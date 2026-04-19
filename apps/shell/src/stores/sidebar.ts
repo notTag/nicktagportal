@@ -16,7 +16,7 @@ function loadDockedSide(): DockedSide {
 }
 
 export const useSidebarStore = defineStore('sidebar', () => {
-  const isOpen = ref(false)
+  const isOpen = ref(true)
   const dockedSide = ref<DockedSide>(loadDockedSide())
   const isDragging = ref(false)
 
