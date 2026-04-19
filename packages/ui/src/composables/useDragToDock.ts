@@ -61,12 +61,12 @@ export function useDragToDock(
   let justDragged = false
 
   function onPointerDown(e: PointerEvent) {
-    const el = handle.value
-    if (!el) return
+    // onPointerDown is only ever registered after boundEl is set in onMounted
+    // (see below), so we can safely use e.currentTarget for setPointerCapture.
     dragging = true
     moved = false
     startX = e.clientX
-    el.setPointerCapture(e.pointerId)
+    ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
   }
 
   function onPointerMove(e: PointerEvent) {
@@ -101,9 +101,14 @@ export function useDragToDock(
     store.setDragging(false)
   }
 
+  // Cache the bound element so onUnmounted can remove listeners even after
+  // Vue nulls the template ref during teardown.
+  let boundEl: HTMLElement | null = null
+
   onMounted(() => {
     const el = handle.value
     if (!el) return
+    boundEl = el
     el.addEventListener('pointerdown', onPointerDown)
     el.addEventListener('pointermove', onPointerMove)
     el.addEventListener('pointerup', onPointerUp)
@@ -111,12 +116,12 @@ export function useDragToDock(
   })
 
   onUnmounted(() => {
-    const el = handle.value
-    if (!el) return
-    el.removeEventListener('pointerdown', onPointerDown)
-    el.removeEventListener('pointermove', onPointerMove)
-    el.removeEventListener('pointerup', onPointerUp)
-    el.removeEventListener('pointercancel', onPointerCancel)
+    if (!boundEl) return
+    boundEl.removeEventListener('pointerdown', onPointerDown)
+    boundEl.removeEventListener('pointermove', onPointerMove)
+    boundEl.removeEventListener('pointerup', onPointerUp)
+    boundEl.removeEventListener('pointercancel', onPointerCancel)
+    boundEl = null
   })
 
   return {
