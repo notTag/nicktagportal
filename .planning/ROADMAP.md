@@ -169,7 +169,7 @@ Phases execute in numeric order: 5 -> 5.1 -> 6 -> 7 -> 7.1 -> 8 -> 9 -> 10
 | 6. Skills Diamond Wall             | v1.1      | 3/3            | Complete    | 2026-04-02 |
 | 7. CLI Terminal Core               | v1.1      | 4/4            | Complete    | 2026-04-06 |
 | 8. CLI Federation Integration      | v1.1      | 3/3            | Complete    | 2026-04-11 |
-| 9. Deployment & Infrastructure     | v1.1      | 4/5            | In Progress |            |
+| 9. Deployment & Infrastructure     | v1.1      | 5/5            | Complete    | 2026-04-19 |
 | 10. Collapsible Sidebar Navigation | v1.1      | 0/TBD          | Not started | -          |
 
 ## Backlog
