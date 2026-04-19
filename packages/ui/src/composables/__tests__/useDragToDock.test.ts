@@ -41,7 +41,8 @@ describe('computeSnapSide (15% symmetric hysteresis)', () => {
 // useDragToDock harness
 // ---------------------------------------------------------------------------
 
-interface MockStore extends SidebarStoreLike {
+interface MockStore {
+  readonly dockedSide: 'left' | 'right'
   setDockedSide: ReturnType<typeof vi.fn>
   setDragging: ReturnType<typeof vi.fn>
   _side: 'left' | 'right'
@@ -61,13 +62,19 @@ function makeStore(initial: 'left' | 'right' = 'left'): MockStore {
   return store
 }
 
-function mountHarness(store: SidebarStoreLike, renderHandle = true) {
+function mountHarness(store: MockStore, renderHandle = true) {
   let api: ReturnType<typeof useDragToDock> | null = null
+
+  // vitest 4.x typings return a broad Mock<Procedure | Constructable> from
+  // vi.fn(), which is structurally wider than SidebarStoreLike's narrow
+  // (side: DockedSide) => void signature. Cast through unknown at the
+  // composable boundary — runtime behaviour is unchanged.
+  const storeArg = store as unknown as SidebarStoreLike
 
   const Harness = defineComponent({
     setup() {
       const handle = ref<HTMLElement | null>(null)
-      api = useDragToDock({ handle, store })
+      api = useDragToDock({ handle, store: storeArg })
       return () =>
         renderHandle
           ? h('div', { ref: handle, 'data-testid': 'handle' })
