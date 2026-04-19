@@ -26,6 +26,10 @@ describe('packages/ui barrel export', () => {
     expect(UIExports.MobileMenu).toBeDefined()
   })
 
+  it('exports TheSidebar as a component', () => {
+    expect(UIExports.TheSidebar).toBeDefined()
+  })
+
   it('exports useDragToDock composable', () => {
     expect(UIExports.useDragToDock).toBeDefined()
     expect(typeof UIExports.useDragToDock).toBe('function')
@@ -36,7 +40,7 @@ describe('packages/ui barrel export', () => {
     expect(typeof UIExports.computeSnapSide).toBe('function')
   })
 
-  it('exports exactly 8 runtime items (6 components + 2 composable fns)', () => {
-    expect(Object.keys(UIExports)).toHaveLength(8)
+  it('exports exactly 9 runtime items (7 components + 2 composable fns)', () => {
+    expect(Object.keys(UIExports)).toHaveLength(9)
   })
 })
