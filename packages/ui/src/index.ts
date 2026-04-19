@@ -9,5 +9,6 @@ export {
   type DockedSide,
   type UseDragToDockOptions,
   type UseDragToDockReturn,
+  type SidebarStore,
   type SidebarStoreLike,
 } from './composables/useDragToDock'

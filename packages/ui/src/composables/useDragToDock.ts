@@ -1,4 +1,4 @@
-import { onMounted, onUnmounted, type Ref } from 'vue'
+import { onMounted, onUnmounted, ref, type Ref } from 'vue'
 
 export type DockedSide = 'left' | 'right'
 
@@ -18,17 +18,33 @@ export function computeSnapSide(
   currentSide: DockedSide,
 ): DockedSide {
   const slideThreshold =
-    currentSide === 'left'
-      ? (windowWidth / 10) * 6.5
-      : (windowWidth / 10) * 3.5
+    currentSide === 'left' ? (windowWidth / 10) * 6.5 : (windowWidth / 10) * 3.5
   return dragX < slideThreshold ? 'left' : 'right'
 }
 
-/** Minimal sidebar-store surface that useDragToDock requires. */
+/**
+ * Minimal sidebar-store surface that useDragToDock requires.
+ *
+ * @deprecated Prefer `SidebarStore` — this name is kept as an alias for
+ * backward compatibility with tests and downstream consumers.
+ */
 export interface SidebarStoreLike {
   readonly dockedSide: DockedSide
   setDockedSide: (side: DockedSide) => void
   setDragging: (flag: boolean) => void
+}
+
+/**
+ * Full sidebar-store contract consumed by TheSidebar.vue. This is the public
+ * shape that any packages/ui consumer must implement to use the sidebar —
+ * it keeps the component standalone (no app-specific store imports).
+ */
+export interface SidebarStore extends SidebarStoreLike {
+  readonly isOpen: boolean
+  readonly isDragging: boolean
+  open: () => void
+  close: () => void
+  toggle: () => void
 }
 
 export interface UseDragToDockOptions {
@@ -48,6 +64,14 @@ export interface UseDragToDockReturn {
   wasDragging: () => boolean
   /** Consumer calls this after handling the trailing click to reset wasDragging. */
   resetWasDragging: () => void
+  /**
+   * Reactive X-axis offset in pixels from the drag start position.
+   * Consumers bind this to a `transform: translateX(...)` style during
+   * drag so the sidebar follows the pointer 1:1 on the X axis.
+   * Y-axis movement is ignored by design — only `clientX` drives this value.
+   * Resets to 0 on pointerup/pointercancel.
+   */
+  dragOffsetX: Ref<number>
 }
 
 export function useDragToDock(
@@ -59,13 +83,13 @@ export function useDragToDock(
   let moved = false
   let startX = 0
   let justDragged = false
+  const dragOffsetX = ref(0)
 
   function onPointerDown(e: PointerEvent) {
-    // onPointerDown is only ever registered after boundEl is set in onMounted
-    // (see below), so we can safely use e.currentTarget for setPointerCapture.
     dragging = true
     moved = false
     startX = e.clientX
+    dragOffsetX.value = 0
     ;(e.currentTarget as HTMLElement).setPointerCapture(e.pointerId)
   }
 
@@ -75,6 +99,9 @@ export function useDragToDock(
     if (!moved && Math.abs(dx) > dragThreshold) {
       moved = true
       store.setDragging(true)
+    }
+    if (moved) {
+      dragOffsetX.value = dx
     }
   }
 
@@ -92,6 +119,7 @@ export function useDragToDock(
     }
     store.setDragging(false)
     moved = false
+    dragOffsetX.value = 0
   }
 
   function onPointerCancel() {
@@ -99,6 +127,7 @@ export function useDragToDock(
     dragging = false
     moved = false
     store.setDragging(false)
+    dragOffsetX.value = 0
   }
 
   // Cache the bound element so onUnmounted can remove listeners even after
@@ -129,5 +158,6 @@ export function useDragToDock(
     resetWasDragging: () => {
       justDragged = false
     },
+    dragOffsetX,
   }
 }
