@@ -138,7 +138,7 @@ Plans:
 - [x] 09-02-PLAN.md -- Tree-shake audit wiring: rollup-plugin-visualizer in both apps, bundle-size.yml PR workflow, deploy.yml stats artifact, audit:bundle script (INF-02)
 - [x] 09-03-PLAN.md -- Version stamping: pkg.json 1.1.0, Vite define, transformIndexHtml meta tag, window globals, AppVersion.vue footer (INF-03)
 - [x] 09-04-PLAN.md -- Rollback verify step: automated meta-tag assertion with retry loop in rollback.yml (INF-03)
-- [ ] 09-05-PLAN.md -- BUNDLE-AUDIT.md + ROLLBACK-TEST.md deliverables with live-test evidence (INF-02, INF-03)
+- [x] 09-05-PLAN.md -- BUNDLE-AUDIT.md + ROLLBACK-TEST.md deliverables with live-test evidence (INF-02, INF-03)
 
 ### Phase 10: Collapsible Sidebar Navigation
 
@@ -194,15 +194,16 @@ Plans:
 
 - [ ] TBD (promote with /gsd:review-backlog when ready)
 
-### Phase 999.4: Rollback Workflow Testing (BACKLOG)
+### Phase 999.4: Rollback Workflow Testing (RESOLVED — 2026-04-19)
 
 **Goal:** Trigger Rollback Deployment workflow with a prior deploy run_id, verify site reverts to that version through the production approval gate. Requires at least 2 successful deploys first.
 **Requirements:** TBD
 **Plans:** 0 plans
+**Resolved by:** Phase 9 plan 09-05 — production rollback executed end-to-end (rollback run_id `24634259538`), automated verify step asserted meta-tag match. See `.planning/phases/09-deployment-infrastructure/ROLLBACK-TEST.md`.
 
 Plans:
 
-- [ ] TBD (promote with /gsd:review-backlog when ready)
+- [x] Resolved — see Phase 9 deliverable
 
 ### Phase 999.5: Tree Shaking (BACKLOG)
 
@@ -214,15 +215,16 @@ Plans:
 
 - [ ] TBD (promote with /gsd:review-backlog when ready)
 
-### Phase 999.6: GitHub Actions Node.js 20 Deprecation (BACKLOG)
+### Phase 999.6: GitHub Actions Node.js 20 Deprecation (RESOLVED — 2026-04-19)
 
 **Goal:** Update GitHub Actions workflows to support Node.js 24. actions/checkout@v4 and actions/upload-artifact@v4 are running on deprecated Node.js 20, which will be forced to Node.js 24 starting June 2, 2026. Also resolve "Cleaning up orphan processes" warnings. Update action versions or set FORCE_JAVASCRIPT_ACTIONS_TO_NODE24=true.
 **Requirements:** TBD
 **Plans:** 0 plans
+**Resolved by:** Phase 9 plan 09-01 — all first-party `actions/*` pins bumped to Node 24-capable majors (checkout@v5, download-artifact@v6, upload-artifact@v6), Bun pinned to 1.3.12. See `.planning/phases/09-deployment-infrastructure/09-01-SUMMARY.md`.
 
 Plans:
 
-- [ ] TBD (promote with /gsd:review-backlog when ready)
+- [x] Resolved — see Phase 9 deliverable
 
 ### Phase 999.7: VSCode Theme JSON Import Engine (BACKLOG)
 

@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
 status: executing
-stopped_at: Completed 09-04-rollback-verify-step-PLAN.md
-last_updated: '2026-04-18T00:21:43.755Z'
-last_activity: 2026-04-18
+stopped_at: Phase 09 complete — ROLLBACK-TEST.md + 09-05-SUMMARY.md landed
+last_updated: '2026-04-19T17:25:00.000Z'
+last_activity: 2026-04-19 -- Phase 09 closed; INF-01/02/03 discharged; backlog 999.4 + 999.6 resolved
 progress:
   total_phases: 22
-  completed_phases: 5
+  completed_phases: 6
   total_plans: 25
-  completed_plans: 24
-  percent: 96
+  completed_plans: 25
+  percent: 100
 ---
 
 # Project State
@@ -21,16 +21,18 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-27)
 
 **Core value:** The shell app works as a polished, deployable personal site from day one -- federation infrastructure is ready but never blocks the core experience.
-**Current focus:** Phase 09 — Deployment Infrastructure
+**Current focus:** Phase 09 — Deployment Infrastructure (COMPLETE)
 
 ## Current Position
 
 Phase: 09-deployment-infrastructure
 Plan: 5 of 5
-Status: Ready to execute
-Last activity: 2026-04-18
+Status: Complete — INF-01/02/03 discharged, backlog 999.4 + 999.6 resolved
+Last activity: 2026-04-19 -- ROLLBACK-TEST.md + 09-05-SUMMARY.md landed
 
-Progress: [████████░░] 84%
+Next: Phase 10 — Collapsible Sidebar Navigation (planned; ready to discuss or execute)
+
+Progress: [██████████] 100% (25/25 plans)
 
 ## Performance Metrics
 
@@ -70,6 +72,9 @@ All v1.0 decisions archived -- see milestones/v1.0-ROADMAP.md for full history.
 - [Phase 09]: Bumped GitHub Actions to Node 24-capable pins (checkout@v5, download-artifact@v6); Bun exact-pinned to 1.3.12 per D-02
 - [Phase 09]: Plan 09-02: Visualizer gated behind VITE_AUDIT || NODE_ENV=production; per-app filenames stats-{shell,cli}.html; build:all chains CLI→shell→copy to match deploy.yml; bundle-size PR workflow uses preactjs/compressed-size-action@v2 with bun install-script override, inform-only (no fail-on).
 - [Phase 09]: Plan 09-04: rollback.yml gains fail-closed verify step (6x15s retry, 90s total) that greps <meta name=app-version> from deploy-pages page_url and exits non-zero on mismatch — hardens every future rollback, not just INF-03 live test
+- [Phase 09]: Plan 09-05 live rollback test uncovered latent bug: deploy-pages@v4 queries CURRENT run for github-pages artifact, so cross-run download-artifact alone is insufficient. Fix (commit b8f9ed9): re-upload tar into current run via upload-artifact@v6 with matching name. This was exactly why backlog 999.4 existed — workflow had never been exercised.
+- [Phase 09]: CDN propagation measured ≤15s (Attempt 1 matched on rollback run 24634259538). Assumption A3 (worst-case ≤90s) has 6× headroom. Retry loop retained at 6 attempts for Fastly POP variance defense.
+- [Phase 09]: Footer layout: grid-cols-[1fr_auto_1fr] keeps SocialLinks centered while AppVersion pins to right edge via justify-self-end. Version text: 10px + opacity-70 + tracking-wide as subtle deploy signature, not primary footer element.
 
 ### Pending Todos
 
