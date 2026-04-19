@@ -71,6 +71,14 @@ Requirements for milestone v1.1: CLI Remote & Site Polish. Each maps to roadmap 
 - [x] **INF-02**: Production bundle audited for tree shaking effectiveness
 - [x] **INF-03**: Rollback deployment workflow tested end-to-end in production
 
+### Navigation
+
+- [ ] **NAV-01**: User sees a 56px floating icon rail on the left edge of the viewport on desktop (≥640px) containing Home, Skills, CLI, and Playground nav links, with no horizontal header nav
+- [ ] **NAV-02**: User can click the rail to expand it into a 260px floating card that overlays main content (no layout reflow) and reveals nav labels, brand name, and theme picker; clicking the close button or outside the card collapses it back to rail
+- [ ] **NAV-03**: User can drag the sidebar header across the viewport to dock it on the opposite edge, with symmetric 15% hysteresis around the midpoint so casual drags stay sticky; docked side persists across page reloads via localStorage
+- [ ] **NAV-04**: User sees a hamburger trigger in place of the rail below 640px; tapping it slides the full 260px card over content as an overlay (replaces the existing MobileMenu behavior)
+- [ ] **NAV-05**: User sees an active-route indicator (accent-colored background pill) on the current route's nav entry in both rail mode (icon-only pill) and card mode (full-width pill)
+
 ## Future Requirements
 
 Deferred to future milestones. Tracked but not in current roadmap.
@@ -147,14 +155,19 @@ Which phases cover which requirements. Updated during roadmap creation.
 | INF-01      | 9     | Complete |
 | INF-02      | 9     | Complete |
 | INF-03      | 9     | Complete |
+| NAV-01      | 10    | Pending  |
+| NAV-02      | 10    | Pending  |
+| NAV-03      | 10    | Pending  |
+| NAV-04      | 10    | Pending  |
+| NAV-05      | 10    | Pending  |
 
 **Coverage:**
 
-- v1.1 requirements: 46 total
-- Mapped to phases: 46
+- v1.1 requirements: 51 total
+- Mapped to phases: 51
 - Unmapped: 0
 
 ---
 
 _Requirements defined: 2026-03-31_
-_Last updated: 2026-03-31 after roadmap creation_
+_Last updated: 2026-04-19 — NAV-01..05 added for Phase 10_
