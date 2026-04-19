@@ -74,6 +74,6 @@
 /* Drag disables sidebar transitions so transform follows pointer 1:1.
    Consumed by the useDragToDock composable (plan 10-03) and TheSidebar (plan 10-04).
    !important is required to beat the global *-transition rule above. */
-.is-dragging .sidebar {
+.sidebar.is-dragging {
   transition: none !important;
 }
