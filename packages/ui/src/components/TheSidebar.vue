@@ -181,8 +181,10 @@ const navIconClass = 'h-4 w-4 flex-shrink-0'
       </button>
     </div>
 
-    <!-- Body: section label + nav list -->
-    <div class="flex flex-1 flex-col py-2">
+    <!-- Body: section label + nav list.
+         min-h-0 + overflow-y-auto lets the nav scroll if the footer
+         expands (e.g. ThemeDropdown open) beyond the available space. -->
+    <div class="flex min-h-0 flex-1 flex-col overflow-y-auto py-2">
       <div
         class="text-text-muted overflow-hidden px-3 text-xs font-semibold tracking-wider uppercase transition-[max-height,margin,opacity] duration-[240ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
         :class="
@@ -312,12 +314,15 @@ const navIconClass = 'h-4 w-4 flex-shrink-0'
       </ul>
     </div>
 
-    <!-- Footer: ThemeDropdown, visible only in card mode via max-height collapse -->
+    <!-- Footer: ThemeDropdown, visible only in card mode via max-height collapse.
+         max-h-[400px] leaves headroom for the ThemeDropdown's accordion-upward
+         panel (trigger + ~320px listbox + padding). The footer only grows to
+         its natural content height — max-h is a ceiling, not a reservation. -->
     <div
       class="border-border overflow-hidden border-t px-3 transition-[max-height,padding,opacity] duration-[240ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
       :class="
         props.store.isOpen
-          ? 'max-h-20 py-3 opacity-100 delay-[120ms]'
+          ? 'max-h-[400px] py-3 opacity-100 delay-[120ms]'
           : 'max-h-0 py-0 opacity-0'
       "
     >

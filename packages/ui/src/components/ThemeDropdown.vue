@@ -36,7 +36,10 @@ function toggle() {
 }
 
 function handleTriggerKeydown(e: KeyboardEvent) {
-  if (!isOpen.value && (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown')) {
+  if (
+    !isOpen.value &&
+    (e.key === 'Enter' || e.key === ' ' || e.key === 'ArrowDown')
+  ) {
     e.preventDefault()
     open()
   }
@@ -89,7 +92,11 @@ function handleOptionMouseEnter(index: number) {
 }
 
 function handleClickOutside(e: MouseEvent) {
-  if (isOpen.value && wrapperRef.value && !wrapperRef.value.contains(e.target as Node)) {
+  if (
+    isOpen.value &&
+    wrapperRef.value &&
+    !wrapperRef.value.contains(e.target as Node)
+  ) {
     store.revertPreview()
     close()
   }
@@ -105,48 +112,62 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div ref="wrapperRef" class="relative">
+  <div ref="wrapperRef" class="flex flex-col">
+    <!-- Accordion panel — grows UPWARD from the trigger. In-flow (not absolute),
+         so it stays inside the parent sidebar regardless of overflow rules.
+         tabindex/focus moves here when opened; aria-hidden flips with isOpen. -->
+    <div
+      ref="listboxRef"
+      role="listbox"
+      aria-label="Select theme"
+      :aria-activedescendant="
+        activeIndex >= 0
+          ? `theme-option-${themeList[activeIndex].id}`
+          : undefined
+      "
+      :aria-hidden="!isOpen"
+      tabindex="-1"
+      class="overflow-hidden transition-[max-height,margin,opacity] duration-[240ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+      :class="
+        isOpen ? 'mb-2 max-h-[320px] opacity-100' : 'mb-0 max-h-0 opacity-0'
+      "
+      @keydown="handleListboxKeydown"
+    >
+      <div
+        class="border-border bg-surface-overlay max-h-[320px] overflow-y-auto rounded-lg border py-2"
+      >
+        <div
+          v-for="(theme, index) in themeList"
+          :id="`theme-option-${theme.id}`"
+          :key="theme.id"
+          role="option"
+          :aria-selected="theme.id === store.confirmedThemeId"
+          class="text-text mx-1 cursor-pointer rounded px-2 py-1.5 text-sm"
+          :class="{
+            'bg-selection': index === activeIndex,
+            'hover:bg-hover': index !== activeIndex,
+          }"
+          @click="handleOptionClick(index)"
+          @mouseenter="handleOptionMouseEnter(index)"
+        >
+          <span v-if="theme.id === store.confirmedThemeId" class="text-accent"
+            >&#x2713; </span
+          >{{ theme.name }}
+        </div>
+      </div>
+    </div>
+
+    <!-- Trigger always sits at the bottom so the panel opens upward. -->
     <div
       role="button"
       tabindex="0"
       aria-haspopup="listbox"
       :aria-expanded="isOpen"
-      class="cursor-pointer text-sm font-normal text-text-muted transition-colors hover:text-accent"
+      class="text-text-muted hover:text-accent cursor-pointer text-sm font-normal transition-colors"
       @click="toggle"
       @keydown="handleTriggerKeydown"
     >
       Theme &#x25BE;
-    </div>
-
-    <div
-      v-if="isOpen"
-      ref="listboxRef"
-      role="listbox"
-      aria-label="Select theme"
-      :aria-activedescendant="activeIndex >= 0 ? `theme-option-${themeList[activeIndex].id}` : undefined"
-      tabindex="-1"
-      class="absolute right-0 top-full z-40 mt-2 w-[220px] rounded-lg border border-border bg-surface-overlay py-2 shadow-[0_4px_16px_rgba(0,0,0,0.3)]"
-      @keydown="handleListboxKeydown"
-    >
-      <div
-        v-for="(theme, index) in themeList"
-        :id="`theme-option-${theme.id}`"
-        :key="theme.id"
-        role="option"
-        :aria-selected="theme.id === store.confirmedThemeId"
-        class="mx-1 cursor-pointer rounded px-2 py-1.5 text-sm text-text"
-        :class="{
-          'bg-selection': index === activeIndex,
-          'hover:bg-hover': index !== activeIndex,
-        }"
-        @click="handleOptionClick(index)"
-        @mouseenter="handleOptionMouseEnter(index)"
-      >
-        <span
-          v-if="theme.id === store.confirmedThemeId"
-          class="text-accent"
-        >&#x2713; </span>{{ theme.name }}
-      </div>
     </div>
   </div>
 </template>

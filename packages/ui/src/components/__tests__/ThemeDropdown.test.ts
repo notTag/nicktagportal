@@ -37,9 +37,11 @@ describe('ThemeDropdown', () => {
     expect(trigger.attributes('aria-haspopup')).toBe('listbox')
   })
 
-  it('does not render listbox initially', () => {
+  it('listbox is present in DOM but aria-hidden initially (accordion closed)', () => {
     const wrapper = mountDropdown()
-    expect(wrapper.find('[role="listbox"]').exists()).toBe(false)
+    const listbox = wrapper.find('[role="listbox"]')
+    expect(listbox.exists()).toBe(true)
+    expect(listbox.attributes('aria-hidden')).toBe('true')
   })
 
   it('renders listbox with theme options after clicking trigger', async () => {
@@ -158,8 +160,10 @@ describe('ThemeDropdown', () => {
 
       await listbox.trigger('keydown', { key: 'Enter' })
       expect(store.setTheme).toHaveBeenCalled()
-      // Should close after Enter
-      expect(wrapper.find('[role="listbox"]').exists()).toBe(false)
+      // Accordion closes → listbox aria-hidden flips to true
+      expect(wrapper.find('[role="listbox"]').attributes('aria-hidden')).toBe(
+        'true',
+      )
     })
 
     it('closes dropdown and reverts on Tab in listbox', async () => {
@@ -170,7 +174,9 @@ describe('ThemeDropdown', () => {
 
       await listbox.trigger('keydown', { key: 'Tab' })
       expect(store.revertPreview).toHaveBeenCalled()
-      expect(wrapper.find('[role="listbox"]').exists()).toBe(false)
+      expect(wrapper.find('[role="listbox"]').attributes('aria-hidden')).toBe(
+        'true',
+      )
     })
   })
 
@@ -178,12 +184,16 @@ describe('ThemeDropdown', () => {
     it('closes dropdown and reverts preview on second click', async () => {
       const wrapper = mountDropdown()
       const store = useThemeStore()
-      // Open
+      // Open — aria-hidden flips to false
       await wrapper.find('[role="button"]').trigger('click')
-      expect(wrapper.find('[role="listbox"]').exists()).toBe(true)
-      // Close
+      expect(wrapper.find('[role="listbox"]').attributes('aria-hidden')).toBe(
+        'false',
+      )
+      // Close — aria-hidden flips back to true
       await wrapper.find('[role="button"]').trigger('click')
-      expect(wrapper.find('[role="listbox"]').exists()).toBe(false)
+      expect(wrapper.find('[role="listbox"]').attributes('aria-hidden')).toBe(
+        'true',
+      )
       expect(store.revertPreview).toHaveBeenCalled()
     })
   })
