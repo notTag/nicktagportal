@@ -30,6 +30,27 @@
   --color-header-bg: #241b2f;
   --color-selection: #ffffff20;
   --color-hover: #37294d99;
+
+  /* Sidebar dimensions (sketch-findings: layout-navigation.md) */
+  --sidebar-width: 260px;
+  --sidebar-rail: 56px;
+
+  /* Sidebar shadows (rail resting vs. card expanded) */
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.12);
+
+  /* Motion curves (sidebar + future animation consumers) */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Motion durations */
+  --duration-fast: 180ms;
+  --duration-base: 240ms;
+  --duration-slow: 360ms;
+
+  /* Sidebar accent / dock-hint colors */
+  --color-accent-soft: #eef2ff;
+  --color-sidebar-hint: rgba(99, 102, 241, 0.08);
 }
 
 /* Theme transition for smooth color switching (D-12: 250ms ease-in-out) */
@@ -47,5 +68,12 @@
 .no-transition *,
 .no-transition *::before,
 .no-transition *::after {
+  transition: none !important;
+}
+
+/* Drag disables sidebar transitions so transform follows pointer 1:1.
+   Consumed by the useDragToDock composable (plan 10-03) and TheSidebar (plan 10-04).
+   !important is required to beat the global *-transition rule above. */
+.is-dragging .sidebar {
   transition: none !important;
 }
