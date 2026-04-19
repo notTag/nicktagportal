@@ -3,9 +3,9 @@ gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
 status: executing
-stopped_at: Phase 10 planned — 5 plans in 3 waves, verification passed first iteration
-last_updated: '2026-04-19T22:50:00.000Z'
-last_activity: 2026-04-19 -- Phase 10 planning complete; ready to execute
+stopped_at: Completed 09-04-rollback-verify-step-PLAN.md
+last_updated: '2026-04-19T20:44:30.994Z'
+last_activity: 2026-04-19 -- Phase 10 execution started
 progress:
   total_phases: 22
   completed_phases: 6
@@ -21,14 +21,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-27)
 
 **Core value:** The shell app works as a polished, deployable personal site from day one -- federation infrastructure is ready but never blocks the core experience.
-**Current focus:** Phase 10 — Collapsible Sidebar Navigation (PLANNED)
+**Current focus:** Phase 10 — collapsible-sidebar
 
 ## Current Position
 
-Phase: 10-collapsible-sidebar
-Plan: 0 of 5
-Status: Ready to execute — 5 plans in 3 waves; verification passed first iteration
-Last activity: 2026-04-19 -- Phase 10 plans landed (10-01 tokens, 10-02 store, 10-03 drag composable, 10-04 TheSidebar SFC, 10-05 AppLayout integration)
+Phase: 10 (collapsible-sidebar) — EXECUTING
+Plan: 1 of 5
+Status: Executing Phase 10
+Last activity: 2026-04-19 -- Phase 10 execution started
 
 Next: /gsd-execute-phase 10
 
