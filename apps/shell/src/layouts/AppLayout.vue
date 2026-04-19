@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import { TheSidebar, TheFooter, SocialLinks } from '@ui'
 import { features } from '@/config/features'
+import { useSidebarStore } from '@/stores/sidebar'
 import socialLinksData from '@/data/socialLinks.json'
 import AppVersion from '@/components/AppVersion.vue'
 
 type Orientation = 'left' | 'right' | 'center' | 'none'
+
+// Shell-side store instance. Passed to TheSidebar as a prop so the UI
+// component stays portable toward an eventual @nick/ui package.
+const sidebarStore = useSidebarStore()
 </script>
 
 <template>
   <div id="app-content" class="bg-surface text-text flex h-screen flex-col">
-    <TheSidebar />
+    <TheSidebar :store="sidebarStore" />
     <main class="flex-1 overflow-y-auto">
       <RouterView />
     </main>

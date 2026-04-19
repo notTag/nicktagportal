@@ -35,6 +35,10 @@
   --sidebar-width: 260px;
   --sidebar-rail: 56px;
 
+  /* Sidebar bottom inset reserves footer clearance so the floating panel
+     never overlaps TheFooter. 5rem = TheFooter py-6 + content + small gap. */
+  --sidebar-bottom-inset: 5rem;
+
   /* Sidebar shadows (rail resting vs. card expanded) */
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
   --shadow-xl: 0 20px 48px rgba(0, 0, 0, 0.12);
