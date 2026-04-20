@@ -33,7 +33,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md)
 - [x] **Phase 7: CLI Terminal Core** - xterm.js terminal with virtual resume filesystem and shell commands as a standalone Vue app
 - [x] **Phase 8: CLI Federation Integration** - Wire CLI remote into shell via Module Federation with shared singletons and fallback handling
 - [ ] **Phase 9: Deployment & Infrastructure** - GitHub Actions Node.js 24 migration, tree shaking audit, and rollback verification
-- [ ] **Phase 10: Collapsible Sidebar Navigation** - Replace horizontal header nav with a floating icon rail that expands to a card; drag-to-dock (left/right); hamburger + slide-over fallback below 640px
+- [x] **Phase 10: Collapsible Sidebar Navigation** - Replace horizontal header nav with a floating icon rail that expands to a card; drag-to-dock (left/right); hamburger + slide-over fallback below 640px
 
 ## Phase Details
 

@@ -2,16 +2,16 @@
 gsd_state_version: 1.0
 milestone: v1.1
 milestone_name: CLI Remote & Site Polish
-status: executing
-stopped_at: Completed 09-04-rollback-verify-step-PLAN.md
-last_updated: '2026-04-19T20:44:30.994Z'
-last_activity: 2026-04-19 -- Phase 10 execution started
+status: ready
+stopped_at: Completed 10-collapsible-sidebar (all 6 plans + verification)
+last_updated: '2026-04-20T00:00:00.000Z'
+last_activity: 2026-04-20 -- Phase 10 complete (7/7 verified)
 progress:
   total_phases: 22
-  completed_phases: 6
-  total_plans: 30
-  completed_plans: 25
-  percent: 83
+  completed_phases: 7
+  total_plans: 36
+  completed_plans: 31
+  percent: 86
 ---
 
 # Project State
@@ -21,18 +21,18 @@ progress:
 See: .planning/PROJECT.md (updated 2026-03-27)
 
 **Core value:** The shell app works as a polished, deployable personal site from day one -- federation infrastructure is ready but never blocks the core experience.
-**Current focus:** Phase 10 — collapsible-sidebar
+**Current focus:** Phase 10 complete — ready to advance to Phase 11
 
 ## Current Position
 
-Phase: 10 (collapsible-sidebar) — EXECUTING
-Plan: 1 of 5
-Status: Executing Phase 10
-Last activity: 2026-04-19 -- Phase 10 execution started
+Phase: 10 (collapsible-sidebar) — COMPLETE (7/7 verified, all 5 browser UAT passed)
+Plan: 6 of 6 (10-01 tokens, 10-02 store, 10-03 drag composable, 10-04 TheSidebar, 10-05 AppLayout integration, 10-06 UAT polish)
+Status: Ready for next phase
+Last activity: 2026-04-20 -- Phase 10 complete
 
-Next: /gsd-execute-phase 10
+Next: /gsd-progress or /gsd-next
 
-Progress: [████████░░] 83% (25/30 plans)
+Progress: [████████▊░] 86% (31/36 plans)
 
 ## Performance Metrics
 
