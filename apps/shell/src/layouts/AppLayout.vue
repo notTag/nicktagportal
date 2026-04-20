@@ -15,7 +15,9 @@ const sidebarStore = useSidebarStore()
 <template>
   <div id="app-content" class="bg-surface text-text flex h-screen flex-col">
     <TheSidebar :store="sidebarStore" />
-    <main class="flex-1 overflow-y-auto">
+    <main
+      class="flex-1 overflow-y-auto [scrollbar-gutter:stable_both-edges] sm:px-[calc(var(--sidebar-rail)+2rem)]"
+    >
       <RouterView />
     </main>
     <TheFooter v-if="features.showFooter">
