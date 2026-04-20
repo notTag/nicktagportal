@@ -154,31 +154,32 @@ Plans:
 5. Below 640px, the rail hides and a hamburger trigger opens the full card as an overlay (existing mobile-menu behavior)
 6. Active route indicator works in both rail (background pill on icon) and card (background pill on full link) modes
 7. All existing header/MobileMenu tests pass or are updated; new component has its own unit tests
-   **Plans**: 5 plans
+   **Plans**: 6 plans (10-06 added post-UAT for polish + library portability)
    **UI hint**: yes
    **Design reference**: `.planning/sketches/001-collapsible-sidebar/` (winning variant D) and `.claude/skills/sketch-findings-nicktagportal/`
 
 Plans:
 
-- [ ] 10-01-sidebar-tokens-PLAN.md -- Add sidebar CSS custom properties (widths, shadows, easing, durations, accent-soft) + .is-dragging .sidebar rule to @theme
-- [ ] 10-02-sidebar-store-PLAN.md -- Pinia sidebar store (isOpen, dockedSide, isDragging) with localStorage persistence for dockedSide only
-- [ ] 10-03-drag-composable-PLAN.md -- useDragToDock composable + computeSnapSide (15% symmetric hysteresis) in packages/ui/src/composables/
-- [ ] 10-04-sidebar-component-PLAN.md -- TheSidebar.vue SFC (rail/card, drag wiring, hamburger fallback, active-route pill, relocated ThemeDropdown)
-- [ ] 10-05-applayout-integration-PLAN.md -- Mount TheSidebar in AppLayout; delete TheHeader + MobileMenu + their tests; barrel cleanup; AppLayout smoke test
+- [x] 10-01-sidebar-tokens-PLAN.md -- Add sidebar CSS custom properties (widths, shadows, easing, durations, accent-soft) + .sidebar.is-dragging rule to @theme
+- [x] 10-02-sidebar-store-PLAN.md -- Pinia sidebar store (isOpen, dockedSide, isDragging) with localStorage persistence for dockedSide only
+- [x] 10-03-drag-composable-PLAN.md -- useDragToDock composable + computeSnapSide (15% symmetric hysteresis) in packages/ui/src/composables/
+- [x] 10-04-sidebar-component-PLAN.md -- TheSidebar.vue SFC (rail/card, drag wiring, hamburger fallback, active-route pill, relocated ThemeDropdown)
+- [x] 10-05-applayout-integration-PLAN.md -- Mount TheSidebar in AppLayout; delete TheHeader + MobileMenu + their tests; barrel cleanup; AppLayout smoke test
+- [x] 10-06-sidebar-polish-PLAN.md -- UAT polish + library portability: drag follow, footer clearance, grip icon, default-open, ThemeDropdown accordion, store-prop refactor
 
 ## Progress
 
 **Execution Order:**
 Phases execute in numeric order: 5 -> 5.1 -> 6 -> 7 -> 7.1 -> 8 -> 9 -> 10
 
-| Phase                              | Milestone | Plans Complete | Status      | Completed  |
-| ---------------------------------- | --------- | -------------- | ----------- | ---------- |
-| 5. Theme System                    | v1.1      | 3/3            | Complete    | 2026-03-27 |
-| 6. Skills Diamond Wall             | v1.1      | 3/3            | Complete    | 2026-04-02 |
-| 7. CLI Terminal Core               | v1.1      | 4/4            | Complete    | 2026-04-06 |
-| 8. CLI Federation Integration      | v1.1      | 3/3            | Complete    | 2026-04-11 |
-| 9. Deployment & Infrastructure     | v1.1      | 5/5            | Complete    | 2026-04-19 |
-| 10. Collapsible Sidebar Navigation | v1.1      | 0/5            | Not started | -          |
+| Phase                              | Milestone | Plans Complete | Status   | Completed  |
+| ---------------------------------- | --------- | -------------- | -------- | ---------- |
+| 5. Theme System                    | v1.1      | 3/3            | Complete | 2026-03-27 |
+| 6. Skills Diamond Wall             | v1.1      | 3/3            | Complete | 2026-04-02 |
+| 7. CLI Terminal Core               | v1.1      | 4/4            | Complete | 2026-04-06 |
+| 8. CLI Federation Integration      | v1.1      | 3/3            | Complete | 2026-04-11 |
+| 9. Deployment & Infrastructure     | v1.1      | 5/5            | Complete | 2026-04-19 |
+| 10. Collapsible Sidebar Navigation | v1.1      | 6/6            | Complete | 2026-04-20 |
 
 ## Backlog
 
