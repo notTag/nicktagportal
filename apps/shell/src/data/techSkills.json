@@ -4,14 +4,15 @@
     "displayName": "Splunk",
     "iconPath": "/icons/skills/splunk.svg",
     "category": "Observability",
-    "years": 7
+    "years": 7,
+    "invertInDark": true
   },
   {
     "name": "datadog",
     "displayName": "DataDog APM",
     "iconPath": "/icons/skills/datadog.svg",
     "category": "Observability",
-    "years": 5
+    "years": 1
   },
   {
     "name": "jira",
@@ -25,14 +26,7 @@
     "displayName": "Terraform",
     "iconPath": "/icons/skills/terraform.svg",
     "category": "CI/CD",
-    "years": 5
-  },
-  {
-    "name": "atlantis",
-    "displayName": "Atlantis",
-    "iconPath": "/icons/skills/atlantis.svg",
-    "category": "CI/CD",
-    "years": 4
+    "years": 1
   },
   {
     "name": "ansible",
@@ -53,7 +47,8 @@
     "displayName": "GitHub",
     "iconPath": "/icons/skills/github.svg",
     "category": "CI/CD",
-    "years": 13
+    "years": 13,
+    "invertInDark": true
   },
   {
     "name": "aws",
@@ -74,14 +69,14 @@
     "displayName": "SQS",
     "iconPath": "/icons/skills/sqs.svg",
     "category": "Infrastructure",
-    "years": 2
+    "years": 1
   },
   {
     "name": "kafka",
     "displayName": "Kafka",
     "iconPath": "/icons/skills/kafka.svg",
     "category": "Infrastructure",
-    "years": 5
+    "years": 1
   },
   {
     "name": "vault",
@@ -89,13 +84,6 @@
     "iconPath": "/icons/skills/vault.svg",
     "category": "Security",
     "years": 5
-  },
-  {
-    "name": "cycode",
-    "displayName": "Cycode",
-    "iconPath": "/icons/skills/cycode.svg",
-    "category": "Security",
-    "years": 3
   },
   {
     "name": "mysql",
@@ -120,8 +108,8 @@
   },
   {
     "name": "echo",
-    "displayName": "Echo Framework",
-    "iconPath": "/icons/skills/go.svg",
+    "displayName": "Echo Golang Framework",
+    "iconPath": "/icons/skills/echo.svg",
     "category": "Backend Frameworks",
     "years": 7
   },
@@ -217,11 +205,18 @@
     "years": 4
   },
   {
+    "name": "vue",
+    "displayName": "Vue",
+    "iconPath": "/icons/skills/vue.svg",
+    "category": "Frontend Frameworks",
+    "years": 7
+  },
+  {
     "name": "react",
     "displayName": "React",
     "iconPath": "/icons/skills/react.svg",
     "category": "Frontend Frameworks",
-    "years": 4
+    "years": 2
   },
   {
     "name": "javascript",
@@ -236,5 +231,84 @@
     "iconPath": "/icons/skills/python.svg",
     "category": "Languages",
     "years": 5
+  },
+  {
+    "name": "vuetify",
+    "displayName": "Vuetify",
+    "iconPath": "/icons/skills/vuetify.svg",
+    "category": "Frontend Frameworks",
+    "years": 4
+  },
+  {
+    "name": "tanstack",
+    "displayName": "TanStack",
+    "iconPath": "/icons/skills/tanstack.svg",
+    "category": "Frontend Frameworks",
+    "years": 3,
+    "invertInDark": true
+  },
+  {
+    "name": "bun",
+    "displayName": "Bun",
+    "iconPath": "/icons/skills/bun.svg",
+    "category": "Runtimes",
+    "years": 4
+  },
+  {
+    "name": "npm",
+    "displayName": "npm",
+    "iconPath": "/icons/skills/npm.svg",
+    "category": "Package Managers",
+    "years": 15
+  },
+  {
+    "name": "claude-code",
+    "displayName": "Claude Code",
+    "iconPath": "/icons/skills/claude.svg",
+    "category": "AI Platform",
+    "years": 1
+  },
+  {
+    "name": "codex",
+    "displayName": "Codex",
+    "iconPath": "/icons/skills/codex.svg",
+    "category": "AI Platform",
+    "years": 1,
+    "invertInDark": true
+  },
+  {
+    "name": "opencode",
+    "displayName": "opencode",
+    "iconPath": "/icons/skills/opencode.svg",
+    "category": "AI Platform",
+    "years": 1
+  },
+  {
+    "name": "postgres",
+    "displayName": "PostgreSQL",
+    "iconPath": "/icons/skills/postgres.svg",
+    "category": "Databases",
+    "years": 1
+  },
+  {
+    "name": "pgvector",
+    "displayName": "pgvector",
+    "iconPath": "/icons/skills/pgvector.svg",
+    "category": "Databases",
+    "years": 1
+  },
+  {
+    "name": "s3",
+    "displayName": "AWS S3",
+    "iconPath": "/icons/skills/s3.svg",
+    "category": "Infrastructure",
+    "years": 7
+  },
+  {
+    "name": "ec2",
+    "displayName": "AWS EC2",
+    "iconPath": "/icons/skills/ec2.svg",
+    "category": "Infrastructure",
+    "years": 7
   }
 ]

@@ -84,3 +84,9 @@
 .sidebar.is-dragging {
   transition: none !important;
 }
+
+/* Invert mono dark-on-dark skill icons when the active theme is dark.
+   Flagged per-skill via `invertInDark: true` in techSkills.json. */
+[data-theme-type='dark'] img.skill-icon-invert {
+  filter: invert(1) !important;
+}

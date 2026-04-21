@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
-  <!-- Atlantis: teal hexagon with "A" -->
-  <polygon points="64,8 118,36 118,92 64,120 10,92 10,36" fill="#3B8686" opacity="0.15"/>
-  <polygon points="64,8 118,36 118,92 64,120 10,92 10,36" fill="none" stroke="#3B8686" stroke-width="4"/>
-  <text x="64" y="78" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="52" font-weight="700" fill="#3B8686">A</text>
-</svg>

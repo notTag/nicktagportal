@@ -29,15 +29,23 @@ function applyTheme(colors: ThemeColors) {
   }
 }
 
+function applyThemeType(type: 'dark' | 'light') {
+  document.documentElement.setAttribute('data-theme-type', type)
+}
+
 export function useTheme() {
   const store = useThemeStore()
   const { currentTheme } = storeToRefs(store)
 
   // Apply immediately on initialization
   applyTheme(currentTheme.value.colors)
+  applyThemeType(currentTheme.value.type)
 
   // Watch for changes (theme switch or preview)
-  watch(currentTheme, (theme) => applyTheme(theme.colors))
+  watch(currentTheme, (theme) => {
+    applyTheme(theme.colors)
+    applyThemeType(theme.type)
+  })
 
   return store
 }

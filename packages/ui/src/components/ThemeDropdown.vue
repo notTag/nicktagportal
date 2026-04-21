@@ -3,6 +3,11 @@ import { ref, nextTick, onMounted, onUnmounted } from 'vue'
 import { useThemeStore } from '@/stores/theme'
 import { themeList } from '@/themes'
 
+const emit = defineEmits<{
+  'dropdown-open': []
+  'dropdown-close': []
+}>()
+
 const store = useThemeStore()
 
 const isOpen = ref(false)
@@ -12,6 +17,7 @@ const listboxRef = ref<HTMLDivElement | null>(null)
 
 function open() {
   isOpen.value = true
+  emit('dropdown-open')
   const confirmedIdx = themeList.findIndex(
     (t) => t.id === store.confirmedThemeId,
   )
@@ -24,6 +30,7 @@ function open() {
 function close() {
   isOpen.value = false
   activeIndex.value = -1
+  emit('dropdown-close')
 }
 
 function toggle() {

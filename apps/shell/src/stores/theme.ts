@@ -16,8 +16,12 @@ export const useThemeStore = defineStore('theme', () => {
   const activeThemeId = computed(() => previewingId.value ?? themeId.value)
 
   function loadThemeId(): ThemeId {
-    const stored = localStorage.getItem(STORAGE_KEY)
-    if (stored && stored in themes) return stored as ThemeId
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY)
+      if (stored && stored in themes) return stored as ThemeId
+    } catch {
+      // localStorage may throw in private-browsing / storage-quota edge cases
+    }
     return DEFAULT_THEME_ID
   }
 

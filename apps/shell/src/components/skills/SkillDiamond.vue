@@ -105,7 +105,7 @@ function handleClick() {
     <!-- Inner rotated diamond -->
     <div
       ref="diamondRef"
-      class="overflow-hidden rounded-sm border border-border bg-surface-raised transition-[transform,box-shadow,opacity] duration-200 ease-out"
+      class="border-border bg-surface-raised overflow-hidden rounded-sm border transition-[transform,box-shadow,opacity] duration-200 ease-out"
       :class="isVisible ? 'opacity-100' : 'opacity-30'"
       :style="diamondStyle"
       :aria-label="skill.displayName"
@@ -117,6 +117,7 @@ function handleClick() {
         :src="skill.iconPath"
         :alt="skill.displayName"
         class="h-full w-full object-contain p-2"
+        :class="{ 'skill-icon-invert': skill.invertInDark }"
         :style="{ transform: 'rotate(-45deg)' }"
       />
     </div>

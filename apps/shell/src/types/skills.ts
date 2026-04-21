@@ -4,6 +4,7 @@ export interface Skill {
   iconPath: string
   category: string
   years: number
+  invertInDark?: boolean
 }
 
 /** Format years for display — caps at "10+" for values over 10 */

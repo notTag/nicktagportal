@@ -60,6 +60,11 @@ onUnmounted(() => {
 
 const showAside = computed(() => !isMobile.value || props.store.isOpen)
 
+// When the ThemeDropdown opens, the aside must allow overflow so the
+// upward-growing accordion is not clipped by overflow-hidden (which is
+// needed during the sidebar width animation).
+const themeDropdownOpen = ref(false)
+
 /**
  * Follow-the-pointer transform during drag. Snap animation resumes on
  * release because dragOffsetX resets to 0 and the `.sidebar.is-dragging`
@@ -109,8 +114,9 @@ const navIconClass = 'h-4 w-4 flex-shrink-0'
        bottom uses --sidebar-bottom-inset to reserve TheFooter clearance. -->
   <aside
     v-show="showAside"
-    class="sidebar bg-surface-raised border-border fixed top-4 z-40 flex flex-col overflow-hidden rounded-[14px] border shadow-[var(--shadow-md)] transition-[width,box-shadow,transform] duration-[360ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+    class="sidebar bg-surface-raised border-border fixed top-4 z-40 flex flex-col rounded-[14px] border shadow-[var(--shadow-md)] transition-[width,box-shadow,transform] duration-[360ms] ease-[cubic-bezier(0.34,1.56,0.64,1)]"
     :class="{
+      'overflow-hidden': !themeDropdownOpen,
       'is-open w-[var(--sidebar-width)] shadow-[var(--shadow-xl)]':
         props.store.isOpen,
       'w-[var(--sidebar-rail)]': !props.store.isOpen,
@@ -326,7 +332,10 @@ const navIconClass = 'h-4 w-4 flex-shrink-0'
           : 'max-h-0 py-0 opacity-0'
       "
     >
-      <ThemeDropdown />
+      <ThemeDropdown
+        @dropdown-open="themeDropdownOpen = true"
+        @dropdown-close="themeDropdownOpen = false"
+      />
     </div>
   </aside>
 </template>
