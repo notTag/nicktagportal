@@ -8,6 +8,8 @@ const router = createRouter({
   history: createMemoryHistory(),
   routes: [
     { path: '/', component: { template: '<div />' } },
+    { path: '/skills', component: { template: '<div />' } },
+    { path: '/cli', component: { template: '<div />' } },
     { path: '/playground', component: { template: '<div />' } },
   ],
 })
