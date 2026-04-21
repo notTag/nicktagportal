@@ -179,7 +179,7 @@
   {
     "name": "matomo",
     "displayName": "Matomo",
-    "iconPath": "/icons/skills/matomo.svg",
+    "iconPath": "/icons/skills/matomo.png",
     "category": "Logging",
     "years": 4
   },

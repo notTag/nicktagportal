@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import SkillDiamond from './SkillDiamond.vue'
 import DiamondInfoPanel from './DiamondInfoPanel.vue'
 import type { Skill, ProficiencyMode } from '@/types/skills'
@@ -25,10 +25,26 @@ const gap = 4
  * Calculate how many copies of the skill set fill the viewport.
  * We create exactly 2 identical halves so translateX(-50%) loops perfectly.
  */
-const viewportWidth =
-  typeof window !== 'undefined' ? window.innerWidth : 1920
+const viewportWidth = ref(
+  typeof window !== 'undefined' ? window.innerWidth : 1920,
+)
+function syncViewportWidth() {
+  viewportWidth.value = window.innerWidth
+}
+onMounted(() => {
+  syncViewportWidth()
+  window.addEventListener('resize', syncViewportWidth)
+})
+onUnmounted(() => {
+  window.removeEventListener('resize', syncViewportWidth)
+})
 const fillCount = computed(() =>
-  Math.max(1, Math.ceil(viewportWidth / (props.skills.length * (cellSize.value + gap)))),
+  Math.max(
+    1,
+    Math.ceil(
+      viewportWidth.value / (props.skills.length * (cellSize.value + gap)),
+    ),
+  ),
 )
 const oneHalf = computed(() => {
   const result: Skill[] = []

@@ -6,7 +6,9 @@ import DiamondWall from '@/components/skills/DiamondWall.vue'
 <template>
   <div class="bg-surface flex min-h-full flex-col">
     <SkillsToolbar />
-    <div class="flex-1 overflow-hidden pt-6">
+    <div
+      class="flex-1 overflow-hidden pt-6 sm:-mx-[calc(var(--sidebar-rail)+2rem)]"
+    >
       <DiamondWall />
     </div>
   </div>
