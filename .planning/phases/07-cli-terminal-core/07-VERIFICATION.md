@@ -1,8 +1,13 @@
 ---
 phase: 07-cli-terminal-core
 verified: 2026-04-03T21:30:00Z
-status: gaps_found
+status: gaps_accepted
 score: 18/20 requirements verified (CLI-19 and CLI-20 deferred, not implemented)
+override:
+  accepted_at: 2026-04-20
+  accepted_by: user
+  reason: 'CLI-19 (resume command) and CLI-20 (ssh Easter egg) skipped — not shipping. 18/20 core terminal requirements satisfied; 07-04-SUMMARY frontmatter already correctly lists these as requirements-deferred. Browser UAT of /cli confirmed during Phase 10 sidebar integration.'
+  defer_to: 'Dropped from scope'
 gaps:
   - truth: 'User can trigger an ssh Easter egg command and view a formatted resume summary with the resume command'
     status: failed

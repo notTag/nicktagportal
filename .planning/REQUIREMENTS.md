@@ -27,8 +27,8 @@ Requirements for milestone v1.1: CLI Remote & Site Polish. Each maps to roadmap 
 - [ ] **CLI-16**: User can create files with `touch` (persisted to localStorage)
 - [x] **CLI-17**: User can set aliases with `alias` (persisted to localStorage)
 - [ ] **CLI-18**: User sees an ASCII art welcome banner on terminal load
-- [ ] **CLI-19**: User can view a formatted resume summary with `resume` command
-- [ ] **CLI-20**: User can trigger an `ssh` Easter egg command
+- [~] **CLI-19**: User can view a formatted resume summary with `resume` command — DEFERRED per D-21/D-22; dropped from v1.1 scope (2026-04-20)
+- [~] **CLI-20**: User can trigger an `ssh` Easter egg command — DEFERRED per D-21/D-22; dropped from v1.1 scope (2026-04-20)
 
 ### Virtual Filesystem
 
@@ -141,8 +141,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CLI-16      | 7     | Pending  |
 | CLI-17      | 7     | Complete |
 | CLI-18      | 7     | Pending  |
-| CLI-19      | 7     | Pending  |
-| CLI-20      | 7     | Pending  |
+| CLI-19      | 7     | Deferred |
+| CLI-20      | 7     | Deferred |
 | VFS-01      | 7     | Pending  |
 | VFS-02      | 7     | Pending  |
 | VFS-03      | 7     | Pending  |

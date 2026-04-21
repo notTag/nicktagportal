@@ -1,9 +1,14 @@
 ---
 phase: 06-skills-diamond-wall
 verified: 2026-04-02T18:00:26Z
-status: gaps_found
+status: gaps_accepted
 score: 4/5 success criteria verified
 re_verification: false
+override:
+  accepted_at: 2026-04-20
+  accepted_by: user
+  reason: 'SKL-03 staggered entrance animation and SKL-08 IntersectionObserver wiring deferred to Phase 999.9 (BACKLOG) per user approval during 06-03 execution. All other 6 SKL requirements fully satisfied. Human visual checks (hover, proficiency modes, reduced-motion, CategoryPills UX) deferred to next UAT cycle.'
+  defer_to: 'Phase 999.9: Skills Entrance Animation'
 gaps:
   - truth: 'Diamonds animate in with staggered entrance when scrolled into view'
     status: failed
