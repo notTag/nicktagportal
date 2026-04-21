@@ -2,7 +2,16 @@
 phase: 05-theme-system
 plan: 02
 subsystem: ui
-tags: [theme-dropdown, wai-aria, listbox, keyboard-navigation, responsive, hamburger, vue3-sfc]
+tags:
+  [
+    theme-dropdown,
+    wai-aria,
+    listbox,
+    keyboard-navigation,
+    responsive,
+    hamburger,
+    vue3-sfc,
+  ]
 
 # Dependency graph
 requires:
@@ -18,7 +27,12 @@ affects: [05-03-PLAN, mobile-menu, app-layout]
 # Tech tracking
 tech-stack:
   added: []
-  patterns: [WAI-ARIA listbox with aria-activedescendant, click-outside via document listener, responsive visibility via hidden/sm:flex]
+  patterns:
+    [
+      WAI-ARIA listbox with aria-activedescendant,
+      click-outside via document listener,
+      responsive visibility via hidden/sm:flex,
+    ]
 
 key-files:
   created:
@@ -29,13 +43,13 @@ key-files:
     - apps/shell/src/layouts/AppLayout.vue
 
 key-decisions:
-  - "Click-outside uses capture-phase document listener for reliable detection outside wrapper"
-  - "Hamburger uses CSS span transforms (translate-y + rotate) for line-to-X animation"
+  - 'Click-outside uses capture-phase document listener for reliable detection outside wrapper'
+  - 'Hamburger uses CSS span transforms (translate-y + rotate) for line-to-X animation'
 
 patterns-established:
-  - "WAI-ARIA listbox pattern: role=listbox on panel, role=option on items, aria-activedescendant tracking"
-  - "Responsive visibility: hidden sm:flex for desktop-only, sm:hidden for mobile-only"
-  - "Props-based feature flag wiring: showThemePicker prop controlled by features.ts"
+  - 'WAI-ARIA listbox pattern: role=listbox on panel, role=option on items, aria-activedescendant tracking'
+  - 'Responsive visibility: hidden sm:flex for desktop-only, sm:hidden for mobile-only'
+  - 'Props-based feature flag wiring: showThemePicker prop controlled by features.ts'
 
 requirements-completed: [THM-01]
 
@@ -57,6 +71,7 @@ completed: 2026-03-31
 - **Files modified:** 4
 
 ## Accomplishments
+
 - ThemeDropdown component with full WAI-ARIA listbox semantics: role=listbox, role=option, aria-activedescendant, aria-selected, aria-haspopup
 - Arrow key navigation triggers store.previewTheme for live color preview; Enter confirms, Escape/click-outside/Tab reverts
 - TheHeader responsive layout: desktop shows nav + ThemeDropdown, mobile shows hamburger with animated line-to-X transition
@@ -70,12 +85,14 @@ Each task was committed atomically:
 2. **Task 2: TheHeader responsive layout with ThemeDropdown and hamburger** - `ca22e0e` (feat)
 
 ## Files Created/Modified
+
 - `packages/ui/src/components/ThemeDropdown.vue` - WAI-ARIA listbox dropdown with 9 themes, keyboard nav, live preview
 - `packages/ui/src/components/TheHeader.vue` - Responsive header with ThemeDropdown (desktop) and hamburger (mobile)
 - `packages/ui/src/index.ts` - Added ThemeDropdown barrel export
 - `apps/shell/src/layouts/AppLayout.vue` - Wired showThemePicker feature flag to TheHeader
 
 ## Decisions Made
+
 - Click-outside listener uses capture phase (third arg `true`) for reliable detection before event propagation
 - Hamburger animation uses Tailwind transform utilities (translate-y-2 rotate-45) on spans rather than SVG/icon swap
 
@@ -84,6 +101,7 @@ Each task was committed atomically:
 ### Auto-fixed Issues
 
 **1. [Rule 2 - Missing Critical] Wired showThemePicker feature flag to TheHeader in AppLayout**
+
 - **Found during:** Post-Task 2 verification
 - **Issue:** AppLayout rendered `<TheHeader />` without passing the showThemePicker prop, so ThemeDropdown would never be visible despite the feature flag being true
 - **Fix:** Changed to `<TheHeader :show-theme-picker="features.showThemePicker" />` in AppLayout.vue
@@ -109,6 +127,7 @@ None - no external service configuration required.
 None - all data is wired through the Pinia theme store and themeList. No placeholder data or TODOs.
 
 ## Next Phase Readiness
+
 - ThemeDropdown component complete and exported, ready for Plan 03 (MobileMenu) to import and reuse
 - TheHeader emits toggle-menu event, ready for Plan 03 to wire MobileMenu state
 - Hamburger button and isMobileMenuOpen prop ready for MobileMenu integration
@@ -118,5 +137,6 @@ None - all data is wired through the Pinia theme store and themeList. No placeho
 All 4 created/modified files verified present. All 3 task commits verified in git log (0f1c439, ca22e0e, 548d5f8).
 
 ---
-*Phase: 05-theme-system*
-*Completed: 2026-03-31*
+
+_Phase: 05-theme-system_
+_Completed: 2026-03-31_

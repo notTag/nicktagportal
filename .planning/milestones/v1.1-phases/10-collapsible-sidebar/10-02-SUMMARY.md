@@ -81,18 +81,39 @@ export const useSidebarStore = defineStore('sidebar', () => {
   const dockedSide = ref<DockedSide>(loadDockedSide())
   const isDragging = ref(false)
 
-  function open()  { isOpen.value = true }
-  function close() { isOpen.value = false }
-  function toggle() { isOpen.value = !isOpen.value }
+  function open() {
+    isOpen.value = true
+  }
+  function close() {
+    isOpen.value = false
+  }
+  function toggle() {
+    isOpen.value = !isOpen.value
+  }
 
   function setDockedSide(side: DockedSide) {
     dockedSide.value = side
-    try { localStorage.setItem(STORAGE_KEY, side) } catch { /* state already updated */ }
+    try {
+      localStorage.setItem(STORAGE_KEY, side)
+    } catch {
+      /* state already updated */
+    }
   }
 
-  function setDragging(flag: boolean) { isDragging.value = flag }
+  function setDragging(flag: boolean) {
+    isDragging.value = flag
+  }
 
-  return { isOpen, dockedSide, isDragging, open, close, toggle, setDockedSide, setDragging }
+  return {
+    isOpen,
+    dockedSide,
+    isDragging,
+    open,
+    close,
+    toggle,
+    setDockedSide,
+    setDragging,
+  }
 })
 ```
 
@@ -100,12 +121,12 @@ export const useSidebarStore = defineStore('sidebar', () => {
 
 5 describe blocks, 17 tests, 20 expects:
 
-| Group | Tests |
-| --- | --- |
-| default state | 3 — isOpen / dockedSide / isDragging defaults |
-| open/close/toggle | 4 — open, close, toggle, toggle round-trip |
-| dockedSide persistence | 6 — set right, set left, hydrate right, hydrate left, invalid value, empty string |
-| setDragging | 2 — true, then false |
+| Group                   | Tests                                                                                                              |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| default state           | 3 — isOpen / dockedSide / isDragging defaults                                                                      |
+| open/close/toggle       | 4 — open, close, toggle, toggle round-trip                                                                         |
+| dockedSide persistence  | 6 — set right, set left, hydrate right, hydrate left, invalid value, empty string                                  |
+| setDragging             | 2 — true, then false                                                                                               |
 | localStorage resilience | 2 — setItem throw (does not bubble; state still updates), getItem throw (init does not bubble; defaults to 'left') |
 
 Vitest output:
@@ -129,17 +150,17 @@ Well above the workspace global thresholds (97/96/91/97). The store will not dra
 
 ## Verification
 
-| Check | Result |
-| --- | --- |
-| `bun run typecheck` | exits 0 (both `@nick-site/shell` and `@nick-site/cli`) |
-| `bunx vitest run src/stores/__tests__/sidebar.test.ts` | 17/17 pass, exits 0 |
-| `grep -c "defineStore('sidebar'"` | 1 |
-| `grep -c "export type DockedSide = 'left' \| 'right'"` | 1 |
-| `grep -c "export const useSidebarStore"` | 1 |
-| `grep -cE "function (open\|close\|toggle\|setDockedSide\|setDragging)"` | 5 |
-| `grep -c ": any"` | 0 |
-| `grep -cE "it\("` (test file) | 17 |
-| `grep -c "expect("` (test file) | 20 |
+| Check                                                                   | Result                                                 |
+| ----------------------------------------------------------------------- | ------------------------------------------------------ |
+| `bun run typecheck`                                                     | exits 0 (both `@nick-site/shell` and `@nick-site/cli`) |
+| `bunx vitest run src/stores/__tests__/sidebar.test.ts`                  | 17/17 pass, exits 0                                    |
+| `grep -c "defineStore('sidebar'"`                                       | 1                                                      |
+| `grep -c "export type DockedSide = 'left' \| 'right'"`                  | 1                                                      |
+| `grep -c "export const useSidebarStore"`                                | 1                                                      |
+| `grep -cE "function (open\|close\|toggle\|setDockedSide\|setDragging)"` | 5                                                      |
+| `grep -c ": any"`                                                       | 0                                                      |
+| `grep -cE "it\("` (test file)                                           | 17                                                     |
+| `grep -c "expect("` (test file)                                         | 20                                                     |
 
 ## Deviations from Plan
 
@@ -155,10 +176,10 @@ This is the order the plan dictated. Tests were authored against the documented 
 
 ## Commits
 
-| Task | Hash | Message |
-| --- | --- | --- |
-| 1 | `4b4c1af` | feat(10-02): add sidebar Pinia store with localStorage persistence |
-| 2 | `5f0073a` | test(10-02): add unit tests for sidebar store |
+| Task | Hash      | Message                                                            |
+| ---- | --------- | ------------------------------------------------------------------ |
+| 1    | `4b4c1af` | feat(10-02): add sidebar Pinia store with localStorage persistence |
+| 2    | `5f0073a` | test(10-02): add unit tests for sidebar store                      |
 
 ## Threat Flags
 

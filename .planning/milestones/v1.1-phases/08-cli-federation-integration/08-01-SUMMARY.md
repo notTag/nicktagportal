@@ -39,12 +39,12 @@ key-files:
     - packages/ui/vitest.config.ts
 
 key-decisions:
-  - "Thin re-export pattern: shell themes become facade over @types/themes, preserving all consumer imports unchanged"
-  - "Added @types alias to packages/ui vitest.config.ts so UI tests resolve transitive @types/themes imports"
+  - 'Thin re-export pattern: shell themes become facade over @types/themes, preserving all consumer imports unchanged'
+  - 'Added @types alias to packages/ui vitest.config.ts so UI tests resolve transitive @types/themes imports'
 
 patterns-established:
-  - "Shared package extraction: move canonical definitions to packages/types, leave thin re-exports in consuming apps"
-  - "Vitest alias propagation: when shared packages are referenced transitively, all vitest configs need the alias"
+  - 'Shared package extraction: move canonical definitions to packages/types, leave thin re-exports in consuming apps'
+  - 'Vitest alias propagation: when shared packages are referenced transitively, all vitest configs need the alias'
 
 requirements-completed: [FED-05]
 
@@ -65,6 +65,7 @@ completed: 2026-04-11
 - **Files modified:** 24 (12 created, 12 modified/deleted)
 
 ## Accomplishments
+
 - All theme types (ThemeId, ThemeColors, Theme) and 9 theme data files now live in packages/types/src/themes/ as the canonical source
 - Shell's themes directory converted to thin re-exports from @types/themes -- all existing consumer imports (stores, composables, terminal) work unchanged
 - packages/types/src/index.ts barrel-exports the themes module for monorepo-wide access
@@ -78,6 +79,7 @@ Each task was committed atomically:
 2. **Task 2: Convert shell's themes directory to thin re-exports from @types/themes** - `4f363a4` (refactor)
 
 ## Files Created/Modified
+
 - `packages/types/src/themes/types.ts` - ThemeId, ThemeColors, Theme type definitions (canonical)
 - `packages/types/src/themes/index.ts` - Barrel export with themes record, themeList, DEFAULT_THEME_ID
 - `packages/types/src/themes/*.ts` (9 files) - Individual theme data files (synthwave-84 through hc-light)
@@ -88,6 +90,7 @@ Each task was committed atomically:
 - `packages/ui/vitest.config.ts` - Added @types alias for transitive import resolution
 
 ## Decisions Made
+
 - Used thin re-export pattern so shell consumers (theme store, terminal store, terminalTheme) require zero changes
 - Added @types alias to packages/ui vitest.config.ts (deviation Rule 3) because UI tests transitively import shell themes which now reference @types/themes
 
@@ -96,6 +99,7 @@ Each task was committed atomically:
 ### Auto-fixed Issues
 
 **1. [Rule 3 - Blocking] Added @types alias to packages/ui vitest.config.ts**
+
 - **Found during:** Task 2 (verification step)
 - **Issue:** packages/ui tests failed because they import shell components that now reference @types/themes, but packages/ui vitest config lacked the @types resolve alias
 - **Fix:** Added `'@types': resolve(__dirname, '../types/src')` to packages/ui/vitest.config.ts resolve.alias
@@ -109,16 +113,20 @@ Each task was committed atomically:
 **Impact on plan:** Auto-fix necessary for test resolution across monorepo. No scope creep.
 
 ## Issues Encountered
+
 None beyond the deviation documented above.
 
 ## User Setup Required
+
 None - no external service configuration required.
 
 ## Next Phase Readiness
+
 - packages/types/src/themes/ is ready as the shared theme module for both shell and future CLI app
 - CLI app (08-02) can import from @types/themes to share theme definitions across the federation boundary
 - Shell's existing theme infrastructure continues working unchanged
 
 ---
-*Phase: 08-cli-federation-integration*
-*Completed: 2026-04-11*
+
+_Phase: 08-cli-federation-integration_
+_Completed: 2026-04-11_

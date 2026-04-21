@@ -2,7 +2,15 @@
 phase: 05-theme-system
 plan: 01
 subsystem: ui
-tags: [themes, css-custom-properties, pinia, tailwindcss-v4, fouc-prevention, vscode-themes]
+tags:
+  [
+    themes,
+    css-custom-properties,
+    pinia,
+    tailwindcss-v4,
+    fouc-prevention,
+    vscode-themes,
+  ]
 
 # Dependency graph
 requires:
@@ -21,7 +29,13 @@ affects: [05-02-PLAN, 05-03-PLAN, header-component, mobile-menu, cli-remote]
 # Tech tracking
 tech-stack:
   added: []
-  patterns: [CSS custom property theming, FOUC prevention via inline script, double-RAF pattern, preview vs confirmed theme state]
+  patterns:
+    [
+      CSS custom property theming,
+      FOUC prevention via inline script,
+      double-RAF pattern,
+      preview vs confirmed theme state,
+    ]
 
 key-files:
   created:
@@ -45,15 +59,15 @@ key-files:
     - apps/shell/src/App.vue
 
 key-decisions:
-  - "Corrected SynthWave surface colors from approximations to actual VSCode JSON values (#262335 not #2a2139)"
-  - "FOUC script contains all 9 theme color maps inline for zero-dependency pre-paint application"
-  - "Double-RAF pattern for no-transition removal ensures browser has painted before enabling transitions"
+  - 'Corrected SynthWave surface colors from approximations to actual VSCode JSON values (#262335 not #2a2139)'
+  - 'FOUC script contains all 9 theme color maps inline for zero-dependency pre-paint application'
+  - 'Double-RAF pattern for no-transition removal ensures browser has painted before enabling transitions'
 
 patterns-established:
-  - "Theme definition pattern: one file per theme exporting typed const with 16-key ThemeColors"
-  - "Preview vs confirmed theme state in Pinia store for arrow-key browsing support"
-  - "CSS variable application via composable watching Pinia store"
-  - "FOUC prevention via inline head script reading localStorage before first paint"
+  - 'Theme definition pattern: one file per theme exporting typed const with 16-key ThemeColors'
+  - 'Preview vs confirmed theme state in Pinia store for arrow-key browsing support'
+  - 'CSS variable application via composable watching Pinia store'
+  - 'FOUC prevention via inline head script reading localStorage before first paint'
 
 requirements-completed: [THM-02, THM-03, THM-04, THM-06]
 
@@ -75,6 +89,7 @@ completed: 2026-03-31
 - **Files modified:** 17
 
 ## Accomplishments
+
 - 9 curated VSCode theme definitions with strict 16-key TypeScript interfaces and exact color values sourced from official VSCode theme JSON
 - Pinia theme store supporting both confirmed selection (persisted) and preview mode (for arrow-key browsing) with localStorage persistence
 - FOUC prevention: inline script in index.html reads localStorage and applies all 16 CSS variables before first paint, with no-transition class preventing initial animation
@@ -89,6 +104,7 @@ Each task was committed atomically:
 3. **Task 3: CSS @theme expansion, transitions, and FOUC prevention** - `e0e3f64` (feat)
 
 ## Files Created/Modified
+
 - `apps/shell/src/themes/types.ts` - ThemeId union, ThemeColors (16 keys), Theme interface
 - `apps/shell/src/themes/synthwave-84.ts` - SynthWave '84 default theme
 - `apps/shell/src/themes/dark-modern.ts` - Dark Modern theme
@@ -108,6 +124,7 @@ Each task was committed atomically:
 - `apps/shell/src/App.vue` - useTheme() initialization
 
 ## Decisions Made
+
 - Corrected SynthWave '84 surface color from #2a2139 to #262335 (actual VSCode theme JSON value) and surfaceRaised from #34294f to #241b2f
 - Moved old destructive color #f97e72 to --color-link (it was actually textLink.foreground), new destructive is #fe4450 (errorForeground)
 - FOUC script embeds all 9 theme color maps inline rather than importing from modules to ensure zero-dependency pre-paint execution
@@ -125,6 +142,7 @@ None.
 None - no external service configuration required.
 
 ## Next Phase Readiness
+
 - Theme data layer complete and operational, ready for Plan 02 (ThemeDropdown component) and Plan 03 (MobileMenu integration)
 - All 16 CSS variables available as Tailwind utilities for component styling
 - Preview mode in store ready for arrow-key browsing in dropdown
@@ -134,5 +152,6 @@ None - no external service configuration required.
 All 17 created/modified files verified present. All 3 task commits verified in git log.
 
 ---
-*Phase: 05-theme-system*
-*Completed: 2026-03-31*
+
+_Phase: 05-theme-system_
+_Completed: 2026-03-31_

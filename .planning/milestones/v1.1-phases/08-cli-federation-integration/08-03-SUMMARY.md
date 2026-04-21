@@ -2,7 +2,14 @@
 phase: 08-cli-federation-integration
 plan: 03
 subsystem: ui
-tags: [module-federation, defineAsyncComponent, federation-host, error-fallback, dev-scripts]
+tags:
+  [
+    module-federation,
+    defineAsyncComponent,
+    federation-host,
+    error-fallback,
+    dev-scripts,
+  ]
 
 requires:
   - phase: 08-cli-federation-integration
@@ -19,7 +26,12 @@ affects: [deployment, cli-remote-updates]
 
 tech-stack:
   added: []
-  patterns: [defineAsyncComponent-federation-loading, terminal-error-fallback, sequential-dev-orchestration]
+  patterns:
+    [
+      defineAsyncComponent-federation-loading,
+      terminal-error-fallback,
+      sequential-dev-orchestration,
+    ]
 
 key-files:
   created:
@@ -32,13 +44,13 @@ key-files:
     - package.json
 
 key-decisions:
-  - "defineAsyncComponent with 10s timeout and errorComponent for graceful federation failure handling"
-  - "dev:federation uses sequential build:cli && dev to ensure remoteEntry.js exists before shell starts"
-  - "Hardcoded localhost:3001 in vite.config.ts remotes (static federation config, not dynamic)"
+  - 'defineAsyncComponent with 10s timeout and errorComponent for graceful federation failure handling'
+  - 'dev:federation uses sequential build:cli && dev to ensure remoteEntry.js exists before shell starts'
+  - 'Hardcoded localhost:3001 in vite.config.ts remotes (static federation config, not dynamic)'
 
 patterns-established:
   - "Federation host wiring: defineAsyncComponent wrapping import('remoteName/Component') with errorComponent fallback"
-  - "Dev orchestration: build remote first, then start host, because remoteEntry.js is a build artifact"
+  - 'Dev orchestration: build remote first, then start host, because remoteEntry.js is a build artifact'
 
 requirements-completed: [FED-03, FED-04, FED-06]
 
@@ -64,7 +76,7 @@ completed: 2026-04-11
 - CliFallback.vue displays a terminal-styled ASCII error box when the CLI remote is unavailable
 - vite.config.ts federation config registers cliApp remote at localhost:3001
 - remotes.ts extended with cliApp URL resolver for dev (port 3001) and prod (/remotes/cli)
-- TypeScript declaration for cliApp/* modules prevents import errors
+- TypeScript declaration for cliApp/\* modules prevents import errors
 - Root package.json has dev:cli, build:cli, and dev:federation orchestration scripts
 
 ## Task Commits
@@ -81,7 +93,7 @@ Each task was committed atomically:
 - `apps/shell/src/views/CliView.vue` - Rewritten to use defineAsyncComponent loading cliApp/CliView
 - `apps/shell/vite.config.ts` - Added cliApp to federation remotes config
 - `apps/shell/src/federation/remotes.ts` - Extended with cliApp port/path resolver
-- `apps/shell/env.d.ts` - Added TypeScript declaration for cliApp/* federated modules
+- `apps/shell/env.d.ts` - Added TypeScript declaration for cliApp/\* federated modules
 - `package.json` - Added dev:cli, build:cli, dev:federation scripts
 
 ## Decisions Made
@@ -119,5 +131,6 @@ None - no external service configuration required.
 - dev:federation in package.json: VERIFIED
 
 ---
-*Phase: 08-cli-federation-integration*
-*Completed: 2026-04-11*
+
+_Phase: 08-cli-federation-integration_
+_Completed: 2026-04-11_

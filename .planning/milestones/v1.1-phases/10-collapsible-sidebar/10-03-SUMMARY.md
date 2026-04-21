@@ -85,13 +85,13 @@ export {
 
 ## Hysteresis Formula — Exact-Match Verification
 
-| Assertion                                                   | Count |
-| ----------------------------------------------------------- | ----- |
-| `grep -c "(windowWidth / 10) \* 6.5" useDragToDock.ts`      | 1     |
-| `grep -c "(windowWidth / 10) \* 3.5" useDragToDock.ts`      | 1     |
-| `grep -c "setPointerCapture(e.pointerId)" useDragToDock.ts` | 1     |
-| `grep -c "export function computeSnapSide" useDragToDock.ts`| 1     |
-| `grep -c "export function useDragToDock" useDragToDock.ts`  | 1     |
+| Assertion                                                    | Count |
+| ------------------------------------------------------------ | ----- |
+| `grep -c "(windowWidth / 10) \* 6.5" useDragToDock.ts`       | 1     |
+| `grep -c "(windowWidth / 10) \* 3.5" useDragToDock.ts`       | 1     |
+| `grep -c "setPointerCapture(e.pointerId)" useDragToDock.ts`  | 1     |
+| `grep -c "export function computeSnapSide" useDragToDock.ts` | 1     |
+| `grep -c "export function useDragToDock" useDragToDock.ts`   | 1     |
 
 ## App-Agnostic Guarantee
 
@@ -99,13 +99,13 @@ export {
 
 ## Commits
 
-| # | Hash    | Type     | Description                                                       |
-| - | ------- | -------- | ----------------------------------------------------------------- |
-| 1 | cd8e8ee | feat     | add useDragToDock composable with symmetric hysteresis            |
-| 2 | 71193fe | fix      | cache bound element for onUnmounted cleanup (Rule 1 auto-fix)     |
-| 3 | 25c17b6 | test     | unit-test computeSnapSide + useDragToDock lifecycle (18 tests)    |
-| 4 | a5dfc6f | feat     | re-export useDragToDock + computeSnapSide from @ui barrel         |
-| 5 | 589af0e | test     | update barrel test: 6 → 8 exports (Rule 3 blocking fix)           |
+| #   | Hash    | Type | Description                                                    |
+| --- | ------- | ---- | -------------------------------------------------------------- |
+| 1   | cd8e8ee | feat | add useDragToDock composable with symmetric hysteresis         |
+| 2   | 71193fe | fix  | cache bound element for onUnmounted cleanup (Rule 1 auto-fix)  |
+| 3   | 25c17b6 | test | unit-test computeSnapSide + useDragToDock lifecycle (18 tests) |
+| 4   | a5dfc6f | feat | re-export useDragToDock + computeSnapSide from @ui barrel      |
+| 5   | 589af0e | test | update barrel test: 6 → 8 exports (Rule 3 blocking fix)        |
 
 ## Deviations from Plan
 
@@ -114,7 +114,7 @@ export {
 **1. [Rule 1 — Bug] Fixed onUnmounted cleanup never running**
 
 - **Found during:** Task 2 coverage runs (lines 116-119 reported uncovered).
-- **Issue:** The planned `onUnmounted(() => { const el = handle.value; if (!el) return; ... removeEventListener(...) })` was a no-op. Vue nulls template refs *before* the onUnmounted hook fires, so `handle.value` was always `null` during teardown — listeners leaked every time a consuming component unmounted.
+- **Issue:** The planned `onUnmounted(() => { const el = handle.value; if (!el) return; ... removeEventListener(...) })` was a no-op. Vue nulls template refs _before_ the onUnmounted hook fires, so `handle.value` was always `null` during teardown — listeners leaked every time a consuming component unmounted.
 - **Fix:** Cache the bound element in a closure variable (`boundEl`) inside `onMounted`. `onUnmounted` reads from the cache, so listeners are actually removed.
 - **Side effect:** The planned `if (!el) return` guard inside `onPointerDown` became unreachable (onPointerDown is only ever registered after `boundEl` is set). Replaced `handle.value` access in the handler with `e.currentTarget` for `setPointerCapture`, letting 100% coverage pass naturally.
 - **Files modified:** `packages/ui/src/composables/useDragToDock.ts`.

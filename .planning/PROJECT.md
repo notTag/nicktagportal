@@ -2,146 +2,126 @@
 
 ## What This Is
 
-A personal portfolio and micro-frontend playground live at nicktag.tech — built as a Bun monorepo with a Vue 3 shell app featuring a SynthWave '84 themed UI, interactive terminal CLI, and Module Federation scaffolding ready for future remotes. Deployed via GitHub Actions to GitHub Pages with automated CI/CD and rollback capability.
+A personal portfolio and micro-frontend playground live at nicktag.tech — a Bun monorepo with a Vue 3 shell app that hosts a federated CLI terminal remote, runtime-swappable VSCode themes, a /skills diamond wall, and a collapsible floating sidebar. Deployed via GitHub Actions to GitHub Pages with CI/CD, version stamping, and automated rollback verification.
 
 ## Core Value
 
-The shell app works as a polished, deployable personal site from day one — federation infrastructure is ready but never blocks the core experience.
+The shell app works as a polished, deployable personal site from day one — federation infrastructure is live but never blocks the core experience.
 
 ## Requirements
 
 ### Validated
 
-- [x] Bun monorepo with workspaces (apps/shell, packages/ui, packages/types) — Validated in Phase 1: Monorepo and Shell App Core
-- [x] Vue 3 shell app with Composition API and `<script setup>` throughout — Validated in Phase 1: Monorepo and Shell App Core
-- [x] Vue Router 4 with HTML5 history mode, lazy-loaded routes, 404 fallback — Validated in Phase 1: Monorepo and Shell App Core
-- [x] Pinia state management initialized with placeholder root store — Validated in Phase 1: Monorepo and Shell App Core
-- [x] TailwindCSS v4 with CSS-first config — Validated in Phase 1: Monorepo and Shell App Core
-- [x] TypeScript strict mode everywhere — no plain .js files — Validated in Phase 1: Monorepo and Shell App Core
-- [x] Shared packages (ui, types) scaffolded with minimal package.json and empty index.ts — Validated in Phase 1: Monorepo and Shell App Core
-- [x] Path aliases configured (@/\*, @ui/\*, @types/\*) — Validated in Phase 1: Monorepo and Shell App Core
-- [x] .gitignore covering node_modules, dist, .env\*, .DS_Store — Validated in Phase 1: Monorepo and Shell App Core
-- [x] TheHeader + TheFooter components in packages/ui with AppLayout wrapper — Validated in Phase 1: Monorepo and Shell App Core
-- [x] ESLint v9 flat config + Prettier + husky pre-commit hooks — Validated in Phase 1: Monorepo and Shell App Core
+**v1.0 MVP (shipped 2026-03-24)** — monorepo foundation, shell app scaffold, HomeView/PlaygroundView, Module Federation scaffolding, GitHub Actions → Pages deployment, Tailwind v4 packages/ui scanning fix. Full detail: `milestones/v1.0-REQUIREMENTS.md`.
 
-### Validated
+**v1.1 CLI Remote & Site Polish (shipped 2026-04-20)**
 
-- [x] Polished HomeView with Nick's identity (Technical Lead → Director of Engineering) — Validated in Phase 2: Views and Federation Scaffolding
-- [x] PlaygroundView stubbed for future remote mounting — Validated in Phase 2: Views and Federation Scaffolding
-- [x] Vite build with Module Federation configured (empty remotes, shared singletons) — Validated in Phase 2: Views and Federation Scaffolding
-- [x] federation/remotes.ts with env-aware URL resolver pattern — Validated in Phase 2: Views and Federation Scaffolding
-- [x] CliView with interactive terminal (ls shows directories, no help command, red errors, no scroll jump) — Validated in Phase 2 gap closure
-- [x] Footer social links with correct URLs, readable text, sticky positioning — Validated in Phase 2 gap closure
-- [x] Header nav with proper spacing (gap-6) and 3 tabs: Home, CLI, Playground — Validated in Phase 2 gap closure
-- [x] Skills section with responsive multi-column grid — Validated in Phase 2 gap closure
-- [x] GitHub Actions CI/CD deploying shell to GitHub Pages with production gate and rollback — Validated in Phase 3: Deployment Pipeline
-- [x] CNAME file and 404.html SPA workaround for GitHub Pages — Validated in Phase 3: Deployment Pipeline
-- [x] Tailwind v4 @source path for packages/ui classes in build output — Validated in Phase 4: Header Spacing Fix
+- [x] Theme System — 9 VSCode-derived themes, Pinia store, CSS custom-property swap, WAI-ARIA listbox, FOUC-free localStorage persistence (Phase 5)
+- [x] Skills Diamond Wall — /skills route with Devicon SVG diamond grid, 4 proficiency display modes, category + search filtering, infinite CSS scroll (Phase 6; SKL-03/SKL-08 stagger entrance deferred → 999.9)
+- [x] CLI Terminal Core — xterm.js terminal with 13-command shell, virtual resume filesystem, tab completion, history, alias persistence, CLITHEME runtime switching (Phase 7; CLI-19/CLI-20 dropped from scope)
+- [x] CLI Federation Integration — apps/cli extracted as federation remote, loaded via `defineAsyncComponent` with themed fallback, shared theme types in packages/types, dual Pinia bridge for theme sync (Phase 8)
+- [x] Deployment & Infrastructure — Node 24 action pins, Bun 1.3.12 locked, bundle-size CI gate with PR comments, version stamping across shell + CLI, automated rollback verification polling live `<meta name="app-version">` (Phase 9)
+- [x] Collapsible Sidebar Navigation — floating icon rail → expanded card, drag-to-dock with 15% hysteresis, mobile hamburger slide-over below 640px, dark-mode icon inversion (Phase 10)
 
 ### Active
 
-**Workstream A: CLI Remote**
+Next milestone not yet scoped. Run `/gsd-new-milestone` to define v1.2 requirements.
 
-- [ ] First federated micro-frontend remote (apps/cli) replacing current /cli route
-- [ ] xterm.js-powered terminal with top 10-15 shell commands
-- [ ] Pre-populated resume filesystem (companies, teams, projects, roles, skills)
-- [ ] localStorage for session persistence (aliases, user-created files)
+### Deferred
 
-**Workstream B: Polish & Infrastructure**
-
-- [ ] Theme interchangeability system with VSCode theme mapping
-- [x] Skills diamond wall on /skills route — Validated in Phase 6 (entrance animation deferred to backlog 999.9)
-- [ ] Rollback workflow testing end-to-end
-- [ ] Tree shaking audit and bundle optimization
-- [ ] GitHub Actions Node.js 24 migration
+- **Phase 999.9** — SKL-03 staggered entrance animation + SKL-08 IntersectionObserver scroll trigger (Skills Diamond Wall)
+- **CLI-19 / CLI-20** — `resume` command and `ssh` easter egg dropped from scope per user decision 2026-04-20
 
 ### Out of Scope
 
-- AWS deployment — future migration, GitHub Pages for now
-- Shared UI component library implementation — empty package scaffolded only
-- Backend or API integration — static site for now
+- AWS deployment — future migration, GitHub Pages sufficient for now
+- Shared UI component library beyond current `packages/ui` scope
+- Backend or API integration — static site by design
 - Authentication or user accounts — public portfolio
-- CI testing pipeline — deploy workflow only for now
-
-## Current Milestone: v1.1 CLI Remote & Site Polish
-
-**Goal:** Ship the first real micro-frontend remote — an interactive terminal portfolio experience — while hardening infrastructure and adding visual polish.
-
-**Target features:**
-
-- CLI Remote (apps/cli) — xterm.js terminal with resume filesystem, first federation proof-point
-- Theme Interchangeability — VSCode theme mapping, settings button, localStorage
-- Skills Animated Diamond Wall — /skills route with animated tech icon diamonds
-- Rollback Workflow Testing — Verify rollback deployment end-to-end
-- Tree Shaking — Bundle optimization across monorepo
-- GitHub Actions Node.js 24 Migration — Before June 2, 2026 deadline
-
-**Workstreams:** A (CLI Remote) and B (Polish & Infrastructure) run in parallel.
+- Real backend / WebSocket terminal — security risk, breaks static hosting model
+- Full bash compatibility — portfolio, not a shell
+- WebGL renderer for xterm.js — zero benefit for low-output resume terminal
+- Multiple terminal sessions / tabs — scope creep
+- Theme editor / color picker UI — separate project concern
 
 ## Current State
 
-**v1.0 shipped 2026-03-24** — Live at nicktag.tech
+**v1.1 shipped 2026-04-20** — Live at nicktag.tech
 
-- 4 phases, 11 plans, 19 tasks executed over 4 days
-- ~19,500 lines of TypeScript/Vue across 145 files
-- Tech stack: Vue 3, Vite 6, TailwindCSS v4, Pinia, Vue Router 4, Bun
-- SynthWave '84 themed dark UI with interactive terminal, skills grid, and federation scaffolding
-- CI/CD: GitHub Actions → GitHub Pages with production approval gate and rollback workflow
+- 6 phases, 24 plans executed across 27 days
+- 223 commits since v1.0, 530 files changed (+96,617 / -1,171)
+- 10,085 lines TS/Vue/CSS across apps + packages
+- 33 test files, 342 tests passing, global coverage 97/96/91/97% (L/F/B/S)
+- Federation live: apps/cli remote loaded dynamically by apps/shell with shared singletons
+- Theme system: 9 runtime-switchable themes, mobile + desktop pickers, FOUC-free
+- Version stamping wired into rollback verification loop (6 × 15s polling)
 
-**Phase 5 complete 2026-03-31** — Theme System
+## Next Milestone Goals
 
-- 9 curated VSCode themes switchable via desktop dropdown and mobile hamburger menu
-- WAI-ARIA listbox with arrow-key live preview, Enter/Escape/click-outside handling
-- Pinia store + useTheme composable for reactive CSS custom property switching
-- FOUC prevention via inline script in index.html
-- localStorage persistence across sessions
+Not yet scoped. Likely candidates from backlog (see `.planning/ROADMAP.md` Backlog section):
 
-**Phase 6 complete 2026-04-02** — Skills Diamond Wall
+- **999.7** VSCode Theme JSON import engine (user-paste → custom theme)
+- **999.9** Skills entrance animation (completes deferred SKL-03/SKL-08)
+- **999.10 / 999.13** Skills wall refresh (more skills + resume-accurate years)
+- **999.14** Resume PDF download tab
+- **999.16 / 999.17** CI unit-test step + commit-hook test gate
+- **999.18** Dead code cleanup sweep
 
-- /skills route with continuously scrolling diamond grid of technology icons
-- Toolbar with category filter, search, and proficiency mode toggle (Uniform/Glow/Size/Fill)
-- Hover interaction: row pauses, diamond lifts, info panel with name/years/category
-- Multiple rows at different scroll speeds for parallax depth effect
-- Responsive: 48px/3 rows mobile, 56px/4 rows tablet, 80px/4-5 rows desktop
-- Entrance animation deferred to backlog 999.9
+Run `/gsd-new-milestone` to scope which of these land in v1.2.
 
 ## Context
 
-Nick is a Technical Lead targeting Director of Engineering. The site serves dual purpose: professional portfolio for career positioning and a technical playground for experimenting with micro-frontend architecture (Module Federation via Vite). The monorepo is intentionally over-structured for a single app because the goal is to have federation plumbing ready when remotes are added.
+Nick is a Technical Lead targeting Director of Engineering. The site serves dual purpose: professional portfolio and technical playground for experimenting with micro-frontend architecture (Module Federation via Vite). With v1.1 shipped, the federation architecture is now proven in production — the CLI remote is a real remote, not a placeholder.
 
-Custom domain: nicktag.tech (GitHub Pages with CNAME). Will migrate to AWS (CloudFront + S3) when remotes are introduced — the GitHub Actions deploy workflow is explicitly temporary.
-
-Router uses HTML5 history mode with clean URLs. GitHub Pages requires a 404.html workaround for SPA routing; this goes away on AWS migration.
+Custom domain: nicktag.tech (GitHub Pages with CNAME). AWS migration (CloudFront + S3) remains a backlog item but is no longer urgent — the current deploy pipeline handles two apps (shell + CLI) with coordinated version stamping and rollback.
 
 ## Constraints
 
-- **Runtime**: Bun (package manager and runtime)
+- **Runtime**: Bun (package manager and runtime, pinned 1.3.12)
 - **Framework**: Vue 3 with Composition API — no Options API anywhere
 - **Language**: TypeScript strict mode — no plain JavaScript files
 - **Styling**: TailwindCSS v4 CSS-first config (no tailwind.config.js)
 - **Federation**: @originjs/vite-plugin-federation — shared vue, vue-router, pinia as singletons
-- **Hosting**: GitHub Pages with custom domain (nicktag.tech), migrating to AWS later
+- **Hosting**: GitHub Pages with custom domain (nicktag.tech)
 - **Build target**: esnext (required for Module Federation)
+- **CI**: GitHub Actions on Node 24-capable action pins (checkout@v5, download-artifact@v6)
 
 ## Key Decisions
 
-| Decision                                               | Rationale                                                                    | Outcome    |
-| ------------------------------------------------------ | ---------------------------------------------------------------------------- | ---------- |
-| Bun over npm/pnpm                                      | Faster installs and native workspace support                                 | ✓ Good     |
-| Module Federation via @originjs/vite-plugin-federation | Vite-native federation without webpack                                       | ✓ Good     |
-| TailwindCSS v4 CSS-first config                        | No JS config file, cleaner setup                                             | ⚠️ Revisit |
-| HTML5 history mode over hash                           | Clean URLs; 404.html workaround acceptable since migrating to AWS            | ✓ Good     |
-| GitHub Pages initially                                 | Quick deploy for single app; AWS when remotes need proper hosting            | ✓ Good     |
-| Monorepo scaffolded upfront                            | Federation plumbing ready when remotes are added, avoids restructuring later | ✓ Good     |
-| SynthWave '84 as default theme                         | Distinctive visual identity; CSS custom properties ready for theme swapping  | ✓ Good     |
-| h-screen + overflow-y-auto for sticky footer           | Simpler than position:sticky, works with current layout                      | ✓ Good     |
-| @source directive for packages/ui scanning             | Required for Tailwind v4 to detect utility classes in monorepo packages      | ⚠️ Revisit |
+| Decision                                                                       | Rationale                                                                   | Outcome                                |
+| ------------------------------------------------------------------------------ | --------------------------------------------------------------------------- | -------------------------------------- |
+| Bun over npm/pnpm                                                              | Faster installs, native workspace support                                   | ✓ Good                                 |
+| Module Federation via @originjs/vite-plugin-federation                         | Vite-native federation without webpack                                      | ✓ Good                                 |
+| TailwindCSS v4 CSS-first config                                                | No JS config file, cleaner setup                                            | ⚠️ Revisit (packages/ui @source drift) |
+| HTML5 history mode over hash                                                   | Clean URLs; 404.html workaround acceptable                                  | ✓ Good                                 |
+| GitHub Pages initially                                                         | Quick deploy; AWS deferred indefinitely                                     | ✓ Good                                 |
+| Monorepo scaffolded upfront                                                    | Federation plumbing ready; proven by Phase 8                                | ✓ Good                                 |
+| SynthWave '84 as default theme                                                 | Distinctive visual identity; extends to 9 themes in v1.1                    | ✓ Good                                 |
+| Phase 5: FOUC script embeds all 9 theme maps inline                            | Zero-dependency pre-paint application                                       | ✓ Good                                 |
+| Phase 5: Click-outside uses capture-phase document listener                    | Reliable detection across theme dropdown/mobile menu                        | ✓ Good                                 |
+| Phase 6: Set-based category filtering with All-deselects-individuals toggle    | Intuitive UX for additive category selection                                | ✓ Good                                 |
+| Phase 6: DiamondInfoPanel uses Teleport to body                                | Escapes overflow:hidden clipping                                            | ✓ Good                                 |
+| Phase 6: Entrance animation deferred to 999.9                                  | User-approved scope trim                                                    | — Pending                              |
+| Phase 7: xterm.js over browser-built terminal                                  | Production-grade ANSI + addon ecosystem                                     | ✓ Good                                 |
+| Phase 7: VFS built from LaTeX resume source                                    | Single source of truth for career data                                      | ✓ Good                                 |
+| Phase 7: CLI-19/CLI-20 dropped from scope                                      | User decision 2026-04-20 — not shipping                                     | — Dropped                              |
+| Phase 8: Theme types extracted to packages/types                               | Shared contract between shell and CLI remote                                | ✓ Good                                 |
+| Phase 8: defineAsyncComponent with themed fallback                             | Graceful degradation when remote unavailable                                | ✓ Good                                 |
+| Phase 8: Dual Pinia bridge pattern for cross-remote theme sync                 | Works around federation singleton quirks                                    | ✓ Good                                 |
+| Phase 9: Bun exact-pinned to 1.3.12 per D-02                                   | Reproducible CI builds                                                      | ✓ Good                                 |
+| Phase 9: rollback.yml fail-closed verify step                                  | Uncovered latent deploy-pages@v4 artifact bug during live test              | ✓ Good (hardened future rollbacks)     |
+| Phase 9: Version stamp in `<meta name="app-version">`                          | Enables polling-based rollback verification                                 | ✓ Good                                 |
+| Phase 9: CDN propagation measured ≤15s                                         | Assumption A3 (≤90s) has 6× headroom                                        | ✓ Validated                            |
+| Phase 10: Floating sidebar with drag-to-dock + 15% hysteresis                  | Prevents casual drags from re-docking; validated via sketch 001 variant D   | ✓ Good                                 |
+| Phase 10: Dark-mode icon inversion via CSS filter + `invert-on-dark` attribute | Single-layer solution for mono dark-on-dark logos                           | ✓ Good                                 |
+| Phase 10: localStorage harden against throws (private mode)                    | Theme + dock-side persistence resilient to quota/disabled storage           | ✓ Good                                 |
+| 999.8: Global coverage thresholds 97/96/91/97% (not 100%)                      | happy-dom can't mock viewport; V8 instruments lazy imports as uncovered fns | ✓ Accepted trade-off                   |
 
 ## Evolution
 
 This document evolves at phase transitions and milestone boundaries.
 
-**After each phase transition** (via `/gsd:transition`):
+**After each phase transition** (via `/gsd-transition`):
 
 1. Requirements invalidated? → Move to Out of Scope with reason
 2. Requirements validated? → Move to Validated with phase reference
@@ -149,7 +129,7 @@ This document evolves at phase transitions and milestone boundaries.
 4. Decisions to log? → Add to Key Decisions
 5. "What This Is" still accurate? → Update if drifted
 
-**After each milestone** (via `/gsd:complete-milestone`):
+**After each milestone** (via `/gsd-complete-milestone`):
 
 1. Full review of all sections
 2. Core Value check — still the right priority?
@@ -158,4 +138,4 @@ This document evolves at phase transitions and milestone boundaries.
 
 ---
 
-_Last updated: 2026-04-02 after Phase 6 (Skills Diamond Wall) completed_
+_Last updated: 2026-04-20 after v1.1 milestone shipped_

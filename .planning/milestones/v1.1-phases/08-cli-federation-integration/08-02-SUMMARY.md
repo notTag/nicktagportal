@@ -63,14 +63,14 @@ key-files:
 
 key-decisions:
   - "Same Pinia store ID 'theme' in CLI as shell for dedup when loaded as federation remote"
-  - "Both $CLITHEME watch and site theme bridge watch coexist in useTerminal"
-  - "CLI imports from @types/themes (shared package) not @/themes (app-local)"
-  - "resumeData.json copied to CLI app for self-contained standalone dev"
+  - 'Both $CLITHEME watch and site theme bridge watch coexist in useTerminal'
+  - 'CLI imports from @types/themes (shared package) not @/themes (app-local)'
+  - 'resumeData.json copied to CLI app for self-contained standalone dev'
 
 patterns-established:
-  - "Federation remote scaffold: vite.config.ts with modulePreload:false, cssCodeSplit:false, esnext target"
-  - "Store ID dedup: remote app re-defines host stores with same ID for Pinia singleton sharing"
-  - "Theme bridge pattern: watch site theme store and apply toXtermTheme for xterm.js reactivity"
+  - 'Federation remote scaffold: vite.config.ts with modulePreload:false, cssCodeSplit:false, esnext target'
+  - 'Store ID dedup: remote app re-defines host stores with same ID for Pinia singleton sharing'
+  - 'Theme bridge pattern: watch site theme store and apply toXtermTheme for xterm.js reactivity'
 
 requirements-completed: [FED-01, FED-02, FED-05, THM-05]
 
@@ -114,6 +114,7 @@ Each task was committed atomically:
 ## Files Created/Modified
 
 ### apps/cli/ (new workspace)
+
 - `package.json` - @nick-site/cli with xterm.js, vue, pinia, federation deps
 - `vite.config.ts` - Federation remote config: cliApp, remoteEntry.js, ./CliView exposed
 - `index.html` - Standalone dev entry point
@@ -130,10 +131,12 @@ Each task was committed atomically:
 - `src/data/resumeData.json` - Resume filesystem data (copied from shell)
 
 ### Modified
+
 - `apps/shell/package.json` - Removed @xterm/xterm and @xterm/addon-fit
 - `tsconfig.json` - Added apps/cli tsconfig references
 
 ### Deleted from shell
+
 - `apps/shell/src/terminal/` - Entire directory (17 files)
 - `apps/shell/src/stores/terminal.ts`
 - `apps/shell/src/composables/useTerminal.ts`
@@ -150,10 +153,11 @@ Each task was committed atomically:
 ### Auto-fixed Issues
 
 **1. [Rule 3 - Blocking] Applied 08-01 prerequisite changes to worktree**
+
 - **Found during:** Pre-execution setup
 - **Issue:** Worktree was based on commit 25cec9d but plan depends on 08-01 output at commit 9148bf8. The sandbox blocked git merge/rebase operations.
 - **Fix:** Manually created packages/types/src/themes/ files and converted shell themes to thin re-exports (replicating 08-01 output) inline with Task 1 commit
-- **Files modified:** packages/types/src/themes/*.ts, apps/shell/src/themes/{index,types}.ts, packages/types/src/index.ts, packages/ui/vitest.config.ts
+- **Files modified:** packages/types/src/themes/\*.ts, apps/shell/src/themes/{index,types}.ts, packages/types/src/index.ts, packages/ui/vitest.config.ts
 - **Committed in:** 4fe976a (Task 1 commit)
 
 ---
@@ -180,5 +184,6 @@ Each task was committed atomically:
 - remoteEntry.js will be generated once `bun run --filter '@nick-site/cli' build` is run
 
 ---
-*Phase: 08-cli-federation-integration*
-*Completed: 2026-04-11*
+
+_Phase: 08-cli-federation-integration_
+_Completed: 2026-04-11_

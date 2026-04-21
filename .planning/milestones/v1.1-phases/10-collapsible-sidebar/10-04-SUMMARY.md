@@ -89,6 +89,7 @@ Uses `createTestingPinia({ createSpy: vi.fn })` to auto-spy every store action.
 ### 3. `packages/ui/src/index.ts` — barrel re-export
 
 Added single line after MobileMenu:
+
 ```ts
 export { default as TheSidebar } from './components/TheSidebar.vue'
 ```
@@ -97,28 +98,28 @@ Downstream plan 10-05 can now `import { TheSidebar } from '@ui'` and drop into A
 
 ## Acceptance Grep Receipts
 
-| Check | Count | Required |
-| --- | --- | --- |
-| `<script setup lang="ts">` | 1 | 1 |
-| `useSidebarStore` reference | 2 | ≥1 |
-| `useDragToDock` reference | 2 | ≥1 |
-| `class="sidebar` on aside | 1 | ≥1 |
-| `ref="headerRef"` | 1 | 1 |
-| `data-drag-handle` | 1 | ≥1 |
-| `to="/"` literal | 1 | 1 |
-| `to="/skills"` literal | 1 | 1 |
-| `to="/cli"` literal | 1 | 1 |
-| `to="/playground"` literal | 1 | 1 |
-| `bg-[var(--color-accent-soft)]` | 1 | ≥1 |
-| `w-[var(--sidebar-width)]` | 1 | ≥1 |
-| `w-[var(--sidebar-rail)]` | 1 | ≥1 |
-| `<style>` blocks | 0 | 0 (forbidden) |
-| `visibility: hidden` | 0 | 0 (forbidden) |
-| Hardcoded hex `#rrggbb` | 0 | 0 (forbidden) |
-| `export default` (Options API) | 0 | 0 (forbidden) |
-| `describe('TheSidebar'` | 1 | 1 |
-| `it(` cases in test file | 12 | ≥11 |
-| `createTestingPinia` uses | 2 | ≥1 |
+| Check                           | Count | Required      |
+| ------------------------------- | ----- | ------------- |
+| `<script setup lang="ts">`      | 1     | 1             |
+| `useSidebarStore` reference     | 2     | ≥1            |
+| `useDragToDock` reference       | 2     | ≥1            |
+| `class="sidebar` on aside       | 1     | ≥1            |
+| `ref="headerRef"`               | 1     | 1             |
+| `data-drag-handle`              | 1     | ≥1            |
+| `to="/"` literal                | 1     | 1             |
+| `to="/skills"` literal          | 1     | 1             |
+| `to="/cli"` literal             | 1     | 1             |
+| `to="/playground"` literal      | 1     | 1             |
+| `bg-[var(--color-accent-soft)]` | 1     | ≥1            |
+| `w-[var(--sidebar-width)]`      | 1     | ≥1            |
+| `w-[var(--sidebar-rail)]`       | 1     | ≥1            |
+| `<style>` blocks                | 0     | 0 (forbidden) |
+| `visibility: hidden`            | 0     | 0 (forbidden) |
+| Hardcoded hex `#rrggbb`         | 0     | 0 (forbidden) |
+| `export default` (Options API)  | 0     | 0 (forbidden) |
+| `describe('TheSidebar'`         | 1     | 1             |
+| `it(` cases in test file        | 12    | ≥11           |
+| `createTestingPinia` uses       | 2     | ≥1            |
 
 ## Verification
 
@@ -150,12 +151,12 @@ Downstream plan 10-05 can now `import { TheSidebar } from '@ui'` and drop into A
 
 ## Commits
 
-| Task | Hash | Message |
-| --- | --- | --- |
-| 1 | `7beee49` | `feat(10-04): TheSidebar.vue rail/card + drag-to-dock + mobile hamburger` (also bundles Rule 3 fix) |
-| 2 | `d1adac9` | `test(10-04): unit-test TheSidebar behaviour — 12 cases` |
-| 3 | `59fa82d` | `feat(10-04): re-export TheSidebar from @ui barrel` |
-| — | `2614d2f` | `test(10-04): update @ui barrel test to include TheSidebar` (Rule 1 fix) |
+| Task | Hash      | Message                                                                                             |
+| ---- | --------- | --------------------------------------------------------------------------------------------------- |
+| 1    | `7beee49` | `feat(10-04): TheSidebar.vue rail/card + drag-to-dock + mobile hamburger` (also bundles Rule 3 fix) |
+| 2    | `d1adac9` | `test(10-04): unit-test TheSidebar behaviour — 12 cases`                                            |
+| 3    | `59fa82d` | `feat(10-04): re-export TheSidebar from @ui barrel`                                                 |
+| —    | `2614d2f` | `test(10-04): update @ui barrel test to include TheSidebar` (Rule 1 fix)                            |
 
 ## Success Criteria Status
 

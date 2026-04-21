@@ -80,19 +80,19 @@ diff --git a/apps/shell/src/assets/main.css b/apps/shell/src/assets/main.css
 
 ## Tokens Added (verbatim from sketch-findings layout-navigation.md)
 
-| Token                  | Value                                       | Purpose                                            |
-| ---------------------- | ------------------------------------------- | -------------------------------------------------- |
-| `--sidebar-width`      | `260px`                                     | Expanded card width (NAV-02)                       |
-| `--sidebar-rail`       | `56px`                                      | Resting rail width (NAV-01)                        |
-| `--shadow-md`          | `0 4px 12px rgba(0, 0, 0, 0.06)`            | Rail resting shadow                                |
-| `--shadow-xl`          | `0 20px 48px rgba(0, 0, 0, 0.12)`           | Expanded card shadow                               |
-| `--ease-spring`        | `cubic-bezier(0.34, 1.56, 0.64, 1)`         | Spring overshoot curve (expand)                    |
-| `--ease-out`           | `cubic-bezier(0.22, 1, 0.36, 1)`            | Ease-out (collapse)                                |
-| `--duration-fast`      | `180ms`                                     | Fast transitions (hover, hint)                     |
-| `--duration-base`      | `240ms`                                     | Default sidebar transition                         |
-| `--duration-slow`      | `360ms`                                     | Spring expand                                      |
-| `--color-accent-soft`  | `#eef2ff`                                   | Active-route pill / dock-hint gradient base        |
-| `--color-sidebar-hint` | `rgba(99, 102, 241, 0.08)`                  | Drag dock-hint strip wash (theme-agnostic, static) |
+| Token                  | Value                               | Purpose                                            |
+| ---------------------- | ----------------------------------- | -------------------------------------------------- |
+| `--sidebar-width`      | `260px`                             | Expanded card width (NAV-02)                       |
+| `--sidebar-rail`       | `56px`                              | Resting rail width (NAV-01)                        |
+| `--shadow-md`          | `0 4px 12px rgba(0, 0, 0, 0.06)`    | Rail resting shadow                                |
+| `--shadow-xl`          | `0 20px 48px rgba(0, 0, 0, 0.12)`   | Expanded card shadow                               |
+| `--ease-spring`        | `cubic-bezier(0.34, 1.56, 0.64, 1)` | Spring overshoot curve (expand)                    |
+| `--ease-out`           | `cubic-bezier(0.22, 1, 0.36, 1)`    | Ease-out (collapse)                                |
+| `--duration-fast`      | `180ms`                             | Fast transitions (hover, hint)                     |
+| `--duration-base`      | `240ms`                             | Default sidebar transition                         |
+| `--duration-slow`      | `360ms`                             | Spring expand                                      |
+| `--color-accent-soft`  | `#eef2ff`                           | Active-route pill / dock-hint gradient base        |
+| `--color-sidebar-hint` | `rgba(99, 102, 241, 0.08)`          | Drag dock-hint strip wash (theme-agnostic, static) |
 
 ## Validation Run
 
