@@ -149,6 +149,42 @@ describe('SkillDiamond', () => {
     })
   })
 
+  describe('theme invert flags', () => {
+    it('does not apply invert classes when neither flag is set', () => {
+      const wrapper = createWrapper()
+      const img = wrapper.find('img')
+      expect(img.classes()).not.toContain('skill-icon-invert')
+      expect(img.classes()).not.toContain('skill-icon-invert-light')
+    })
+
+    it('applies skill-icon-invert when invertInDark is true', () => {
+      const wrapper = createWrapper({
+        skill: { ...testSkill, invertInDark: true },
+      })
+      const img = wrapper.find('img')
+      expect(img.classes()).toContain('skill-icon-invert')
+      expect(img.classes()).not.toContain('skill-icon-invert-light')
+    })
+
+    it('applies skill-icon-invert-light when invertInLight is true', () => {
+      const wrapper = createWrapper({
+        skill: { ...testSkill, invertInLight: true },
+      })
+      const img = wrapper.find('img')
+      expect(img.classes()).toContain('skill-icon-invert-light')
+      expect(img.classes()).not.toContain('skill-icon-invert')
+    })
+
+    it('applies both classes when both flags are true', () => {
+      const wrapper = createWrapper({
+        skill: { ...testSkill, invertInDark: true, invertInLight: true },
+      })
+      const img = wrapper.find('img')
+      expect(img.classes()).toContain('skill-icon-invert')
+      expect(img.classes()).toContain('skill-icon-invert-light')
+    })
+  })
+
   describe('click interaction', () => {
     it('emits hover on click when not hovered', async () => {
       const wrapper = createWrapper()
