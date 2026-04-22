@@ -117,7 +117,10 @@ function handleClick() {
         :src="skill.iconPath"
         :alt="skill.displayName"
         class="h-full w-full object-contain p-2"
-        :class="{ 'skill-icon-invert': skill.invertInDark }"
+        :class="{
+          'skill-icon-invert': skill.invertInDark,
+          'skill-icon-invert-light': skill.invertInLight,
+        }"
         :style="{ transform: 'rotate(-45deg)' }"
       />
     </div>

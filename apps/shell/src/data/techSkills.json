@@ -266,7 +266,8 @@
     "displayName": "Claude Code",
     "iconPath": "/icons/skills/claude.svg",
     "category": "AI Platform",
-    "years": 1
+    "years": 1,
+    "invertInLight": true
   },
   {
     "name": "codex",

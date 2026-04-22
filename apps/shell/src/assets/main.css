@@ -90,3 +90,9 @@
 [data-theme-type='dark'] img.skill-icon-invert {
   filter: invert(1) !important;
 }
+
+/* Invert mono light-on-light skill icons when the active theme is light.
+   Flagged per-skill via `invertInLight: true` in techSkills.json. */
+[data-theme-type='light'] img.skill-icon-invert-light {
+  filter: invert(1) !important;
+}

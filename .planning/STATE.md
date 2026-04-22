@@ -5,7 +5,7 @@ milestone_name: CLI Remote & Site Polish
 status: shipped
 stopped_at: v1.1 milestone archived 2026-04-20
 last_updated: '2026-04-20T00:00:00.000Z'
-last_activity: 2026-04-20 -- v1.1 shipped; awaiting next milestone scoping
+last_activity: 2026-04-21 -- Completed quick task 260421-slg: add invertInLight flag for anthropic logo (uncommitted)
 progress:
   total_phases: 6
   completed_phases: 6
@@ -43,6 +43,12 @@ Decisions from v1.0 and v1.1 archived. Full log in PROJECT.md Key Decisions tabl
 ### Blockers/Concerns
 
 None. All v1.1 phases verified with accepted overrides where applicable.
+
+### Quick Tasks Completed
+
+| #          | Description                               | Date       | Commit      | Directory                                                                       |
+| ---------- | ----------------------------------------- | ---------- | ----------- | ------------------------------------------------------------------------------- |
+| 260421-slg | add invertInLight flag for anthropic logo | 2026-04-21 | uncommitted | [260421-slg-add-invertinlight-flag](./quick/260421-slg-add-invertinlight-flag/) |
 
 ## Session Continuity
 

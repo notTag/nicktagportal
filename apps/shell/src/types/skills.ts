@@ -5,6 +5,7 @@ export interface Skill {
   category: string
   years: number
   invertInDark?: boolean
+  invertInLight?: boolean
 }
 
 /** Format years for display — caps at "10+" for values over 10 */
