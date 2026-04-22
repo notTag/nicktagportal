@@ -76,7 +76,8 @@
     "displayName": "Kafka",
     "iconPath": "/icons/skills/kafka.svg",
     "category": "Infrastructure",
-    "years": 1
+    "years": 1,
+    "invertInDark": true
   },
   {
     "name": "vault",
