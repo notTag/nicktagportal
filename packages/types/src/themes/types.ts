@@ -8,6 +8,14 @@ export type ThemeId =
   | 'solarized-light'
   | 'hc-dark'
   | 'hc-light'
+  | 'noctis'
+  | 'gruvbox'
+  | 'bear'
+  | 'lunar-pink'
+  | 'theme-plus'
+  | 'claude-code'
+  | 'codex'
+  | 'hermes'
 
 export interface ThemeColors {
   readonly surface: string

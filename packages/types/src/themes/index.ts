@@ -8,10 +8,18 @@ import { solarizedDark } from './solarized-dark'
 import { solarizedLight } from './solarized-light'
 import { hcDark } from './hc-dark'
 import { hcLight } from './hc-light'
+import { noctis } from './noctis'
+import { gruvbox } from './gruvbox'
+import { bear } from './bear'
+import { lunarPink } from './lunar-pink'
+import { themePlus } from './theme-plus'
+import { claudeCode } from './claude-code'
+import { codex } from './codex'
+import { hermes } from './hermes'
 
 export type { Theme, ThemeColors, ThemeId } from './types'
 
-export const DEFAULT_THEME_ID: ThemeId = 'synthwave-84'
+export const DEFAULT_THEME_ID: ThemeId = 'solarized-light'
 
 export const themes: Record<ThemeId, Theme> = {
   'synthwave-84': synthwave84,
@@ -23,6 +31,14 @@ export const themes: Record<ThemeId, Theme> = {
   'solarized-light': solarizedLight,
   'hc-dark': hcDark,
   'hc-light': hcLight,
+  noctis: noctis,
+  gruvbox: gruvbox,
+  bear: bear,
+  'lunar-pink': lunarPink,
+  'theme-plus': themePlus,
+  'claude-code': claudeCode,
+  codex: codex,
+  hermes: hermes,
 }
 
 // Ordered list for dropdown display (per D-11 / UI-SPEC ordering)
@@ -36,4 +52,12 @@ export const themeList: Theme[] = [
   hcDark,
   solarizedLight,
   hcLight,
+  noctis,
+  gruvbox,
+  bear,
+  lunarPink,
+  themePlus,
+  claudeCode,
+  codex,
+  hermes,
 ]

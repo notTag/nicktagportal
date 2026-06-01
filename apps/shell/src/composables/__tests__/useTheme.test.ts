@@ -27,13 +27,13 @@ describe('useTheme', () => {
   it('sets --color-surface to the default theme surface color', () => {
     mountWithTheme()
     const root = document.documentElement.style
-    expect(root.getPropertyValue('--color-surface')).toBe('#262335')
+    expect(root.getPropertyValue('--color-surface')).toBe('#FDF6E3')
   })
 
   it('sets --color-accent to the default theme accent color', () => {
     mountWithTheme()
     const root = document.documentElement.style
-    expect(root.getPropertyValue('--color-accent')).toBe('#ff7edb')
+    expect(root.getPropertyValue('--color-accent')).toBe('#AC9D57')
   })
 
   it('applies all 16 CSS variables from CSS_VAR_MAP', () => {

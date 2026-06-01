@@ -12,7 +12,7 @@ describe('useThemeStore', () => {
     it('starts with themeId as DEFAULT_THEME_ID when localStorage is empty', () => {
       const store = useThemeStore()
       expect(store.themeId).toBe(DEFAULT_THEME_ID)
-      expect(store.themeId).toBe('synthwave-84')
+      expect(store.themeId).toBe('solarized-light')
     })
 
     it('reads stored theme from localStorage if valid ThemeId', () => {

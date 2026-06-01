@@ -12,6 +12,14 @@ const EXPECTED_THEME_IDS = [
   'solarized-light',
   'hc-dark',
   'hc-light',
+  'noctis',
+  'gruvbox',
+  'bear',
+  'lunar-pink',
+  'theme-plus',
+  'claude-code',
+  'codex',
+  'hermes',
 ] as const
 
 const REQUIRED_COLOR_KEYS: (keyof ThemeColors)[] = [
@@ -35,14 +43,14 @@ const REQUIRED_COLOR_KEYS: (keyof ThemeColors)[] = [
 
 describe('Theme Registry', () => {
   describe('DEFAULT_THEME_ID', () => {
-    it("equals 'synthwave-84'", () => {
-      expect(DEFAULT_THEME_ID).toBe('synthwave-84')
+    it("equals 'solarized-light'", () => {
+      expect(DEFAULT_THEME_ID).toBe('solarized-light')
     })
   })
 
   describe('themes record', () => {
-    it('has exactly 9 entries', () => {
-      expect(Object.keys(themes)).toHaveLength(9)
+    it('has exactly 17 entries', () => {
+      expect(Object.keys(themes)).toHaveLength(17)
     })
 
     it('contains all expected theme IDs as keys', () => {
@@ -64,15 +72,12 @@ describe('Theme Registry', () => {
       expect(['dark', 'light']).toContain(themes[id].type)
     })
 
-    it.each(EXPECTED_THEME_IDS)(
-      '%s has all 16 required color keys',
-      (id) => {
-        const colors = themes[id].colors
-        for (const key of REQUIRED_COLOR_KEYS) {
-          expect(colors).toHaveProperty(key)
-        }
-      },
-    )
+    it.each(EXPECTED_THEME_IDS)('%s has all 16 required color keys', (id) => {
+      const colors = themes[id].colors
+      for (const key of REQUIRED_COLOR_KEYS) {
+        expect(colors).toHaveProperty(key)
+      }
+    })
 
     it.each(EXPECTED_THEME_IDS)(
       '%s has non-empty string values for all colors',
@@ -88,8 +93,8 @@ describe('Theme Registry', () => {
   })
 
   describe('themeList', () => {
-    it('has exactly 9 entries', () => {
-      expect(themeList).toHaveLength(9)
+    it('has exactly 17 entries', () => {
+      expect(themeList).toHaveLength(17)
     })
 
     it('has synthwave-84 as the first entry', () => {

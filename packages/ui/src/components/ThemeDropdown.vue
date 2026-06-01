@@ -149,7 +149,7 @@ onUnmounted(() => {
           :key="theme.id"
           role="option"
           :aria-selected="theme.id === store.confirmedThemeId"
-          class="text-text mx-1 cursor-pointer rounded px-2 py-1.5 text-sm"
+          class="text-text mx-1 flex cursor-pointer items-center gap-2 rounded px-2 py-1.5 text-sm"
           :class="{
             'bg-selection': index === activeIndex,
             'hover:bg-hover': index !== activeIndex,
@@ -157,9 +157,18 @@ onUnmounted(() => {
           @click="handleOptionClick(index)"
           @mouseenter="handleOptionMouseEnter(index)"
         >
-          <span v-if="theme.id === store.confirmedThemeId" class="text-accent"
-            >&#x2713; </span
-          >{{ theme.name }}
+          <span
+            class="border-border size-3 shrink-0 rounded-full border"
+            :style="{ backgroundColor: theme.colors.accent }"
+            aria-hidden="true"
+          />
+          <span class="min-w-0 flex-1 truncate">{{ theme.name }}</span>
+          <span
+            v-if="theme.id === store.confirmedThemeId"
+            class="text-accent shrink-0"
+            aria-hidden="true"
+            >&#x2713;</span
+          >
         </div>
       </div>
     </div>
