@@ -25,7 +25,7 @@
     },
     "apps/cli": {
       "name": "@nick-site/cli",
-      "version": "0.0.0",
+      "version": "1.1.2",
       "dependencies": {
         "@nick-site/types": "workspace:*",
         "@xterm/addon-fit": "0.11.0",
@@ -48,7 +48,7 @@
     },
     "apps/shell": {
       "name": "@nick-site/shell",
-      "version": "0.0.0",
+      "version": "1.1.5",
       "dependencies": {
         "@nick-site/types": "workspace:*",
         "@nick-site/ui": "workspace:*",
@@ -73,6 +73,9 @@
     "packages/types": {
       "name": "@nick-site/types",
       "version": "0.0.0",
+      "dependencies": {
+        "@nick_tag_tech/themes": "^0.1.2",
+      },
     },
     "packages/ui": {
       "name": "@nick-site/ui",
@@ -241,6 +244,8 @@
     "@nick-site/types": ["@nick-site/types@workspace:packages/types"],
 
     "@nick-site/ui": ["@nick-site/ui@workspace:packages/ui"],
+
+    "@nick_tag_tech/themes": ["@nick_tag_tech/themes@0.1.2", "", { "peerDependencies": { "pinia": "^2.0.0 || ^3.0.0", "vue": "^3.0.0" }, "optionalPeers": ["pinia", "vue"] }, "sha512-016ufAESCI4o8kMIdkrz1AxLLBmzryIrFkDuSInuV3uk1pP6uzmAwl7yR+s/bNerJAupfLlI01uTjrfXH773dw=="],
 
     "@nodelib/fs.scandir": ["@nodelib/fs.scandir@2.1.5", "", { "dependencies": { "@nodelib/fs.stat": "2.0.5", "run-parallel": "^1.1.9" } }, "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="],
 
