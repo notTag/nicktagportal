@@ -8,6 +8,10 @@ export default mergeConfig(
     resolve: {
       alias: {
         'cliApp/CliView': resolve(__dirname, 'src/__mocks__/cliApp/CliView.ts'),
+        'projectTrackerApp/DashboardView': resolve(
+          __dirname,
+          'src/__mocks__/projectTrackerApp/DashboardView.ts',
+        ),
       },
     },
     test: {

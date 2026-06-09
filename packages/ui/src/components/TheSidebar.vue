@@ -84,6 +84,13 @@ const navLinkClass =
 const navLabelClass =
   'nav-label overflow-hidden whitespace-nowrap transition-[max-width,opacity] duration-[240ms] ease-[cubic-bezier(0.22,1,0.36,1)]'
 const navIconClass = 'h-4 w-4 flex-shrink-0'
+
+// FAUX feature flags — placeholder until Unleash lands (see FEATURES/feat-001.md).
+// Swap this map for `useFlag('projects')` from @unleash/proxy-client-vue; the
+// `v-if` call sites stay identical.
+const featureFlags = {
+  projects: false,
+} as const
 </script>
 
 <template>
@@ -285,6 +292,35 @@ const navIconClass = 'h-4 w-4 flex-shrink-0'
               ]"
             >
               CLI
+            </span>
+          </RouterLink>
+        </li>
+        <li v-if="featureFlags.projects">
+          <RouterLink
+            to="/projects"
+            title="Projects"
+            :class="navLinkClass"
+            :active-class="activePillClass"
+          >
+            <svg
+              :class="navIconClass"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M4 7h16M4 12h16M4 17h10" />
+              <circle cx="18" cy="17" r="2" />
+            </svg>
+            <span
+              :class="[
+                navLabelClass,
+                props.store.isOpen
+                  ? 'max-w-[180px] opacity-100 delay-[120ms]'
+                  : 'max-w-0 opacity-0',
+              ]"
+            >
+              Projects
             </span>
           </RouterLink>
         </li>

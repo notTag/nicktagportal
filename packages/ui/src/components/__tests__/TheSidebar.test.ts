@@ -24,6 +24,11 @@ const router = createRouter({
     { path: '/skills', name: 'skills', component: { template: '<div />' } },
     { path: '/cli', name: 'cli', component: { template: '<div />' } },
     {
+      path: '/projects',
+      name: 'projects',
+      component: { template: '<div />' },
+    },
+    {
       path: '/playground',
       name: 'playground',
       component: { template: '<div />' },
@@ -81,9 +86,11 @@ describe('TheSidebar', () => {
     expect(aside.classes()).toContain('sidebar')
   })
 
-  it('renders four nav links with correct hrefs in order', () => {
+  it('renders nav links with correct hrefs in order', () => {
     const { wrapper } = mountSidebar()
     const hrefs = wrapper.findAll('aside ul a').map((a) => a.attributes('href'))
+    // '/projects' is gated off by the faux `featureFlags.projects` flag
+    // (placeholder until Unleash lands — see FEATURES/feat-001.md).
     expect(hrefs).toEqual(['/', '/skills', '/cli', '/playground'])
   })
 

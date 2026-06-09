@@ -5,3 +5,6 @@ dist
 *.local
 .claude/worktrees/
 coverage/
+tmp_notes/
+apps/shell/src/.claude/
+apps/.claude/
