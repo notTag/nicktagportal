@@ -4,5 +4,8 @@
   "private": true,
   "type": "module",
   "main": "src/index.ts",
-  "types": "src/index.ts"
+  "types": "src/index.ts",
+  "dependencies": {
+    "@nick_tag_tech/themes": "^0.1.2"
+  }
 }

@@ -1,51 +1,14 @@
-import { watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useThemeStore } from '@/stores/theme'
-import type { ThemeColors } from '@/themes/types'
-
-const CSS_VAR_MAP: Record<keyof ThemeColors, string> = {
-  surface: '--color-surface',
-  surfaceRaised: '--color-surface-raised',
-  surfaceOverlay: '--color-surface-overlay',
-  text: '--color-text',
-  textMuted: '--color-text-muted',
-  textOnAccent: '--color-text-on-accent',
-  accent: '--color-accent',
-  accentCyan: '--color-accent-cyan',
-  accentYellow: '--color-accent-yellow',
-  destructive: '--color-destructive',
-  link: '--color-link',
-  linkHover: '--color-link-hover',
-  border: '--color-border',
-  headerBg: '--color-header-bg',
-  selection: '--color-selection',
-  hover: '--color-hover',
-}
-
-function applyTheme(colors: ThemeColors) {
-  const root = document.documentElement.style
-  for (const [key, cssVar] of Object.entries(CSS_VAR_MAP)) {
-    root.setProperty(cssVar, colors[key as keyof ThemeColors])
-  }
-}
-
-function applyThemeType(type: 'dark' | 'light') {
-  document.documentElement.setAttribute('data-theme-type', type)
-}
+import { useThemeEffect } from '@nick_tag_tech/themes/vue'
 
 export function useTheme() {
   const store = useThemeStore()
   const { currentTheme } = storeToRefs(store)
 
-  // Apply immediately on initialization
-  applyTheme(currentTheme.value.colors)
-  applyThemeType(currentTheme.value.type)
-
-  // Watch for changes (theme switch or preview)
-  watch(currentTheme, (theme) => {
-    applyTheme(theme.colors)
-    applyThemeType(theme.type)
-  })
+  // Apply CSS variables + data-theme-type on init and on every theme change
+  // (switch or preview). DOM application lives in the shared package.
+  useThemeEffect(currentTheme)
 
   return store
 }

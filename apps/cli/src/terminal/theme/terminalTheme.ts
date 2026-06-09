@@ -1,29 +1,5 @@
-import type { ITheme } from '@xterm/xterm'
-import type { ThemeColors } from '@ntypes/themes'
-
-export function toXtermTheme(colors: ThemeColors): ITheme {
-  return {
-    background: colors.surface,
-    foreground: colors.text,
-    cursor: colors.accentYellow,
-    cursorAccent: colors.surface,
-    selectionBackground: colors.selection,
-    selectionForeground: colors.text,
-    black: colors.surface,
-    red: colors.destructive,
-    green: colors.accentCyan,
-    yellow: colors.accentYellow,
-    blue: colors.accent,
-    magenta: colors.link,
-    cyan: colors.accentCyan,
-    white: colors.text,
-    brightBlack: colors.textMuted,
-    brightRed: colors.destructive,
-    brightGreen: colors.accentCyan,
-    brightYellow: colors.accentYellow,
-    brightBlue: colors.accent,
-    brightMagenta: colors.link,
-    brightCyan: colors.accentCyan,
-    brightWhite: colors.textOnAccent,
-  }
-}
+// Terminal/xterm palette is now derived by the shared package
+// @nick_tag_tech/themes. Kept as a thin alias so existing `toXtermTheme`
+// import sites and the terminal/index.ts re-export keep working. The package's
+// TerminalTheme is structurally compatible with xterm's ITheme.
+export { toTerminalTheme as toXtermTheme } from '@nick_tag_tech/themes/terminal'

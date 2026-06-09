@@ -69,14 +69,6 @@ export default mergeConfig(
             statements: 92,
           },
 
-          // useTheme: V8 counts the private `applyTheme` function separately from the
-          // exported `useTheme` function. Both are exercised but V8 instruments them
-          // as 3 functions (module-level CSS_VAR_MAP, applyTheme, useTheme).
-          'src/composables/useTheme.ts': {
-            functions: 66,
-            statements: 90,
-          },
-
           // router/index.ts: Lazy route component imports (lines 15-35) are function
           // expressions that V8 counts as separate functions. The test exercises 4 of 5
           // lazy imports but the playground-remote route shares the same component import.
