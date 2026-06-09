@@ -23,6 +23,13 @@ describe('router configuration', () => {
     expect(cli!.path).toBe('/cli')
   })
 
+  it('has a route for /projects with name projects', () => {
+    const routes = router.getRoutes()
+    const projects = routes.find((r) => r.name === 'projects')
+    expect(projects).toBeDefined()
+    expect(projects!.path).toBe('/projects')
+  })
+
   it('has a route for /playground with name playground', () => {
     const routes = router.getRoutes()
     const playground = routes.find((r) => r.name === 'playground')
@@ -43,9 +50,9 @@ describe('router configuration', () => {
     expect(notFound).toBeDefined()
   })
 
-  it('defines exactly 6 routes', () => {
+  it('defines exactly 7 routes', () => {
     const routes = router.getRoutes()
-    expect(routes).toHaveLength(6)
+    expect(routes).toHaveLength(7)
   })
 
   it('uses web history mode', () => {
@@ -71,6 +78,16 @@ describe('router configuration', () => {
       const routes = router.getRoutes()
       const cli = routes.find((r) => r.name === 'cli')
       const componentDef = cli!.components!.default
+      if (typeof componentDef === 'function') {
+        const mod = await (componentDef as () => Promise<unknown>)()
+        expect(mod).toBeTruthy()
+      }
+    })
+
+    it('resolves ProjectTrackerView component from /projects route', async () => {
+      const routes = router.getRoutes()
+      const projects = routes.find((r) => r.name === 'projects')
+      const componentDef = projects!.components!.default
       if (typeof componentDef === 'function') {
         const mod = await (componentDef as () => Promise<unknown>)()
         expect(mod).toBeTruthy()

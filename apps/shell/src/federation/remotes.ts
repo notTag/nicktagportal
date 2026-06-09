@@ -1,5 +1,5 @@
 // Remote micro-frontend URL resolver
-export type RemoteName = 'cliApp'
+export type RemoteName = 'cliApp' | 'projectTrackerApp'
 
 const DEV_BASE = 'http://localhost'
 const PROD_BASE = 'https://nicktag.tech'
@@ -7,11 +7,13 @@ const PROD_BASE = 'https://nicktag.tech'
 // Map remote names to local dev server ports
 const remotePortsDev: Record<string, number> = {
   cliApp: 3001,
+  projectTrackerApp: 3002,
 }
 
 // Map remote names to production URL paths
 const remotePathsProd: Record<string, string> = {
   cliApp: '/remotes/cli',
+  projectTrackerApp: '/remotes/project-tracker',
 }
 
 /**

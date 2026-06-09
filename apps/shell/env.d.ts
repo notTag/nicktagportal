@@ -20,6 +20,16 @@ declare module 'cliApp/*' {
   export default component
 }
 
+declare module 'projectTrackerApp/*' {
+  import type { DefineComponent } from 'vue'
+  const component: DefineComponent<
+    Record<string, unknown>,
+    Record<string, unknown>,
+    unknown
+  >
+  export default component
+}
+
 declare const __APP_VERSION__: string
 
 interface Window {

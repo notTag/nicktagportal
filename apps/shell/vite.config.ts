@@ -23,6 +23,9 @@ export default defineConfig({
               cliApp: isProd
                 ? 'https://nicktag.tech/remotes/cli/assets/remoteEntry.js'
                 : 'http://localhost:3001/assets/remoteEntry.js',
+              projectTrackerApp: isProd
+                ? 'https://nicktag.tech/remotes/project-tracker/assets/remoteEntry.js'
+                : 'http://localhost:3002/assets/remoteEntry.js',
             },
             shared: ['vue', 'vue-router', 'pinia'],
           }),

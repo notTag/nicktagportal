@@ -19,6 +19,11 @@ describe('resolveRemoteUrl', () => {
     expect(url).toMatch(/^http:\/\/localhost:.*\/assets\/remoteEntry\.js$/)
   })
 
+  it('returns the Project Tracker dev remote URL', () => {
+    const url = resolveRemoteUrl('projectTrackerApp')
+    expect(url).toBe('http://localhost:3002/assets/remoteEntry.js')
+  })
+
   it('returns production URL when DEV is false', async () => {
     // Dynamically re-import with mocked import.meta.env
     vi.stubEnv('DEV', false)

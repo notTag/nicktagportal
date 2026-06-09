@@ -20,6 +20,11 @@ const router = createRouter({
       component: () => import('../views/CliView.vue'),
     },
     {
+      path: '/projects',
+      name: 'projects',
+      component: () => import('../views/ProjectTrackerView.vue'),
+    },
+    {
       path: '/playground',
       name: 'playground',
       component: () => import('../views/PlaygroundView.vue'),
