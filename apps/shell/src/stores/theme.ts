@@ -1,52 +1,7 @@
-import { defineStore } from 'pinia'
-import { ref, computed } from 'vue'
-import { themes, DEFAULT_THEME_ID } from '@/themes'
-import type { ThemeId } from '@/themes/types'
+// Theme store provided by the shared package @nick_tag_tech/themes.
+// createThemeStore preserves the prior contract: confirmed id + transient
+// preview id, localStorage persistence (key 'nicksite-theme'), and the
+// currentTheme/activeThemeId/confirmedThemeId computeds. Store id stays 'theme'.
+import { createThemeStore } from '@nick_tag_tech/themes/pinia'
 
-const STORAGE_KEY = 'nicksite-theme'
-
-export const useThemeStore = defineStore('theme', () => {
-  const themeId = ref<ThemeId>(loadThemeId())
-  const previewingId = ref<ThemeId | null>(null)
-
-  const currentTheme = computed(
-    () => themes[previewingId.value ?? themeId.value],
-  )
-  const confirmedThemeId = computed(() => themeId.value)
-  const activeThemeId = computed(() => previewingId.value ?? themeId.value)
-
-  function loadThemeId(): ThemeId {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY)
-      if (stored && stored in themes) return stored as ThemeId
-    } catch {
-      // localStorage may throw in private-browsing / storage-quota edge cases
-    }
-    return DEFAULT_THEME_ID
-  }
-
-  function setTheme(id: ThemeId) {
-    themeId.value = id
-    previewingId.value = null
-    localStorage.setItem(STORAGE_KEY, id)
-  }
-
-  function previewTheme(id: ThemeId) {
-    previewingId.value = id
-  }
-
-  function revertPreview() {
-    previewingId.value = null
-  }
-
-  return {
-    themeId,
-    previewingId,
-    currentTheme,
-    confirmedThemeId,
-    activeThemeId,
-    setTheme,
-    previewTheme,
-    revertPreview,
-  }
-})
+export const useThemeStore = createThemeStore({ storageKey: 'nicksite-theme' })
