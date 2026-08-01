@@ -3,6 +3,7 @@ import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
 import { animate, stagger, utils } from 'animejs'
 import { useSkillsStore } from '@/stores/skills'
 import { prefersReducedMotion } from '@/utils/motion'
+import { cellSizeFor, LOGO_CELL_GAP_PX } from './layout'
 import DiamondRow from './DiamondRow.vue'
 import type { Skill } from '@/types/skills'
 import techSkills from '@/data/techSkills.json'
@@ -34,7 +35,7 @@ function updateResponsive() {
     diamondSize.value = 80
   }
 
-  const cellHeight = Math.ceil(diamondSize.value * 1.5) + 4
+  const cellHeight = cellSizeFor(diamondSize.value) + LOGO_CELL_GAP_PX
   const availableHeight = h - TOOLBAR_HEIGHT
   const dynamicRows = Math.ceil(availableHeight / cellHeight)
 

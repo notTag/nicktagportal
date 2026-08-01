@@ -4,6 +4,7 @@ import { animate } from 'animejs'
 import SkillDiamond from './SkillDiamond.vue'
 import DiamondInfoPanel from './DiamondInfoPanel.vue'
 import { prefersReducedMotion } from '@/utils/motion'
+import { cellSizeFor, LOGO_CELL_GAP_PX } from './layout'
 import type { Skill, ProficiencyMode } from '@/types/skills'
 
 const props = defineProps<{
@@ -19,9 +20,8 @@ const hoveredSkill = ref<Skill | null>(null)
 const panelPosition = ref<{ x: number; y: number } | null>(null)
 const trackRef = ref<HTMLElement | null>(null)
 
-/** Outer cell is larger than the logo so hover lift and glow are not clipped */
-const cellSize = computed(() => Math.ceil(props.diamondSize * 1.5))
-const gap = 4
+const cellSize = computed(() => cellSizeFor(props.diamondSize))
+const gap = LOGO_CELL_GAP_PX
 
 /**
  * Calculate how many copies of the skill set fill the viewport.
@@ -96,7 +96,9 @@ function startMarquee() {
 }
 
 function rampMarqueeSpeed(targetSpeed: number) {
-  speedRampAnimation?.revert()
+  // cancel(), not revert() — revert() seeks the tween back to 0, which would
+  // snap marqueeSpeed to its pre-ramp value and make the resume instant
+  speedRampAnimation?.cancel()
   if (!scrollAnimation) {
     marqueeSpeed.current = targetSpeed
     return
@@ -129,7 +131,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   window.removeEventListener('resize', syncViewportWidth)
-  speedRampAnimation?.revert()
+  speedRampAnimation?.cancel()
   scrollAnimation?.revert()
   speedRampAnimation = null
   scrollAnimation = null

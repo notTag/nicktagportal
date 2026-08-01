@@ -119,11 +119,17 @@ describe('SkillDiamond', () => {
       expect(style).not.toContain('opacity')
     })
 
-    it('applies a drop-shadow glow in glow mode', () => {
-      const style = logoStyle('glow')
-      // Glow follows the logo silhouette, sized by years: 2 + 3 = 5px
-      expect(style).toContain('drop-shadow')
-      expect(style).toContain('5px')
+    it('applies glow as a CSS variable on the wrapper, not the logo', () => {
+      // `img.skill-icon-invert` sets `filter: invert(1) !important`, so a glow
+      // set as a filter on the logo would be silently dropped
+      const wrapper = createWrapper({ mode: 'glow' })
+      const lift = wrapper.find('[aria-label="Vue.js"]')
+      // Glow radius is sized by years: 2 + 3 = 5px
+      expect(lift.attributes('style')).toContain('--proficiency-glow: 5px')
+      expect(lift.classes()).toContain('is-glowing')
+      expect(wrapper.find('img').attributes('style') ?? '').not.toContain(
+        'drop-shadow',
+      )
     })
 
     it('applies scale transform in size mode', () => {

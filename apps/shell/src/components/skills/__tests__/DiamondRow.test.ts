@@ -83,16 +83,16 @@ describe('DiamondRow', () => {
       const wrapper = createShallowWrapper({ diamondSize: 80 })
       const rowDiv = wrapper.find('div')
       const style = rowDiv.attributes('style') ?? ''
-      // cellSize = ceil(80 * 1.5) = 120, rowHeight = 120 + 4 = 124
-      expect(style).toContain('height: 124px')
+      // cellSize = ceil(80 * LOGO_CELL_RATIO) = 100, rowHeight = 100 + 4 = 104
+      expect(style).toContain('height: 104px')
     })
 
     it('applies offset for odd row indexes', () => {
       const wrapper = createShallowWrapper({ rowIndex: 1 })
       const rowDiv = wrapper.find('div')
       const style = rowDiv.attributes('style') ?? ''
-      // Odd index should have negative margin-left offset
-      expect(style).toContain('margin-left: -60px')
+      // Odd index should have negative margin-left offset of half a cell
+      expect(style).toContain('margin-left: -50px')
     })
 
     it('applies zero offset for even row indexes', () => {
