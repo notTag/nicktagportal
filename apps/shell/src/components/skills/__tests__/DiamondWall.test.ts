@@ -95,21 +95,21 @@ describe('DiamondWall', () => {
       spy.mockRestore()
     })
 
-    it('sets isEntranceComplete after setTimeout', async () => {
-      vi.useFakeTimers()
+    it('sets isEntranceComplete once the entrance animation resolves', async () => {
       const wrapper = shallowMount(DiamondWall, {
         global: { plugins: [createPinia()] },
       })
       const rows = wrapper.findAllComponents({ name: 'DiamondRow' })
-      // Initially false
+      // Rows must not scroll while the entrance is still animating them
       expect(rows[0].props('isEntranceComplete')).toBe(false)
 
-      vi.advanceTimersByTime(300)
+      // Rows are stubbed here, so the entrance finds no targets and completes
+      // immediately rather than waiting on anime.js frames
+      await wrapper.vm.$nextTick()
       await wrapper.vm.$nextTick()
 
       const rowsAfter = wrapper.findAllComponents({ name: 'DiamondRow' })
       expect(rowsAfter[0].props('isEntranceComplete')).toBe(true)
-      vi.useRealTimers()
     })
 
     it('passes isEntranceComplete to each row', () => {

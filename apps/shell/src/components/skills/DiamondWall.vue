@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { animate, stagger, utils } from 'animejs'
 import { useSkillsStore } from '@/stores/skills'
+import { prefersReducedMotion } from '@/utils/motion'
 import DiamondRow from './DiamondRow.vue'
 import type { Skill } from '@/types/skills'
 import techSkills from '@/data/techSkills.json'
@@ -9,11 +11,16 @@ const ROW_SPEEDS = [20, 30, 25, 35, 22, 28, 32, 24]
 
 const store = useSkillsStore()
 const isEntranceComplete = ref(false)
+const wallRef = ref<HTMLElement | null>(null)
 
 const diamondSize = ref(80)
 const rowCount = ref(7)
 
 const TOOLBAR_HEIGHT = 120
+
+const ENTRANCE_DURATION_MS = 550
+const ENTRANCE_ROW_STAGGER_MS = 80
+const ENTRANCE_RISE_PX = 28
 
 function updateResponsive() {
   const w = window.innerWidth
@@ -52,16 +59,46 @@ function shuffleWithSeed(arr: Skill[], seed: number): Skill[] {
   return result
 }
 
-onMounted(() => {
+let entranceAnimation: ReturnType<typeof animate> | null = null
+
+/**
+ * Rows fade and rise in sequence, then hand off to each row's marquee via
+ * `isEntranceComplete` — scrolling must not start under a moving row or the
+ * two transforms fight for the same `transform` property.
+ */
+function runEntrance() {
+  const rowElements = wallRef.value?.querySelectorAll('.skill-row')
+
+  if (!rowElements?.length || prefersReducedMotion()) {
+    isEntranceComplete.value = true
+    return
+  }
+
+  utils.set(rowElements, { opacity: 0, translateY: ENTRANCE_RISE_PX })
+
+  entranceAnimation = animate(rowElements, {
+    opacity: [0, 1],
+    translateY: [ENTRANCE_RISE_PX, 0],
+    duration: ENTRANCE_DURATION_MS,
+    delay: stagger(ENTRANCE_ROW_STAGGER_MS),
+    ease: 'outQuad',
+    onComplete: () => {
+      isEntranceComplete.value = true
+    },
+  })
+}
+
+onMounted(async () => {
   updateResponsive()
   window.addEventListener('resize', updateResponsive)
-  setTimeout(() => {
-    isEntranceComplete.value = true
-  }, 300)
+  await nextTick()
+  runEntrance()
 })
 
 onUnmounted(() => {
   window.removeEventListener('resize', updateResponsive)
+  entranceAnimation?.revert()
+  entranceAnimation = null
 })
 
 const rows = computed(() => {
@@ -74,6 +111,7 @@ const rows = computed(() => {
 
 <template>
   <div
+    ref="wallRef"
     class="w-full overflow-hidden"
     role="img"
     aria-label="Technology skills showcase"

@@ -13,6 +13,22 @@ const MockIntersectionObserver = vi.fn(function (this: {
 })
 vi.stubGlobal('IntersectionObserver', MockIntersectionObserver)
 
+// Mock matchMedia (not available in happy-dom) — animation code reads
+// prefers-reduced-motion before deciding whether to animate
+vi.stubGlobal(
+  'matchMedia',
+  vi.fn((query: string) => ({
+    matches: false,
+    media: query,
+    onchange: null,
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    addListener: vi.fn(),
+    removeListener: vi.fn(),
+    dispatchEvent: vi.fn(),
+  })),
+)
+
 // Mock localStorage (not fully available in happy-dom)
 const localStorageStore: Record<string, string> = {}
 const localStorageMock: Storage = {
