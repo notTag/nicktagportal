@@ -63,8 +63,9 @@ describe('SkillDiamond', () => {
   describe('visibility', () => {
     it('applies full opacity when skill is visible (All category active)', () => {
       const wrapper = createWrapper()
-      const diamond = wrapper.find('[aria-label="Vue.js"]')
-      expect(diamond.classes()).toContain('opacity-100')
+      // Opacity on the outer cell means one thing only: whether this skill is
+      // inside the active category filter
+      expect(wrapper.classes()).toContain('opacity-100')
     })
 
     it('applies reduced opacity when skill is not visible', async () => {
@@ -80,8 +81,7 @@ describe('SkillDiamond', () => {
       })
       await nextTick()
 
-      const diamond = wrapper.find('[aria-label="Vue.js"]')
-      expect(diamond.classes()).toContain('opacity-30')
+      expect(wrapper.classes()).toContain('opacity-30')
     })
   })
 
@@ -104,48 +104,66 @@ describe('SkillDiamond', () => {
   })
 
   describe('proficiency mode', () => {
-    it('renders in uniform mode without extra box-shadow', () => {
-      const wrapper = createWrapper({ mode: 'uniform' })
-      const diamond = wrapper.find('[aria-label="Vue.js"]')
-      const style = diamond.attributes('style') ?? ''
-      // Uniform mode should have boxShadow: none
-      expect(style).toContain('box-shadow: none')
+    // Each mode claims a property nothing else writes: `size` takes transform
+    // on the logo, `glow` and `fill` take CSS variables on the wrapper because
+    // `img.skill-icon-invert` sets `filter: invert(1) !important`.
+    function logoStyle(mode: ProficiencyMode): string {
+      const wrapper = createWrapper({ mode })
+      return wrapper.find('img').attributes('style') ?? ''
+    }
+
+    it('renders in uniform mode without proficiency styling', () => {
+      const style = logoStyle('uniform')
+      expect(style).not.toContain('drop-shadow')
+      expect(style).not.toContain('scale(')
+      expect(style).not.toContain('opacity')
     })
 
-    it('applies glow box-shadow in glow mode', () => {
+    it('applies glow as a CSS variable on the wrapper, not the logo', () => {
+      // `img.skill-icon-invert` sets `filter: invert(1) !important`, so a glow
+      // set as a filter on the logo would be silently dropped
       const wrapper = createWrapper({ mode: 'glow' })
-      const diamond = wrapper.find('[aria-label="Vue.js"]')
-      const style = diamond.attributes('style') ?? ''
-      // Glow should have a non-none box-shadow
-      expect(style).toContain('box-shadow')
-      expect(style).not.toContain('box-shadow: none')
+      const lift = wrapper.find('[aria-label="Vue.js"]')
+      // Glow radius is sized by years: 2 + 3 = 5px
+      expect(lift.attributes('style')).toContain('--proficiency-glow: 5px')
+      expect(lift.classes()).toContain('is-glowing')
+      expect(wrapper.find('img').attributes('style') ?? '').not.toContain(
+        'drop-shadow',
+      )
     })
 
     it('applies scale transform in size mode', () => {
-      const wrapper = createWrapper({ mode: 'size' })
-      const diamond = wrapper.find('[aria-label="Vue.js"]')
-      const style = diamond.attributes('style') ?? ''
+      const style = logoStyle('size')
       // Size mode: scale(0.85 + years * 0.03) = scale(0.85 + 3 * 0.03) = scale(0.94)
       expect(style).toContain('scale(0.94)')
     })
 
-    it('processes fill mode without glow or size styles', () => {
+    it('encodes fill mode as desaturation, leaving opacity to category filtering', () => {
       const wrapper = createWrapper({ mode: 'fill' })
-      const diamond = wrapper.find('[aria-label="Vue.js"]')
-      const style = diamond.attributes('style') ?? ''
-      // Fill mode applies background-color via color-mix (happy-dom may strip it)
-      // Verify it doesn't apply glow (box-shadow) or size (scale) styles
-      expect(style).toContain('rotate(45deg)')
-      expect(style).not.toContain('scale(')
-      expect(style).toContain('box-shadow: none')
+      const lift = wrapper.find('[aria-label="Vue.js"]')
+      // 3 years of 10 to mastery leaves 70% desaturation
+      expect(lift.attributes('style')).toContain(
+        '--proficiency-desaturation: 0.7',
+      )
+      expect(lift.classes()).toContain('is-filling')
+      // Opacity carries category filtering only, so fill must not touch it
+      expect(lift.attributes('style')).not.toContain('opacity')
+      expect(logoStyle('fill')).not.toContain('opacity')
     })
 
-    it('applies default empty object in uniform mode', () => {
-      const wrapper = createWrapper({ mode: 'uniform' })
-      const diamond = wrapper.find('[aria-label="Vue.js"]')
-      const style = diamond.attributes('style') ?? ''
-      expect(style).toContain('rotate(45deg)')
-      expect(style).toContain('box-shadow: none')
+    it('treats a decade of experience as full saturation', () => {
+      const wrapper = mount(SkillDiamond, {
+        props: {
+          skill: { ...testSkill, years: 12 },
+          mode: 'fill',
+          diamondSize: 80,
+        },
+        global: { plugins: [createPinia()] },
+      })
+      const lift = wrapper.find('[aria-label="Vue.js"]')
+      expect(lift.attributes('style')).toContain(
+        '--proficiency-desaturation: 0',
+      )
     })
   })
 

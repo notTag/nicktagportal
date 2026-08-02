@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
+import { animate } from 'animejs'
 import SkillDiamond from './SkillDiamond.vue'
 import DiamondInfoPanel from './DiamondInfoPanel.vue'
+import { prefersReducedMotion } from '@/utils/motion'
+import { cellSizeFor, LOGO_CELL_GAP_PX } from './layout'
 import type { Skill, ProficiencyMode } from '@/types/skills'
 
 const props = defineProps<{
@@ -13,17 +16,16 @@ const props = defineProps<{
   isEntranceComplete: boolean
 }>()
 
-const isPaused = ref(false)
 const hoveredSkill = ref<Skill | null>(null)
 const panelPosition = ref<{ x: number; y: number } | null>(null)
+const trackRef = ref<HTMLElement | null>(null)
 
-/** Cell size accounts for the rotated diamond's bounding box */
-const cellSize = computed(() => Math.ceil(props.diamondSize * 1.5))
-const gap = 4
+const cellSize = computed(() => cellSizeFor(props.diamondSize))
+const gap = LOGO_CELL_GAP_PX
 
 /**
  * Calculate how many copies of the skill set fill the viewport.
- * We create exactly 2 identical halves so translateX(-50%) loops perfectly.
+ * We create exactly 2 identical halves so translating by one half loops perfectly.
  */
 const viewportWidth = ref(
   typeof window !== 'undefined' ? window.innerWidth : 1920,
@@ -31,13 +33,7 @@ const viewportWidth = ref(
 function syncViewportWidth() {
   viewportWidth.value = window.innerWidth
 }
-onMounted(() => {
-  syncViewportWidth()
-  window.addEventListener('resize', syncViewportWidth)
-})
-onUnmounted(() => {
-  window.removeEventListener('resize', syncViewportWidth)
-})
+
 const fillCount = computed(() =>
   Math.max(
     1,
@@ -60,7 +56,9 @@ const scrollDistance = computed(
   () => oneHalf.value.length * (cellSize.value + gap),
 )
 
-const duration = computed(() => scrollDistance.value / props.speed)
+const scrollDurationMs = computed(
+  () => (scrollDistance.value / props.speed) * 1000,
+)
 
 /** Row height = cell bounding box + small vertical gap */
 const rowHeight = computed(() => cellSize.value + gap)
@@ -70,10 +68,76 @@ const rowOffset = computed(() =>
   props.rowIndex % 2 === 1 ? `${-(cellSize.value / 2)}px` : '0',
 )
 
-function onDiamondHover(
-  payload: { skill: Skill; element: HTMLElement },
-  _index: number,
-) {
+const SPEED_RAMP_DURATION_MS = 400
+
+let scrollAnimation: ReturnType<typeof animate> | null = null
+let speedRampAnimation: ReturnType<typeof animate> | null = null
+
+/**
+ * anime.js tweens this scalar and we write it through to the marquee's playback
+ * rate, so hovering eases the row to a stop instead of freezing it mid-frame the
+ * way `animation-play-state: paused` does.
+ */
+const marqueeSpeed = { current: 1 }
+
+function startMarquee() {
+  scrollAnimation?.revert()
+  scrollAnimation = null
+
+  if (!trackRef.value || prefersReducedMotion()) return
+
+  scrollAnimation = animate(trackRef.value, {
+    x: [0, -scrollDistance.value],
+    duration: scrollDurationMs.value,
+    ease: 'linear',
+    loop: true,
+  })
+  scrollAnimation.speed = marqueeSpeed.current
+}
+
+function rampMarqueeSpeed(targetSpeed: number) {
+  // cancel(), not revert() — revert() seeks the tween back to 0, which would
+  // snap marqueeSpeed to its pre-ramp value and make the resume instant
+  speedRampAnimation?.cancel()
+  if (!scrollAnimation) {
+    marqueeSpeed.current = targetSpeed
+    return
+  }
+  speedRampAnimation = animate(marqueeSpeed, {
+    current: targetSpeed,
+    duration: SPEED_RAMP_DURATION_MS,
+    ease: 'outQuad',
+    onUpdate: () => {
+      if (scrollAnimation) scrollAnimation.speed = marqueeSpeed.current
+    },
+  })
+}
+
+// ponytail: resize restarts the marquee from x=0 rather than preserving
+// progress. Resizes are rare and cell sizes shift anyway; add a seek() if the
+// jump ever becomes noticeable.
+watch(
+  [scrollDistance, scrollDurationMs, () => props.isEntranceComplete],
+  () => {
+    if (props.isEntranceComplete) startMarquee()
+  },
+)
+
+onMounted(() => {
+  syncViewportWidth()
+  window.addEventListener('resize', syncViewportWidth)
+  if (props.isEntranceComplete) startMarquee()
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', syncViewportWidth)
+  speedRampAnimation?.cancel()
+  scrollAnimation?.revert()
+  speedRampAnimation = null
+  scrollAnimation = null
+})
+
+function onDiamondHover(payload: { skill: Skill; element: HTMLElement }) {
   hoveredSkill.value = payload.skill
   const rect = payload.element.getBoundingClientRect()
   panelPosition.value = {
@@ -87,8 +151,12 @@ function onDiamondLeave() {
   panelPosition.value = null
 }
 
+function handleRowEnter() {
+  rampMarqueeSpeed(0)
+}
+
 function handleRowLeave() {
-  isPaused.value = false
+  rampMarqueeSpeed(1)
   hoveredSkill.value = null
   panelPosition.value = null
 }
@@ -96,23 +164,18 @@ function handleRowLeave() {
 
 <template>
   <div
-    class="relative"
-    :class="{ paused: isPaused }"
+    class="skill-row relative"
     :style="{
       height: `${rowHeight}px`,
       marginLeft: rowOffset,
     }"
-    @mouseenter="isPaused = true"
+    @mouseenter="handleRowEnter"
     @mouseleave="handleRowLeave"
   >
     <div
-      class="flex shrink-0 items-center"
-      :class="{ 'scroll-row-animation': isEntranceComplete }"
-      :style="{
-        animationDuration: `${duration}s`,
-        gap: `${gap}px`,
-        '--scroll-distance': `-${scrollDistance}px`,
-      }"
+      ref="trackRef"
+      class="flex shrink-0 items-center will-change-transform"
+      :style="{ gap: `${gap}px` }"
     >
       <SkillDiamond
         v-for="(skill, i) in duplicatedSkills"
@@ -120,7 +183,7 @@ function handleRowLeave() {
         :skill="skill"
         :mode="mode"
         :diamond-size="diamondSize"
-        @hover="onDiamondHover($event, i)"
+        @hover="onDiamondHover($event)"
         @leave="onDiamondLeave"
       />
     </div>
@@ -128,29 +191,3 @@ function handleRowLeave() {
 
   <DiamondInfoPanel :skill="hoveredSkill" :position="panelPosition" />
 </template>
-
-<style scoped>
-@keyframes scroll-row {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(var(--scroll-distance));
-  }
-}
-
-.scroll-row-animation {
-  animation: scroll-row linear infinite;
-  will-change: transform;
-}
-
-.paused .scroll-row-animation {
-  animation-play-state: paused;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .scroll-row-animation {
-    animation: none;
-  }
-}
-</style>

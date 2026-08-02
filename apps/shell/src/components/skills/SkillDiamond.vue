@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { ref, computed, type CSSProperties } from 'vue'
+import { ref, computed, onBeforeUnmount, type CSSProperties } from 'vue'
+import { animate } from 'animejs'
 import { useSkillsStore } from '@/stores/skills'
+import { cellSizeFor } from './layout'
 import type { Skill, ProficiencyMode } from '@/types/skills'
 
 const props = defineProps<{
@@ -16,113 +18,177 @@ const emit = defineEmits<{
 
 const store = useSkillsStore()
 const isHovered = ref(false)
-const diamondRef = ref<HTMLElement | null>(null)
+const isAnimating = ref(false)
+const liftRef = ref<HTMLElement | null>(null)
 
-/** The outer cell size that contains the rotated diamond without clipping */
-const cellSize = computed(() => Math.ceil(props.diamondSize * 1.5))
+const cellSize = computed(() => cellSizeFor(props.diamondSize))
 
 const isVisible = computed(() =>
   store.isSkillVisible(props.skill.category, props.skill.displayName),
 )
 
-const proficiencyStyle = computed<CSSProperties>(() => {
+const isGlowMode = computed(() => props.mode === 'glow')
+const isFillMode = computed(() => props.mode === 'fill')
+
+/** Years of experience beyond which a skill reads as fully mastered */
+const MASTERY_YEARS = 10
+
+/**
+ * Fill mode encodes proficiency as colour intensity: a novice skill reads
+ * almost monochrome, a mastered one at full saturation. Opacity is deliberately
+ * left alone — the cell already uses it to dim skills outside the active
+ * category, and stacking both meanings on one property makes neither legible.
+ */
+const proficiencyDesaturation = computed(() => {
+  if (!isFillMode.value) return 0
+  const masteryRatio = Math.min(props.skill.years / MASTERY_YEARS, 1)
+  return 1 - masteryRatio
+})
+
+/**
+ * Glow is expressed as a CSS variable rather than a `filter` declaration
+ * because `img.skill-icon-invert` sets `filter: invert(1) !important`
+ * (main.css) and would silently win over any filter set here.
+ */
+const proficiencyGlowRadius = computed(() =>
+  isGlowMode.value ? `${2 + props.skill.years}px` : '0px',
+)
+
+/**
+ * Proficiency styling is bound by Vue on the logo; hover styling is written by
+ * anime.js on the wrapper. Splitting them keeps the two off the same CSS
+ * properties, so neither can clobber the other on re-render.
+ */
+const logoStyle = computed<CSSProperties>(() => {
   switch (props.mode) {
-    case 'glow':
-      return {
-        boxShadow: `0 0 ${4 + props.skill.years * 2}px var(--color-accent)`,
-      }
     case 'size':
-      return {
-        transform: `rotate(45deg) scale(${0.85 + props.skill.years * 0.03})`,
-      }
-    case 'fill':
-      return {
-        backgroundColor: `color-mix(in srgb, var(--color-surface-raised) ${Math.min(30 + props.skill.years * 7, 100)}%, transparent)`,
-      }
+      return { transform: `scale(${0.85 + props.skill.years * 0.03})` }
     default:
       return {}
   }
 })
 
-const diamondStyle = computed<CSSProperties>(() => {
-  const base: CSSProperties = {
-    width: `${props.diamondSize}px`,
-    height: `${props.diamondSize}px`,
-  }
+const HOVER_GLOW_VARIABLE = '--hover-glow'
 
-  if (isHovered.value) {
-    return {
-      ...base,
-      transform: 'rotate(45deg) translateY(-4px)',
-      boxShadow: '0 4px 16px var(--color-accent)',
-    }
-  }
+let hoverAnimation: ReturnType<typeof animate> | null = null
 
-  // Merge proficiency style
-  const prof = proficiencyStyle.value
-  return {
-    ...base,
-    transform: prof.transform ?? 'rotate(45deg)',
-    boxShadow: (prof.boxShadow as string) ?? 'none',
-    backgroundColor: prof.backgroundColor,
-  }
-})
+function animateHoverLift(lifted: boolean) {
+  if (!liftRef.value) return
 
-function handleMouseEnter() {
+  isAnimating.value = true
+  hoverAnimation?.cancel()
+  hoverAnimation = animate(liftRef.value, {
+    translateY: lifted ? -4 : 0,
+    scale: lifted ? 1.08 : 1,
+    [HOVER_GLOW_VARIABLE]: lifted ? 1 : 0,
+    duration: lifted ? 260 : 200,
+    ease: lifted ? 'outBack' : 'outQuad',
+    onComplete: () => {
+      // Releasing `will-change` and the filter chain once settled keeps several
+      // hundred idle logos off the compositor
+      if (!lifted) isAnimating.value = false
+    },
+  })
+}
+
+function enterHover() {
   isHovered.value = true
-  if (diamondRef.value) {
-    emit('hover', { skill: props.skill, element: diamondRef.value })
+  animateHoverLift(true)
+  if (liftRef.value) {
+    emit('hover', { skill: props.skill, element: liftRef.value })
   }
 }
 
-function handleMouseLeave() {
+function exitHover() {
   isHovered.value = false
+  animateHoverLift(false)
   emit('leave')
 }
 
 function handleClick() {
   if (isHovered.value) {
-    isHovered.value = false
-    emit('leave')
+    exitHover()
   } else {
-    isHovered.value = true
-    if (diamondRef.value) {
-      emit('hover', { skill: props.skill, element: diamondRef.value })
-    }
+    enterHover()
   }
 }
+
+onBeforeUnmount(() => {
+  hoverAnimation?.revert()
+  hoverAnimation = null
+})
 </script>
 
 <template>
-  <!-- Outer cell: sized to the rotated bounding box, no overflow hidden -->
   <div
-    class="flex shrink-0 items-center justify-center"
+    class="flex shrink-0 items-center justify-center transition-opacity duration-200 ease-out"
+    :class="isVisible ? 'opacity-100' : 'opacity-30'"
     :style="{
       width: `${cellSize}px`,
       height: `${cellSize}px`,
     }"
   >
-    <!-- Inner rotated diamond -->
     <div
-      ref="diamondRef"
-      class="border-border bg-surface-raised overflow-hidden rounded-sm border transition-[transform,box-shadow,opacity] duration-200 ease-out"
-      :class="isVisible ? 'opacity-100' : 'opacity-30'"
-      :style="diamondStyle"
+      ref="liftRef"
+      class="skill-logo-lift"
+      :class="{
+        'is-glowing': isGlowMode,
+        'is-filling': isFillMode,
+        'is-animating': isAnimating,
+      }"
+      :style="{
+        width: `${diamondSize}px`,
+        height: `${diamondSize}px`,
+        '--proficiency-glow': proficiencyGlowRadius,
+        '--proficiency-desaturation': proficiencyDesaturation,
+      }"
       :aria-label="skill.displayName"
-      @mouseenter="handleMouseEnter"
-      @mouseleave="handleMouseLeave"
+      @mouseenter="enterHover"
+      @mouseleave="exitHover"
       @click="handleClick"
     >
       <img
         :src="skill.iconPath"
         :alt="skill.displayName"
-        class="h-full w-full object-contain p-2"
+        class="h-full w-full object-contain"
         :class="{
           'skill-icon-invert': skill.invertInDark,
           'skill-icon-invert-light': skill.invertInLight,
         }"
-        :style="{ transform: 'rotate(-45deg)' }"
+        :style="logoStyle"
       />
     </div>
   </div>
 </template>
+
+<style scoped>
+/*
+ * anime.js drives --hover-glow from 0 to 1 and Vue binds --proficiency-glow;
+ * CSS turns both scalars into shadows that follow the logo silhouette.
+ * Animating variables rather than the `filter` string avoids interpolating
+ * drop-shadow syntax, which does not interpolate reliably.
+ *
+ * The filter chain is scoped to logos that actually need it — an always-on
+ * filter would force compositing on every duplicated logo in the wall.
+ */
+.skill-logo-lift {
+  --hover-glow: 0;
+  --proficiency-glow: 0px;
+  --proficiency-desaturation: 0;
+}
+
+.skill-logo-lift.is-glowing,
+.skill-logo-lift.is-filling,
+.skill-logo-lift.is-animating {
+  filter: grayscale(var(--proficiency-desaturation))
+    drop-shadow(0 0 var(--proficiency-glow) var(--color-accent))
+    drop-shadow(
+      0 0 calc(var(--hover-glow) * 8px)
+        color-mix(in srgb, var(--color-accent) 70%, transparent)
+    );
+}
+
+.skill-logo-lift.is-animating {
+  will-change: transform, filter;
+}
+</style>

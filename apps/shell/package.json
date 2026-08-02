@@ -12,6 +12,7 @@
     "@nick-site/types": "workspace:*",
     "@nick-site/ui": "workspace:*",
     "@nick_tag_tech/themes": "^0.1.2",
+    "animejs": "^4.5.0",
     "pinia": "^2.3",
     "vue": "^3.5",
     "vue-ascii-overlay": "0.1.0",

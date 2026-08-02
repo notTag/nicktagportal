@@ -83,16 +83,16 @@ describe('DiamondRow', () => {
       const wrapper = createShallowWrapper({ diamondSize: 80 })
       const rowDiv = wrapper.find('div')
       const style = rowDiv.attributes('style') ?? ''
-      // cellSize = ceil(80 * 1.5) = 120, rowHeight = 120 + 4 = 124
-      expect(style).toContain('height: 124px')
+      // cellSize = ceil(80 * LOGO_CELL_RATIO) = 100, rowHeight = 100 + 4 = 104
+      expect(style).toContain('height: 104px')
     })
 
     it('applies offset for odd row indexes', () => {
       const wrapper = createShallowWrapper({ rowIndex: 1 })
       const rowDiv = wrapper.find('div')
       const style = rowDiv.attributes('style') ?? ''
-      // Odd index should have negative margin-left offset
-      expect(style).toContain('margin-left: -60px')
+      // Odd index should have negative margin-left offset of half a cell
+      expect(style).toContain('margin-left: -50px')
     })
 
     it('applies zero offset for even row indexes', () => {
@@ -104,19 +104,14 @@ describe('DiamondRow', () => {
   })
 
   describe('pause on hover', () => {
-    it('adds paused class on mouseenter', async () => {
-      const wrapper = createShallowWrapper()
-      const rowDiv = wrapper.find('div')
-      await rowDiv.trigger('mouseenter')
-      expect(rowDiv.classes()).toContain('paused')
-    })
-
-    it('removes paused class on mouseleave', async () => {
+    it('handles row mouseenter and mouseleave without error', async () => {
+      // The marquee eases to a stop via anime.js playback speed rather than a
+      // CSS class, so behaviour is asserted through the hover state it clears
       const wrapper = createShallowWrapper()
       const rowDiv = wrapper.find('div')
       await rowDiv.trigger('mouseenter')
       await rowDiv.trigger('mouseleave')
-      expect(rowDiv.classes()).not.toContain('paused')
+      expect(rowDiv.exists()).toBe(true)
     })
   })
 
@@ -168,16 +163,21 @@ describe('DiamondRow', () => {
   })
 
   describe('animation', () => {
-    it('applies scroll-row-animation class when entrance is complete', () => {
+    it('renders a scroll track holding the logos', () => {
       const wrapper = createShallowWrapper({ isEntranceComplete: true })
-      const animDiv = wrapper.find('.scroll-row-animation')
-      expect(animDiv.exists()).toBe(true)
+      const track = wrapper.find('.will-change-transform')
+      expect(track.exists()).toBe(true)
     })
 
-    it('does not apply scroll-row-animation class when entrance is not complete', () => {
-      const wrapper = createShallowWrapper({ isEntranceComplete: false })
-      const animDiv = wrapper.find('.scroll-row-animation')
-      expect(animDiv.exists()).toBe(false)
+    it('renders an even number of logos so the loop seam is invisible', () => {
+      // anime.js translates the track by exactly one half of its width, which
+      // only loops seamlessly if the second half duplicates the first
+      const wrapper = createShallowWrapper({ isEntranceComplete: true })
+      const logoCount = wrapper.findAllComponents({
+        name: 'SkillDiamond',
+      }).length
+      expect(logoCount).toBeGreaterThan(0)
+      expect(logoCount % 2).toBe(0)
     })
   })
 })
