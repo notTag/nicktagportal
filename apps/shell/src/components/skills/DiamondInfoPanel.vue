@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { animate } from 'animejs'
 import { formatYears } from '@/types/skills'
-import { prefersReducedMotion } from '@/utils/motion'
 import type { Skill } from '@/types/skills'
 
 defineProps<{
@@ -19,7 +18,7 @@ function innerCard(el: Element): Element | null {
 
 function onEnter(el: Element, done: () => void) {
   const card = innerCard(el)
-  if (!card || prefersReducedMotion()) {
+  if (!card) {
     done()
     return
   }
@@ -34,7 +33,7 @@ function onEnter(el: Element, done: () => void) {
 
 function onLeave(el: Element, done: () => void) {
   const card = innerCard(el)
-  if (!card || prefersReducedMotion()) {
+  if (!card) {
     done()
     return
   }

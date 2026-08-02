@@ -2,7 +2,6 @@
 import { ref, computed, onBeforeUnmount, type CSSProperties } from 'vue'
 import { animate } from 'animejs'
 import { useSkillsStore } from '@/stores/skills'
-import { prefersReducedMotion } from '@/utils/motion'
 import { cellSizeFor } from './layout'
 import type { Skill, ProficiencyMode } from '@/types/skills'
 
@@ -74,7 +73,7 @@ const HOVER_GLOW_VARIABLE = '--hover-glow'
 let hoverAnimation: ReturnType<typeof animate> | null = null
 
 function animateHoverLift(lifted: boolean) {
-  if (!liftRef.value || prefersReducedMotion()) return
+  if (!liftRef.value) return
 
   isAnimating.value = true
   hoverAnimation?.cancel()
