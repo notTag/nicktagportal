@@ -63,8 +63,8 @@ describe('SkillDiamond', () => {
   describe('visibility', () => {
     it('applies full opacity when skill is visible (All category active)', () => {
       const wrapper = createWrapper()
-      // Category dimming lives on the outer cell so it multiplies with the
-      // fill-mode opacity applied to the logo itself
+      // Opacity on the outer cell means one thing only: whether this skill is
+      // inside the active category filter
       expect(wrapper.classes()).toContain('opacity-100')
     })
 
@@ -104,9 +104,9 @@ describe('SkillDiamond', () => {
   })
 
   describe('proficiency mode', () => {
-    // Proficiency styling is applied to the logo itself; the wrapper element is
-    // reserved for anime.js hover animation so the two never write the same
-    // CSS property.
+    // Each mode claims a property nothing else writes: `size` takes transform
+    // on the logo, `glow` and `fill` take CSS variables on the wrapper because
+    // `img.skill-icon-invert` sets `filter: invert(1) !important`.
     function logoStyle(mode: ProficiencyMode): string {
       const wrapper = createWrapper({ mode })
       return wrapper.find('img').attributes('style') ?? ''
