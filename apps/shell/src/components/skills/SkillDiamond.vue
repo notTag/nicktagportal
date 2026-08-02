@@ -29,6 +29,22 @@ const isVisible = computed(() =>
 )
 
 const isGlowMode = computed(() => props.mode === 'glow')
+const isFillMode = computed(() => props.mode === 'fill')
+
+/** Years of experience beyond which a skill reads as fully mastered */
+const MASTERY_YEARS = 10
+
+/**
+ * Fill mode encodes proficiency as colour intensity: a novice skill reads
+ * almost monochrome, a mastered one at full saturation. Opacity is deliberately
+ * left alone — the cell already uses it to dim skills outside the active
+ * category, and stacking both meanings on one property makes neither legible.
+ */
+const proficiencyDesaturation = computed(() => {
+  if (!isFillMode.value) return 0
+  const masteryRatio = Math.min(props.skill.years / MASTERY_YEARS, 1)
+  return 1 - masteryRatio
+})
 
 /**
  * Glow is expressed as a CSS variable rather than a `filter` declaration
@@ -48,18 +64,6 @@ const logoStyle = computed<CSSProperties>(() => {
   switch (props.mode) {
     case 'size':
       return { transform: `scale(${0.85 + props.skill.years * 0.03})` }
-    case 'fill':
-      // TODO(human): re-encode `fill` proficiency.
-      //
-      // The outer cell already multiplies everything by opacity-30 when a skill
-      // is filtered out of the active category, so encoding proficiency as
-      // opacity too means a dimmed 8-year skill (0.3 * 0.86 = 0.26) reads
-      // almost the same as a selected 1-year skill (0.37). The signal collides
-      // with the filter state.
-      //
-      // Replace the line below with an encoding that does not use opacity.
-      // `props.skill.years` runs roughly 1-10. Return a CSSProperties object.
-      return { opacity: Math.min(30 + props.skill.years * 7, 100) / 100 }
     default:
       return {}
   }
@@ -128,11 +132,16 @@ onBeforeUnmount(() => {
     <div
       ref="liftRef"
       class="skill-logo-lift"
-      :class="{ 'is-glowing': isGlowMode, 'is-animating': isAnimating }"
+      :class="{
+        'is-glowing': isGlowMode,
+        'is-filling': isFillMode,
+        'is-animating': isAnimating,
+      }"
       :style="{
         width: `${diamondSize}px`,
         height: `${diamondSize}px`,
         '--proficiency-glow': proficiencyGlowRadius,
+        '--proficiency-desaturation': proficiencyDesaturation,
       }"
       :aria-label="skill.displayName"
       @mouseenter="enterHover"
@@ -166,11 +175,14 @@ onBeforeUnmount(() => {
 .skill-logo-lift {
   --hover-glow: 0;
   --proficiency-glow: 0px;
+  --proficiency-desaturation: 0;
 }
 
 .skill-logo-lift.is-glowing,
+.skill-logo-lift.is-filling,
 .skill-logo-lift.is-animating {
-  filter: drop-shadow(0 0 var(--proficiency-glow) var(--color-accent))
+  filter: grayscale(var(--proficiency-desaturation))
+    drop-shadow(0 0 var(--proficiency-glow) var(--color-accent))
     drop-shadow(
       0 0 calc(var(--hover-glow) * 8px)
         color-mix(in srgb, var(--color-accent) 70%, transparent)

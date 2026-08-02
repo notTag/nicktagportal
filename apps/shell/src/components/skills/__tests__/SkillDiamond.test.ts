@@ -138,12 +138,32 @@ describe('SkillDiamond', () => {
       expect(style).toContain('scale(0.94)')
     })
 
-    it('applies opacity in fill mode without glow or size styles', () => {
-      const style = logoStyle('fill')
-      // Fill mode: min(30 + years * 7, 100) / 100 = 51 / 100 = 0.51
-      expect(style).toContain('opacity: 0.51')
-      expect(style).not.toContain('scale(')
-      expect(style).not.toContain('drop-shadow')
+    it('encodes fill mode as desaturation, leaving opacity to category filtering', () => {
+      const wrapper = createWrapper({ mode: 'fill' })
+      const lift = wrapper.find('[aria-label="Vue.js"]')
+      // 3 years of 10 to mastery leaves 70% desaturation
+      expect(lift.attributes('style')).toContain(
+        '--proficiency-desaturation: 0.7',
+      )
+      expect(lift.classes()).toContain('is-filling')
+      // Opacity carries category filtering only, so fill must not touch it
+      expect(lift.attributes('style')).not.toContain('opacity')
+      expect(logoStyle('fill')).not.toContain('opacity')
+    })
+
+    it('treats a decade of experience as full saturation', () => {
+      const wrapper = mount(SkillDiamond, {
+        props: {
+          skill: { ...testSkill, years: 12 },
+          mode: 'fill',
+          diamondSize: 80,
+        },
+        global: { plugins: [createPinia()] },
+      })
+      const lift = wrapper.find('[aria-label="Vue.js"]')
+      expect(lift.attributes('style')).toContain(
+        '--proficiency-desaturation: 0',
+      )
     })
   })
 
